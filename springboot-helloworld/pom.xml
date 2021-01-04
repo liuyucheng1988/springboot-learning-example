@@ -5,7 +5,7 @@
 
     <groupId>springboot</groupId>
     <artifactId>springboot-helloworld</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>springboot-helloworld</name>
 
     <!-- Spring Boot 启动父依赖 -->
@@ -22,6 +22,13 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.6</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Junit -->
         <dependency>
             <groupId>junit</groupId>
@@ -29,4 +36,36 @@
             <version>4.12</version>
         </dependency>
     </dependencies>
+   <!-- <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+&lt;!&ndash;                <configuration>
+                    <executable>true</executable>
+                </configuration>&ndash;&gt;
+            </plugin>
+        </plugins>
+    </build>-->
+
+    <build>
+        <finalName>springboot-helloworld</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <!--<configuration>
+                    <mainClass>com.xx.webapps.api.main.WebappsApiBidMain</mainClass>
+                </configuration>-->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>

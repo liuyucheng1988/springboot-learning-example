@@ -1,0 +1,10 @@
+server:
+  port: 8889
+  timeout: 1000
+logging:
+  pattern: #配置日志格式 %d：日期 , %msg：日志信息 ，%n换行
+    console: "%d - %msg%n" #设置控制台打印格式
+  path: D:/log/helloworld #设置log文件路径 默认名称：spring.log
+  file: D:/log/helloworld/hello.log #设置log文件路径 设置日志文件名称cell.log
+  level:
+    com.springboot.service.LoggerTest: info #指定输出某个类的日志级别
