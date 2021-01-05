@@ -1,0 +1,41 @@
+server:
+  port: 8889
+  timeout: 1000
+name: lycyaml
+logging:
+  pattern: #配置日志格式 %d：日期 , %msg：日志信息 ，%n换行
+    console: "%d - %msg%n" #设置控制台打印格式
+  path: D:/log/helloworld #设置log文件路径 默认名称：spring.log
+  file: D:/log/helloworld/hello.log #设置log文件路径 设置日志文件名称cell.log
+  level:
+    com.springboot.service.LoggerTest: info #指定输出某个类的日志级别
+
+digitalhuman:
+  name: liuyucheng
+  age: 33
+  auth:
+    spdb-auth-config:
+      baseUrl: http://127.0.0.1:8443
+    transCode: 1006
+  resource-pool:
+    client:
+      resourcePoolUrl: http://192.168.8.109:8082
+  hypervisor:
+    process:
+      config:
+        command: /home/work/digital-human-proxy-server/bin/BRTCProxy -UE4=${ue4} -RTC=${rtcUrl} -UID=${userId} -ROOMNAME=${roomId} -APPID=${appId} -TOKEN=${token} -KILLSELF_WHEN_OTHERS_LEAVING -AUDIO_IN_SAMPLE_RATE=16000
+        workDir: /home/work/digital-human-proxy-server/bin
+    hypervisor:
+      config:
+        hypervisorType: INTER_PROCESS
+        subProcessLogDir: /home/work/digital-human-proxy-server/logs/sub-process
+        subProcessLogDateFormat: yyyy-MM-dd'T'HH:mm:ss'Z'
+        initialStatus: IDLE
+        auto-release-interval-milliseconds: 15000
+        healthEnabled: true
+    resource:
+      config:
+        resourceType: PROXY_SERVER
+        ports:
+          host: 8080
+          health: 8080

@@ -1,4 +1,13 @@
+server:
+  port: 8889
+  timeout: 1000
 digitalhuman:
+  name: liuyishuangzi
+  age: 22
+  auth:
+    spdb-auth-config:
+      baseUrl: http://127.0.0.1:8443
+    transCode: 1006
   resource-pool:
     client:
       resourcePoolUrl: http://192.168.8.109:8082

@@ -30,23 +30,29 @@ spec:
         app: dockertest
     spec:
       containers: #docker容器的配置
-        - name: dockertest
-          image: liuyucheng02/springboot:1.0.3 # pull镜像的地址 ip:prot/dir/images:tag
+      - name: dockertest
+        image: liuyucheng02/springboot:1.0.4 # pull镜像的地址 ip:prot/dir/images:tag
 #          image: 10.233.0.100:5000:springboot/helloworld:1.0.3
-          imagePullPolicy: IfNotPresent #pull镜像时机，
-          ports:
-            - containerPort: 8889 #容器对外开放端口
-          volumeMounts:
-            - name: conf
-              mountPath: /home/springboot/conf/application.yaml
-              subPath: application.yaml
-            - name: log
-              mountPath: /root/log/helloworld
-        volumes:
+        imagePullPolicy: Always #pull镜像时机，
+        ports:
+        - containerPort: 8889 #容器对外开放端口
+        volumeMounts:
           - name: conf
-            configMap:
-              name: helloworld
+            mountPath: /home/springboot/config/application.yaml
+            subPath: application.yaml
           - name: log
-            hostPath:
-              path: /data/logs/hello/
-              type: DirectoryOrCreate
+            mountPath: /home/springboot/log
+          - name: pic
+            mountPath: /home/springboot/config/pic
+      volumes:
+      - name: conf
+        configMap:
+          name: helloworld
+      - name: log
+        hostPath:
+          path: /data/logs/hello/
+          type: DirectoryOrCreate
+      - name: pic
+        hostPath:
+          path: /data/pic/hello/
+          type: DirectoryOrCreate

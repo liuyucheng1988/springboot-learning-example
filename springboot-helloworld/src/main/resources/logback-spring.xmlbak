@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+
+    <!-- 控制台日志打印格式 -->
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+<!--            <pattern>-->
+<!--                %d - %msg%n-->
+<!--            </pattern>-->
+           <!-- <Pattern>
+                %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable
+            </Pattern>-->
+            <!--<Pattern>
+                -%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } [%t] -&#45;&#45; %-40.40logger{39} : [%X{x-bce-request-id}][%X{currentUser}][%F:%M:%L] %m%n
+            </Pattern>-->
+            <Pattern>
+                -%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } [%t] --- %-40.40logger{39} : [%F:%M:%L] %m%n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <!-- 配置日志文件输出 info级别-->
+   <!-- <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            &lt;!&ndash; 根据LevelFilter 查看FilterReply枚举类型，还有一种NEUTRAL(中立) &ndash;&gt;
+            &lt;!&ndash; NEUTRAL:忽略并继续往下判断，ACCEPT:接受，不往判断走 &ndash;&gt;
+            <level>ERROR</level>&lt;!&ndash; 禁止 &ndash;&gt;
+            <onMatch>DENY</onMatch>&lt;!&ndash; 接受 &ndash;&gt;
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <encoder>
+            &lt;!&ndash;<pattern>
+                %msg%n
+            </pattern>&ndash;&gt;
+            <Pattern>
+                %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable
+            </Pattern>
+        </encoder>
+        &lt;!&ndash;滚动策略&ndash;&gt;
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            &lt;!&ndash;路径&ndash;&gt;
+            <fileNamePattern>D:/log/helloworld/info_%d.log</fileNamePattern>
+           &lt;!&ndash; <fileNamePattern>/root/log/helloworld/info_%d.log</fileNamePattern>&ndash;&gt;
+        </rollingPolicy>
+    </appender>-->
+    <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>
+                -%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } [%t] --- %-40.40logger{39} : [%F:%M:%L] %m%n
+            </Pattern>
+            <!--<pattern> %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable</pattern>-->
+        </encoder>
+        <!--<file>D:/log/helloworld/info_%d.log</file>-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--路径-->
+            <fileNamePattern>D:/log/helloworld/info_%d.log</fileNamePattern>
+           <!-- <fileNamePattern>/root/log/helloworld/info_%d.log</fileNamePattern>-->
+        </rollingPolicy>
+        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logging.info_log_file_path}.%d{yyyyMMddHH}</fileNamePattern>
+            <if condition='isDefined("logging.info_log_max_history_in_hours")'>
+                <then>
+                    <maxHistory>${logging.info_log_max_history_in_hours}</maxHistory>
+                </then>
+            </if>
+        </rollingPolicy>-->
+    </appender>
+    <!-- 配置日志文件输出 error级别-->
+    <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <encoder>
+           <!-- <pattern>
+                %msg%n
+            </pattern>-->
+          <!--  <Pattern>
+                %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable
+            </Pattern>-->
+            <Pattern>
+                -%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } [%t] --- %-40.40logger{39} : [%F:%M:%L] %m%n
+            </Pattern>
+        </encoder>
+        <!--滚动策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--路径-->
+            <fileNamePattern>D:/log/helloworld/error_%d.log</fileNamePattern>
+           <!-- <fileNamePattern>/root/log/helloworld/error_%d.log</fileNamePattern>-->
+        </rollingPolicy>
+    </appender>
+
+
+    <root level="info"><!-- 日志作用域：root(整个项目) -->
+        <appender-ref ref="consoleLog" />
+        <appender-ref ref="fileInfoLog" />
+        <appender-ref ref="fileErrorLog" />
+    </root>
+
+</configuration>

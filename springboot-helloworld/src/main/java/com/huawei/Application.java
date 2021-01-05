@@ -1,4 +1,4 @@
-package org.spring.springboot;
+package com.huawei;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,6 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 // Spring Boot 应用的标识
 @SpringBootApplication
+//@PropertySource("config/application.yaml")
+//@PropertySource(value = "classpath:config/application.yaml")
 public class Application {
 
     public static void main(String[] args) {

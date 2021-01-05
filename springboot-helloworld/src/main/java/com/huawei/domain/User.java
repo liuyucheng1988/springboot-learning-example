@@ -1,4 +1,4 @@
-package org.spring.springboot.domain;
+package com.huawei.domain;
 
 import lombok.Data;
 

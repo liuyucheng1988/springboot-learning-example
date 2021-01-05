@@ -1,4 +1,4 @@
-package org.spring.springboot.web;
+package com.huawei.web;
 
 import org.junit.Test;
 
