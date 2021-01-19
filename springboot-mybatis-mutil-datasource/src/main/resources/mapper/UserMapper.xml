@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.springboot.dao.UserDao">
+	<resultMap id="BaseResultMap" type="org.spring.springboot.domain.User">
+		<result column="id" property="id" />
+		<result column="user_name" property="userName" />
+		<result column="password" property="passWord" />
+		<result column="description" property="description" />
+		<result column="isdel" property="isdel"/>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, user_name, password, description
+	</sql>
+	<insert id="insert" parameterType="org.spring.springboot.domain.User">
+		insert into t_usre(user_name, password, description)
+		values(#{vo.userName},#{vo.passWord},#{vo.description})
+	</insert>
+	<select id="findUserByCondition" resultMap="BaseResultMap"
+			parameterType="org.spring.springboot.domain.User">
+		select *
+		FROM t_user where isdel=0
+		<if test="vo.userName != null and vo.userName != ''">
+			and user_name = #{vo.userName}
+		</if>
+		<if test="vo.passWord != null and vo.passWord != ''">
+			and password = #{vo.passWord}
+		</if>
+	</select>
+
+</mapper>

@@ -1,7 +1,8 @@
 package org.spring.springboot.service;
 
-import org.spring.springboot.domain.City;
 import org.spring.springboot.domain.User;
+
+import java.util.List;
 
 /**
  * 用户业务接口层
@@ -10,11 +11,5 @@ import org.spring.springboot.domain.User;
  */
 public interface UserService {
 
-    /**
-     * 根据用户名获取用户信息，包括从库的地址信息
-     *
-     * @param userName
-     * @return
-     */
-    User findByName(String userName);
+    List<User> findUserByCondition(User req);
 }

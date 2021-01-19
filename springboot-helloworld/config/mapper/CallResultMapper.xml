@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huawei.dao.CallResultDao">
+    <resultMap id="BaseResultMap" type="com.huawei.entity.CallResult">
+        <result column="id" property="id"/>
+        <result column="category" property="category"/>
+        <result column="server" property="server"/>
+        <result column="duration" property="duration"/>
+        <result column="bills_type" property="billsType"/>
+        <result column="result" property="result"/>
+        <result column="createtime" property="createtime"/>
+        <result column="isdel" property="isdel"/>
+        <result column="client" property="client"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, category, server, duration,bills_type,result,createtime,isdel,client
+    </sql>
+
+    <!--<select id="findByName" resultMap="BaseResultMap" parameterType="com.huawei.entity.CallResult">
+        select
+        <include refid="Base_Column_List" />
+        from city
+        where city_name = #{cityName}
+    </select>-->
+    <!--SELECT
+    &#45;&#45; *
+    province,category,server,duration,bills_type,result,count(1) cc
+    FROM   t_call_result where createtime >=date('2021-01-11') and createtime <=date('2021-01-18') and isdel=0
+    and province=''
+    and =''
+    and =''
+    and >=10 and duration<=20
+    and =''
+    and result=0
+
+    group by province,category,server,duration,bills_type,result
+-->
+	<insert id="insert" parameterType="com.huawei.domain.vo.CallResultReq">
+		insert into t_call_result(category, server, duration,bills_type,result,createtime,client)
+		values(#{vo.category},#{vo.server},#{vo.duration},#{vo.bills_type},#{vo.result},#{vo.createtime},#{vo.client})
+	</insert>
+    <select id="findByCondition" resultType="com.huawei.domain.vo.CallResultRsp"
+            parameterType="com.huawei.domain.vo.CallResultReq">
+        select
+        province,category,server,duration,bills_type,result,count(1) size
+        from t_call_result
+        FROM t_call_result where createtime &gt;= #{vo.createTimeFrom} and createtime &lt;= #{vo.createTimeTo} and
+        isdel=0
+        <if test="vo.province != null and vo.province != ''">
+            and province = #{vo.province}
+        </if>
+        <if test="vo.category != null and vo.category != ''">
+            and category = #{vo.category}
+        </if>
+        <if test="vo.server != null and vo.server != ''">
+            and server = #{vo.server}
+        </if>
+        <if test="vo.durationFrom != null">
+            and duration &gt;= #{vo.durationFrom}
+        </if>
+        <if test="vo.durationTo != null">
+            and duration &lt;= #{vo.durationTo}
+        </if>
+        <if test="vo.billsType != null and vo.billsType != ''">
+            and bills_type = #{vo.billsType}
+        </if>
+        <if test="vo.result != null">
+            and result = #{vo.result}
+        </if>
+    </select>
+
+
+    <!--if 标签使用类似html的C标签的if -->
+    <!--<select id="selectUseIf" parameterType="com.soft.test.model.User" resultMap="userMap">
+        select * from t_user where
+        <if test="id != null and id != ''">
+            id=#{id}
+        </if>
+        <if test="username != null and username != ''">
+            and username like concat('%',#{username},'%')
+        </if>
+        <if test="password != null and password != ''">
+            and password=#{password}
+        </if>
+    </select>-->
+
+</mapper>

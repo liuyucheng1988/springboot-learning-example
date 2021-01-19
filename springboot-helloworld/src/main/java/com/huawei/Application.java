@@ -1,5 +1,6 @@
 package com.huawei;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 // Spring Boot 应用的标识
 @SpringBootApplication
+//@MapperScan("com.huawei.dao")
 //@PropertySource("config/application.yaml")
 //@PropertySource(value = "classpath:config/application.yaml")
 public class Application {

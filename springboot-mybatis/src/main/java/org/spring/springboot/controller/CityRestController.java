@@ -20,7 +20,11 @@ public class CityRestController {
 
     @RequestMapping(value = "/api/city", method = RequestMethod.GET)
     public City findOneCity(@RequestParam(value = "cityName", required = true) String cityName) {
-        return cityService.findCityByName(cityName);
+
+
+        City city = cityService.findCityByName(cityName);
+        System.out.println(city.toString());
+        return  city;
     }
 
 }

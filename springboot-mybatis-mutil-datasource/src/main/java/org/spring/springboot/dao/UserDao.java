@@ -1,8 +1,10 @@
-package org.spring.springboot.dao.master;
+package org.spring.springboot.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.spring.springboot.domain.User;
+
+import java.util.List;
 
 /**
  * 用户 DAO 接口类
@@ -12,11 +14,5 @@ import org.spring.springboot.domain.User;
 @Mapper
 public interface UserDao {
 
-    /**
-     * 根据用户名获取用户信息
-     *
-     * @param userName
-     * @return
-     */
-    User findByName(@Param("userName") String userName);
+    List<User> findUserByCondition(@Param("vo") User req);
 }

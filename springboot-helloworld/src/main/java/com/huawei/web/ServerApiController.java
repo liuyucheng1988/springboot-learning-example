@@ -1,17 +1,14 @@
 package com.huawei.web;
 
 import com.huawei.client.OkHttpManager;
-import com.huawei.conf.HKConfig;
-import lombok.extern.slf4j.Slf4j;
-import okhttp3.OkHttpClient;
-import org.json.JSONObject;
 import com.huawei.conf.AuthConfigure;
+import com.huawei.conf.HKConfig;
 import com.huawei.domain.User;
 import com.huawei.ocr.base.OcrClient;
+import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -22,11 +19,11 @@ import java.util.HashMap;
  * Created by bysocket on 16/4/26.
  */
 @RestController
-@RequestMapping("/gsc")
+@RequestMapping("/server")
 @Slf4j
 //@PropertySource("classpath:config/mail.properties")
 //@Configuration
-public class HelloWorldController {
+public class ServerApiController {
 
     @Autowired
     private AuthConfigure authConfigure;
