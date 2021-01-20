@@ -1,0 +1,654 @@
+2021-01-05 15:57:23.165  INFO 8448 [main] --- com.huawei.Application                   : [][][StartupInfoLogger.java:logStarting:50] Starting Application v0.0.2-SNAPSHOT on BDSHYF119754 with PID 8448 (D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin\springboot-helloworld.jar started by liuyucheng02 in D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin)
+2021-01-05 15:57:23.171  INFO 8448 [main] --- com.huawei.Application                   : [][][SpringApplication.java:logStartupProfileInfo:675] No active profile set, falling back to default profiles: default
+2021-01-05 15:57:26.410  INFO 8448 [main] --- o.s.b.w.embedded.tomcat.TomcatWebServer  : [][][TomcatWebServer.java:initialize:90] Tomcat initialized with port(s): 8080 (http)
+2021-01-05 15:57:26.443  INFO 8448 [main] --- o.a.coyote.http11.Http11NioProtocol      : [][][DirectJDKLog.java:log:173] Initializing ProtocolHandler ["http-nio-8080"]
+2021-01-05 15:57:26.488  INFO 8448 [main] --- o.apache.catalina.core.StandardService   : [][][DirectJDKLog.java:log:173] Starting service [Tomcat]
+2021-01-05 15:57:26.491  INFO 8448 [main] --- org.apache.catalina.core.StandardEngine  : [][][DirectJDKLog.java:log:173] Starting Servlet engine: [Apache Tomcat/9.0.16]
+2021-01-05 15:57:26.516  INFO 8448 [main] --- o.a.catalina.core.AprLifecycleListener   : [][][DirectJDKLog.java:log:173] The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk-11.0.9\bin;C:\windows\Sun\Java\bin;C:\windows\system32;C:\windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\NetSarang\Xshell 6;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0;C:\windows\System32\OpenSSH;C:\go1.13\go\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Git\;C:\Program Files\Git\usr\bin;D:\Program Files\kubernetes;C:\Users\liuyucheng02\Downloads\gradle-6.8-rc-1\bin;C:\Program Files\Git\usr\bin;D:\Program Files\MongoDB\Server\4.4\binbak;D:\mongodb-win32-x86_64-windows-4.4.2\bin;C:\Program Files\Java\jdk1.8.0_271\bin;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38\Scripts;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38;C:\Program Files\MySQL\MySQL Shell 8.0\bin;C:\Users\liuyucheng02\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk1.8.0_271\bin;D:\Program Files\apache-maven-3.6.3\bin;D:\Program Files\apache-maven-3.6.3\bin;C:\Users\liuyucheng02\go\bin;D:\Program Files\Microsoft VS Code\bin;C:\Users\liuyucheng02\AppData\Roaming\npm;C:\Program Files\Bandizip;D:\Program Files\JetBrains\PyCharm Community Edition 2020.2.4\bin;D:\Program Files\JetBrains\GoLand 2019.2.3\bin;.]
+2021-01-05 15:57:26.678  INFO 8448 [main] --- o.a.c.c.C.[Tomcat].[localhost].[/]       : [][][DirectJDKLog.java:log:173] Initializing Spring embedded WebApplicationContext
+2021-01-05 15:57:26.679  INFO 8448 [main] --- o.s.web.context.ContextLoader            : [][][ServletWebServerApplicationContext.java:prepareWebApplicationContext:296] Root WebApplicationContext: initialization completed in 3320 ms
+2021-01-05 15:57:26.837  WARN 8448 [main] --- ConfigServletWebServerApplicationContext : [][][AbstractApplicationContext.java:refresh:557] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'HKConfig': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'digitalhuman.name' in value "${digitalhuman.name}"
+2021-01-05 15:57:26.848  INFO 8448 [main] --- o.apache.catalina.core.StandardService   : [][][DirectJDKLog.java:log:173] Stopping service [Tomcat]
+2021-01-05 15:57:26.874  INFO 8448 [main] --- ConditionEvaluationReportLoggingListener : [][][ConditionEvaluationReportLoggingListener.java:logMessage:142] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-01-05 15:57:26.883 ERROR 8448 [main] --- o.s.boot.SpringApplication               : [][][SpringApplication.java:reportFailure:858] Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'HKConfig': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'digitalhuman.name' in value "${digitalhuman.name}"
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:380)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1395)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:592)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:849)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:142)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:775)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1260)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1248)
+	at com.huawei.Application.main(Application.java:20)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:87)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:50)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:51)
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'digitalhuman.name' in value "${digitalhuman.name}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:172)
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:124)
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:237)
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:211)
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:175)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:851)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1188)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1167)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:593)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:90)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:374)
+	... 25 common frames omitted
+2021-01-05 16:07:40.027  INFO 16064 [main] --- com.huawei.Application                   : [][][StartupInfoLogger.java:logStarting:50] Starting Application v0.0.2-SNAPSHOT on BDSHYF119754 with PID 16064 (D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin\springboot-helloworld.jar started by liuyucheng02 in D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin)
+2021-01-05 16:07:40.036  INFO 16064 [main] --- com.huawei.Application                   : [][][SpringApplication.java:logStartupProfileInfo:675] No active profile set, falling back to default profiles: default
+2021-01-05 16:07:43.078  INFO 16064 [main] --- o.s.b.w.embedded.tomcat.TomcatWebServer  : [][][TomcatWebServer.java:initialize:90] Tomcat initialized with port(s): 8080 (http)
+2021-01-05 16:07:43.118  INFO 16064 [main] --- o.a.coyote.http11.Http11NioProtocol      : [][][DirectJDKLog.java:log:173] Initializing ProtocolHandler ["http-nio-8080"]
+2021-01-05 16:07:43.158  INFO 16064 [main] --- o.apache.catalina.core.StandardService   : [][][DirectJDKLog.java:log:173] Starting service [Tomcat]
+2021-01-05 16:07:43.160  INFO 16064 [main] --- org.apache.catalina.core.StandardEngine  : [][][DirectJDKLog.java:log:173] Starting Servlet engine: [Apache Tomcat/9.0.16]
+2021-01-05 16:07:43.197  INFO 16064 [main] --- o.a.catalina.core.AprLifecycleListener   : [][][DirectJDKLog.java:log:173] The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk-11.0.9\bin;C:\windows\Sun\Java\bin;C:\windows\system32;C:\windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\NetSarang\Xshell 6;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0;C:\windows\System32\OpenSSH;C:\go1.13\go\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Git\;C:\Program Files\Git\usr\bin;D:\Program Files\kubernetes;C:\Users\liuyucheng02\Downloads\gradle-6.8-rc-1\bin;C:\Program Files\Git\usr\bin;D:\Program Files\MongoDB\Server\4.4\binbak;D:\mongodb-win32-x86_64-windows-4.4.2\bin;C:\Program Files\Java\jdk1.8.0_271\bin;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38\Scripts;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38;C:\Program Files\MySQL\MySQL Shell 8.0\bin;C:\Users\liuyucheng02\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk1.8.0_271\bin;D:\Program Files\apache-maven-3.6.3\bin;D:\Program Files\apache-maven-3.6.3\bin;C:\Users\liuyucheng02\go\bin;D:\Program Files\Microsoft VS Code\bin;C:\Users\liuyucheng02\AppData\Roaming\npm;C:\Program Files\Bandizip;D:\Program Files\JetBrains\PyCharm Community Edition 2020.2.4\bin;D:\Program Files\JetBrains\GoLand 2019.2.3\bin;.]
+2021-01-05 16:07:43.387  INFO 16064 [main] --- o.a.c.c.C.[Tomcat].[localhost].[/]       : [][][DirectJDKLog.java:log:173] Initializing Spring embedded WebApplicationContext
+2021-01-05 16:07:43.389  INFO 16064 [main] --- o.s.web.context.ContextLoader            : [][][ServletWebServerApplicationContext.java:prepareWebApplicationContext:296] Root WebApplicationContext: initialization completed in 3261 ms
+2021-01-05 16:07:43.625  WARN 16064 [main] --- ConfigServletWebServerApplicationContext : [][][AbstractApplicationContext.java:refresh:557] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'helloWorldController': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'digitalhuman.name' in value "${digitalhuman.name}"
+2021-01-05 16:07:43.653  INFO 16064 [main] --- o.apache.catalina.core.StandardService   : [][][DirectJDKLog.java:log:173] Stopping service [Tomcat]
+2021-01-05 16:07:43.693  INFO 16064 [main] --- ConditionEvaluationReportLoggingListener : [][][ConditionEvaluationReportLoggingListener.java:logMessage:142] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-01-05 16:07:43.710 ERROR 16064 [main] --- o.s.boot.SpringApplication               : [][][SpringApplication.java:reportFailure:858] Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'helloWorldController': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'digitalhuman.name' in value "${digitalhuman.name}"
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:380)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1395)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:592)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:849)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:142)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:775)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1260)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1248)
+	at com.huawei.Application.main(Application.java:20)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:87)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:50)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:51)
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'digitalhuman.name' in value "${digitalhuman.name}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:172)
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:124)
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:237)
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:211)
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:175)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:851)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1188)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1167)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:593)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:90)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:374)
+	... 25 common frames omitted
+2021-01-05 16:09:39.286  INFO 11960 [main] --- com.huawei.Application                   : [][][StartupInfoLogger.java:logStarting:50] Starting Application v0.0.2-SNAPSHOT on BDSHYF119754 with PID 11960 (D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin\springboot-helloworld.jar started by liuyucheng02 in D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin)
+2021-01-05 16:09:39.359  INFO 11960 [main] --- com.huawei.Application                   : [][][SpringApplication.java:logStartupProfileInfo:675] No active profile set, falling back to default profiles: default
+2021-01-05 16:09:42.381  INFO 11960 [main] --- o.s.b.w.embedded.tomcat.TomcatWebServer  : [][][TomcatWebServer.java:initialize:90] Tomcat initialized with port(s): 8080 (http)
+2021-01-05 16:09:42.419  INFO 11960 [main] --- o.a.coyote.http11.Http11NioProtocol      : [][][DirectJDKLog.java:log:173] Initializing ProtocolHandler ["http-nio-8080"]
+2021-01-05 16:09:42.461  INFO 11960 [main] --- o.apache.catalina.core.StandardService   : [][][DirectJDKLog.java:log:173] Starting service [Tomcat]
+2021-01-05 16:09:42.463  INFO 11960 [main] --- org.apache.catalina.core.StandardEngine  : [][][DirectJDKLog.java:log:173] Starting Servlet engine: [Apache Tomcat/9.0.16]
+2021-01-05 16:09:42.505  INFO 11960 [main] --- o.a.catalina.core.AprLifecycleListener   : [][][DirectJDKLog.java:log:173] The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk-11.0.9\bin;C:\windows\Sun\Java\bin;C:\windows\system32;C:\windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\NetSarang\Xshell 6;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0;C:\windows\System32\OpenSSH;C:\go1.13\go\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Git\;C:\Program Files\Git\usr\bin;D:\Program Files\kubernetes;C:\Users\liuyucheng02\Downloads\gradle-6.8-rc-1\bin;C:\Program Files\Git\usr\bin;D:\Program Files\MongoDB\Server\4.4\binbak;D:\mongodb-win32-x86_64-windows-4.4.2\bin;C:\Program Files\Java\jdk1.8.0_271\bin;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38\Scripts;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38;C:\Program Files\MySQL\MySQL Shell 8.0\bin;C:\Users\liuyucheng02\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk1.8.0_271\bin;D:\Program Files\apache-maven-3.6.3\bin;D:\Program Files\apache-maven-3.6.3\bin;C:\Users\liuyucheng02\go\bin;D:\Program Files\Microsoft VS Code\bin;C:\Users\liuyucheng02\AppData\Roaming\npm;C:\Program Files\Bandizip;D:\Program Files\JetBrains\PyCharm Community Edition 2020.2.4\bin;D:\Program Files\JetBrains\GoLand 2019.2.3\bin;.]
+2021-01-05 16:09:42.656  INFO 11960 [main] --- o.a.c.c.C.[Tomcat].[localhost].[/]       : [][][DirectJDKLog.java:log:173] Initializing Spring embedded WebApplicationContext
+2021-01-05 16:09:42.657  INFO 11960 [main] --- o.s.web.context.ContextLoader            : [][][ServletWebServerApplicationContext.java:prepareWebApplicationContext:296] Root WebApplicationContext: initialization completed in 3165 ms
+2021-01-05 16:09:43.139  INFO 11960 [main] --- o.s.s.concurrent.ThreadPoolTaskExecutor  : [][][ExecutorConfigurationSupport.java:initialize:171] Initializing ExecutorService 'applicationTaskExecutor'
+2021-01-05 16:09:43.478  INFO 11960 [main] --- o.a.coyote.http11.Http11NioProtocol      : [][][DirectJDKLog.java:log:173] Starting ProtocolHandler ["http-nio-8080"]
+2021-01-05 16:09:43.535  INFO 11960 [main] --- o.s.b.w.embedded.tomcat.TomcatWebServer  : [][][TomcatWebServer.java:start:204] Tomcat started on port(s): 8080 (http) with context path ''
+2021-01-05 16:09:43.546  INFO 11960 [main] --- com.huawei.Application                   : [][][StartupInfoLogger.java:logStarted:59] Started Application in 6.253 seconds (JVM running for 7.023)
+2021-01-05 16:11:30.936  INFO 11960 [http-nio-8080-exec-1] --- o.a.c.c.C.[Tomcat].[localhost].[/]       : [][][DirectJDKLog.java:log:173] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-01-05 16:11:30.977  INFO 11960 [http-nio-8080-exec-1] --- o.s.web.servlet.DispatcherServlet        : [][][FrameworkServlet.java:initServletBean:524] Initializing Servlet 'dispatcherServlet'
+2021-01-05 16:11:31.000  INFO 11960 [http-nio-8080-exec-1] --- o.s.web.servlet.DispatcherServlet        : [][][FrameworkServlet.java:initServletBean:546] Completed initialization in 19 ms
+2021-01-05 16:11:31.128  INFO 11960 [http-nio-8080-exec-1] --- com.huawei.web.HelloWorldController      : [][][HelloWorldController.java:sayHello:41] get,Hello,liuyc!my age=12,config=null,cf.name=null,cf.age=null.hg=HKConfig(name=null, age=null)
+2021-01-05 16:11:31.204  INFO 11960 [http-nio-8080-exec-1] --- com.huawei.web.HelloWorldController      : [][][HelloWorldController.java:sayHello:47] {
+  "error_msg": "read image file error",
+  "error_code": "SDK102"
+}
+2021-01-05 16:30:31.668  INFO 11960 [http-nio-8080-exec-3] --- com.huawei.web.HelloWorldController      : [][][HelloWorldController.java:sayHello:41] get,Hello,liuyc!my age=12,config=null,cf.name=null,cf.age=null.hg=HKConfig(name=null, age=null)
+2021-01-05 16:30:31.715  INFO 11960 [http-nio-8080-exec-3] --- com.huawei.web.HelloWorldController      : [][][HelloWorldController.java:sayHello:47] {
+  "error_msg": "read image file error",
+  "error_code": "SDK102"
+}
+2021-01-05 16:30:48.164  INFO 11960 [Thread-2] --- o.s.s.concurrent.ThreadPoolTaskExecutor  : [][][ExecutorConfigurationSupport.java:shutdown:208] Shutting down ExecutorService 'applicationTaskExecutor'
+2021-01-05 16:39:42.254  INFO 5028 [main] --- com.huawei.Application                   : [][][StartupInfoLogger.java:logStarting:50] Starting Application v0.0.2-SNAPSHOT on BDSHYF119754 with PID 5028 (D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin\springboot-helloworld.jar started by liuyucheng02 in D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin)
+2021-01-05 16:39:42.259  INFO 5028 [main] --- com.huawei.Application                   : [][][SpringApplication.java:logStartupProfileInfo:675] No active profile set, falling back to default profiles: default
+2021-01-05 16:39:45.180  INFO 5028 [main] --- o.s.b.w.embedded.tomcat.TomcatWebServer  : [][][TomcatWebServer.java:initialize:90] Tomcat initialized with port(s): 8080 (http)
+2021-01-05 16:39:45.218  INFO 5028 [main] --- o.a.coyote.http11.Http11NioProtocol      : [][][DirectJDKLog.java:log:173] Initializing ProtocolHandler ["http-nio-8080"]
+2021-01-05 16:39:45.248  INFO 5028 [main] --- o.apache.catalina.core.StandardService   : [][][DirectJDKLog.java:log:173] Starting service [Tomcat]
+2021-01-05 16:39:45.250  INFO 5028 [main] --- org.apache.catalina.core.StandardEngine  : [][][DirectJDKLog.java:log:173] Starting Servlet engine: [Apache Tomcat/9.0.16]
+2021-01-05 16:39:45.290  INFO 5028 [main] --- o.a.catalina.core.AprLifecycleListener   : [][][DirectJDKLog.java:log:173] The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk-11.0.9\bin;C:\windows\Sun\Java\bin;C:\windows\system32;C:\windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\NetSarang\Xshell 6;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0;C:\windows\System32\OpenSSH;C:\go1.13\go\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Git\;C:\Program Files\Git\usr\bin;D:\Program Files\kubernetes;C:\Users\liuyucheng02\Downloads\gradle-6.8-rc-1\bin;C:\Program Files\Git\usr\bin;D:\Program Files\MongoDB\Server\4.4\binbak;D:\mongodb-win32-x86_64-windows-4.4.2\bin;C:\Program Files\Java\jdk1.8.0_271\bin;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38\Scripts;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38;C:\Program Files\MySQL\MySQL Shell 8.0\bin;C:\Users\liuyucheng02\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk1.8.0_271\bin;D:\Program Files\apache-maven-3.6.3\bin;D:\Program Files\apache-maven-3.6.3\bin;C:\Users\liuyucheng02\go\bin;D:\Program Files\Microsoft VS Code\bin;C:\Users\liuyucheng02\AppData\Roaming\npm;C:\Program Files\Bandizip;D:\Program Files\JetBrains\PyCharm Community Edition 2020.2.4\bin;D:\Program Files\JetBrains\GoLand 2019.2.3\bin;.]
+2021-01-05 16:39:45.454  INFO 5028 [main] --- o.a.c.c.C.[Tomcat].[localhost].[/]       : [][][DirectJDKLog.java:log:173] Initializing Spring embedded WebApplicationContext
+2021-01-05 16:39:45.455  INFO 5028 [main] --- o.s.web.context.ContextLoader            : [][][ServletWebServerApplicationContext.java:prepareWebApplicationContext:296] Root WebApplicationContext: initialization completed in 3105 ms
+2021-01-05 16:39:45.590  WARN 5028 [main] --- ConfigServletWebServerApplicationContext : [][][AbstractApplicationContext.java:refresh:557] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'helloWorldController': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'digitalhuman.name' in value "${digitalhuman.name}"
+2021-01-05 16:39:45.604  INFO 5028 [main] --- o.apache.catalina.core.StandardService   : [][][DirectJDKLog.java:log:173] Stopping service [Tomcat]
+2021-01-05 16:39:45.632  INFO 5028 [main] --- ConditionEvaluationReportLoggingListener : [][][ConditionEvaluationReportLoggingListener.java:logMessage:142] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-01-05 16:39:45.638 ERROR 5028 [main] --- o.s.boot.SpringApplication               : [][][SpringApplication.java:reportFailure:858] Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'helloWorldController': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'digitalhuman.name' in value "${digitalhuman.name}"
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:380)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1395)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:592)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:849)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:142)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:775)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1260)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1248)
+	at com.huawei.Application.main(Application.java:20)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:87)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:50)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:51)
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'digitalhuman.name' in value "${digitalhuman.name}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:172)
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:124)
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:237)
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:211)
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:175)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:851)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1188)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1167)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:593)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:90)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:374)
+	... 25 common frames omitted
+2021-01-05 16:47:41.212  INFO 6576 [main] --- com.huawei.Application                   : [][][StartupInfoLogger.java:logStarting:50] Starting Application v0.0.2-SNAPSHOT on BDSHYF119754 with PID 6576 (D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin\springboot-helloworld.jar started by liuyucheng02 in D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin)
+2021-01-05 16:47:41.261  INFO 6576 [main] --- com.huawei.Application                   : [][][SpringApplication.java:logStartupProfileInfo:675] No active profile set, falling back to default profiles: default
+2021-01-05 16:47:44.999  INFO 6576 [main] --- o.s.b.w.embedded.tomcat.TomcatWebServer  : [][][TomcatWebServer.java:initialize:90] Tomcat initialized with port(s): 8080 (http)
+2021-01-05 16:47:45.038  INFO 6576 [main] --- o.a.coyote.http11.Http11NioProtocol      : [][][DirectJDKLog.java:log:173] Initializing ProtocolHandler ["http-nio-8080"]
+2021-01-05 16:47:45.084  INFO 6576 [main] --- o.apache.catalina.core.StandardService   : [][][DirectJDKLog.java:log:173] Starting service [Tomcat]
+2021-01-05 16:47:45.089  INFO 6576 [main] --- org.apache.catalina.core.StandardEngine  : [][][DirectJDKLog.java:log:173] Starting Servlet engine: [Apache Tomcat/9.0.16]
+2021-01-05 16:47:45.115  INFO 6576 [main] --- o.a.catalina.core.AprLifecycleListener   : [][][DirectJDKLog.java:log:173] The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk-11.0.9\bin;C:\windows\Sun\Java\bin;C:\windows\system32;C:\windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\NetSarang\Xshell 6;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0;C:\windows\System32\OpenSSH;C:\go1.13\go\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Git\;C:\Program Files\Git\usr\bin;D:\Program Files\kubernetes;C:\Users\liuyucheng02\Downloads\gradle-6.8-rc-1\bin;C:\Program Files\Git\usr\bin;D:\Program Files\MongoDB\Server\4.4\binbak;D:\mongodb-win32-x86_64-windows-4.4.2\bin;C:\Program Files\Java\jdk1.8.0_271\bin;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38\Scripts;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38;C:\Program Files\MySQL\MySQL Shell 8.0\bin;C:\Users\liuyucheng02\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk1.8.0_271\bin;D:\Program Files\apache-maven-3.6.3\bin;D:\Program Files\apache-maven-3.6.3\bin;C:\Users\liuyucheng02\go\bin;D:\Program Files\Microsoft VS Code\bin;C:\Users\liuyucheng02\AppData\Roaming\npm;C:\Program Files\Bandizip;D:\Program Files\JetBrains\PyCharm Community Edition 2020.2.4\bin;D:\Program Files\JetBrains\GoLand 2019.2.3\bin;.]
+2021-01-05 16:47:45.338  INFO 6576 [main] --- o.a.c.c.C.[Tomcat].[localhost].[/]       : [][][DirectJDKLog.java:log:173] Initializing Spring embedded WebApplicationContext
+2021-01-05 16:47:45.340  INFO 6576 [main] --- o.s.web.context.ContextLoader            : [][][ServletWebServerApplicationContext.java:prepareWebApplicationContext:296] Root WebApplicationContext: initialization completed in 3875 ms
+2021-01-05 16:47:45.477  WARN 6576 [main] --- ConfigServletWebServerApplicationContext : [][][AbstractApplicationContext.java:refresh:557] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'helloWorldController': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'digitalhuman.name' in value "${digitalhuman.name}"
+2021-01-05 16:47:45.490  INFO 6576 [main] --- o.apache.catalina.core.StandardService   : [][][DirectJDKLog.java:log:173] Stopping service [Tomcat]
+2021-01-05 16:47:45.517  INFO 6576 [main] --- ConditionEvaluationReportLoggingListener : [][][ConditionEvaluationReportLoggingListener.java:logMessage:142] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-01-05 16:47:45.530 ERROR 6576 [main] --- o.s.boot.SpringApplication               : [][][SpringApplication.java:reportFailure:858] Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'helloWorldController': Injection of autowired dependencies failed; nested exception is java.lang.IllegalArgumentException: Could not resolve placeholder 'digitalhuman.name' in value "${digitalhuman.name}"
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:380)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1395)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:592)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:515)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:320)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:222)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:318)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:849)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:877)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:549)
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:142)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:775)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:397)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1260)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1248)
+	at com.huawei.Application.main(Application.java:20)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:566)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:87)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:50)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:51)
+Caused by: java.lang.IllegalArgumentException: Could not resolve placeholder 'digitalhuman.name' in value "${digitalhuman.name}"
+	at org.springframework.util.PropertyPlaceholderHelper.parseStringValue(PropertyPlaceholderHelper.java:172)
+	at org.springframework.util.PropertyPlaceholderHelper.replacePlaceholders(PropertyPlaceholderHelper.java:124)
+	at org.springframework.core.env.AbstractPropertyResolver.doResolvePlaceholders(AbstractPropertyResolver.java:237)
+	at org.springframework.core.env.AbstractPropertyResolver.resolveRequiredPlaceholders(AbstractPropertyResolver.java:211)
+	at org.springframework.context.support.PropertySourcesPlaceholderConfigurer.lambda$processProperties$0(PropertySourcesPlaceholderConfigurer.java:175)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.resolveEmbeddedValue(AbstractBeanFactory.java:851)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1188)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1167)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:593)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:90)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessProperties(AutowiredAnnotationBeanPostProcessor.java:374)
+	... 25 common frames omitted
+2021-01-05 17:29:05.219  INFO 7736 [main] --- com.huawei.Application                   : [][][StartupInfoLogger.java:logStarting:50] Starting Application v0.0.2-SNAPSHOT on BDSHYF119754 with PID 7736 (D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin\springboot-helloworld.jar started by liuyucheng02 in D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin)
+2021-01-05 17:29:05.228  INFO 7736 [main] --- com.huawei.Application                   : [][][SpringApplication.java:logStartupProfileInfo:675] No active profile set, falling back to default profiles: default
+2021-01-05 17:29:08.549  INFO 7736 [main] --- o.s.b.w.embedded.tomcat.TomcatWebServer  : [][][TomcatWebServer.java:initialize:90] Tomcat initialized with port(s): 8080 (http)
+2021-01-05 17:29:08.615  INFO 7736 [main] --- o.a.coyote.http11.Http11NioProtocol      : [][][DirectJDKLog.java:log:173] Initializing ProtocolHandler ["http-nio-8080"]
+2021-01-05 17:29:08.653  INFO 7736 [main] --- o.apache.catalina.core.StandardService   : [][][DirectJDKLog.java:log:173] Starting service [Tomcat]
+2021-01-05 17:29:08.663  INFO 7736 [main] --- org.apache.catalina.core.StandardEngine  : [][][DirectJDKLog.java:log:173] Starting Servlet engine: [Apache Tomcat/9.0.16]
+2021-01-05 17:29:08.698  INFO 7736 [main] --- o.a.catalina.core.AprLifecycleListener   : [][][DirectJDKLog.java:log:173] The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk-11.0.9\bin;C:\windows\Sun\Java\bin;C:\windows\system32;C:\windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\NetSarang\Xshell 6;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0;C:\windows\System32\OpenSSH;C:\go1.13\go\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Git\;C:\Program Files\Git\usr\bin;D:\Program Files\kubernetes;C:\Users\liuyucheng02\Downloads\gradle-6.8-rc-1\bin;C:\Program Files\Git\usr\bin;D:\Program Files\MongoDB\Server\4.4\binbak;D:\mongodb-win32-x86_64-windows-4.4.2\bin;C:\Program Files\Java\jdk1.8.0_271\bin;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38\Scripts;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38;C:\Program Files\MySQL\MySQL Shell 8.0\bin;C:\Users\liuyucheng02\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk1.8.0_271\bin;D:\Program Files\apache-maven-3.6.3\bin;D:\Program Files\apache-maven-3.6.3\bin;C:\Users\liuyucheng02\go\bin;D:\Program Files\Microsoft VS Code\bin;C:\Users\liuyucheng02\AppData\Roaming\npm;C:\Program Files\Bandizip;D:\Program Files\JetBrains\PyCharm Community Edition 2020.2.4\bin;D:\Program Files\JetBrains\GoLand 2019.2.3\bin;.]
+2021-01-05 17:29:08.865  INFO 7736 [main] --- o.a.c.c.C.[Tomcat].[localhost].[/]       : [][][DirectJDKLog.java:log:173] Initializing Spring embedded WebApplicationContext
+2021-01-05 17:29:08.867  INFO 7736 [main] --- o.s.web.context.ContextLoader            : [][][ServletWebServerApplicationContext.java:prepareWebApplicationContext:296] Root WebApplicationContext: initialization completed in 3545 ms
+2021-01-05 17:29:09.484  INFO 7736 [main] --- o.s.s.concurrent.ThreadPoolTaskExecutor  : [][][ExecutorConfigurationSupport.java:initialize:171] Initializing ExecutorService 'applicationTaskExecutor'
+2021-01-05 17:29:10.023  INFO 7736 [main] --- o.a.coyote.http11.Http11NioProtocol      : [][][DirectJDKLog.java:log:173] Starting ProtocolHandler ["http-nio-8080"]
+2021-01-05 17:29:10.125  INFO 7736 [main] --- o.s.b.w.embedded.tomcat.TomcatWebServer  : [][][TomcatWebServer.java:start:204] Tomcat started on port(s): 8080 (http) with context path ''
+2021-01-05 17:29:10.134  INFO 7736 [main] --- com.huawei.Application                   : [][][StartupInfoLogger.java:logStarted:59] Started Application in 7.316 seconds (JVM running for 8.266)
+2021-01-05 17:29:24.559  INFO 7736 [http-nio-8080-exec-1] --- o.a.c.c.C.[Tomcat].[localhost].[/]       : [][][DirectJDKLog.java:log:173] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-01-05 17:29:24.561  INFO 7736 [http-nio-8080-exec-1] --- o.s.web.servlet.DispatcherServlet        : [][][FrameworkServlet.java:initServletBean:524] Initializing Servlet 'dispatcherServlet'
+2021-01-05 17:29:24.571  INFO 7736 [http-nio-8080-exec-1] --- o.s.web.servlet.DispatcherServlet        : [][][FrameworkServlet.java:initServletBean:546] Completed initialization in 10 ms
+2021-01-05 17:29:24.631  INFO 7736 [http-nio-8080-exec-1] --- com.huawei.web.HelloWorldController      : [][][HelloWorldController.java:sayHello:46] get,Hello,liuyc!my age=12,config=null,cf.name=null,cf.age=10000.hg=HKConfig(name=null, age=1000)
+2021-01-05 17:29:26.185  INFO 7736 [http-nio-8080-exec-1] --- com.baidu.aip.client.BaseClient          : [][][BaseClient.java:getAccessToken:199] get access_token success. current state: STATE_AIP_AUTH_OK
+2021-01-05 17:29:28.551  INFO 7736 [http-nio-8080-exec-1] --- com.huawei.web.HelloWorldController      : [][][HelloWorldController.java:sayHello:52] {
+  "words_result": [
+    {"words": "回「A朗读此页内"},
+    {"words": "回回"},
+    {"words": "发票代码:0200000"},
+    {"words": "江苏增值税电了普通发票号"},
+    {"words": "开票日期:2020年12月21日"},
+    {"words": "机器编号;66161629109"},
+    {"words": "校验码:56655166081608247150"},
+    {"words": "名"},
+    {"words": "称刘率成"},
+    {"words": "<\//*0+837<05>683+*>0629*364"},
+    {"words": "买纳税人识别号"},
+    {"words": "032-*390+525>/54>7+363-47>"},
+    {"words": "地址,电话"},
+    {"words": "20<0893<7<-39108>6*4<>0<+0"},
+    {"words": "方耳户行及账号"},
+    {"words": "22*01/-+390+525>/54275>3"},
+    {"words": "物成劳务服务名称国格型号单位"},
+    {"words": "单价"},
+    {"words": "金额"},
+    {"words": "税率"},
+    {"words": "电信服务通信服务费"},
+    {"words": "83.76"},
+    {"words": "8376"},
+    {"words": "电信服务折扣折让"},
+    {"words": "5146"},
+    {"words": "-51.46"},
+    {"words": "32,30"},
+    {"words": "抢底圆色角零分"},
+    {"words": "Y32.30"},
+    {"words": "价税"},
+    {"words": "中国移动通信集团江苏有限公司南京分公司"},
+    {"words": "号码:15051810512账期:202011开票机构:电子渠道"},
+    {"words": "别号913200014086950"},
+    {"words": "掌厅南京人工备注:"},
+    {"words": "江苏省南京市庐山路226号13800250222"},
+    {"words": "中国工商银行南京市城北支行43010109190023"},
+    {"words": "1477719"}
+  ],
+  "log_id": 1346388329934880768,
+  "words_result_num": 37
+}
+2021-01-05 17:30:59.452  INFO 7736 [http-nio-8080-exec-3] --- com.huawei.web.HelloWorldController      : [][][HelloWorldController.java:sayHello:46] get,Hello,liuyc!my age=12,config=null,cf.name=null,cf.age=10000.hg=HKConfig(name=null, age=1000)
+2021-01-05 17:31:01.869  INFO 7736 [http-nio-8080-exec-3] --- com.huawei.web.HelloWorldController      : [][][HelloWorldController.java:sayHello:52] {
+  "words_result": [
+    {"words": "回「A朗读此页内"},
+    {"words": "回回"},
+    {"words": "发票代码:0200000"},
+    {"words": "江苏增值税电了普通发票号"},
+    {"words": "开票日期:2020年12月21日"},
+    {"words": "机器编号;66161629109"},
+    {"words": "校验码:56655166081608247150"},
+    {"words": "名"},
+    {"words": "称刘率成"},
+    {"words": "<\//*0+837<05>683+*>0629*364"},
+    {"words": "买纳税人识别号"},
+    {"words": "032-*390+525>/54>7+363-47>"},
+    {"words": "地址,电话"},
+    {"words": "20<0893<7<-39108>6*4<>0<+0"},
+    {"words": "方耳户行及账号"},
+    {"words": "22*01/-+390+525>/54275>3"},
+    {"words": "物成劳务服务名称国格型号单位"},
+    {"words": "单价"},
+    {"words": "金额"},
+    {"words": "税率"},
+    {"words": "电信服务通信服务费"},
+    {"words": "83.76"},
+    {"words": "8376"},
+    {"words": "电信服务折扣折让"},
+    {"words": "5146"},
+    {"words": "-51.46"},
+    {"words": "32,30"},
+    {"words": "抢底圆色角零分"},
+    {"words": "Y32.30"},
+    {"words": "价税"},
+    {"words": "中国移动通信集团江苏有限公司南京分公司"},
+    {"words": "号码:15051810512账期:202011开票机构:电子渠道"},
+    {"words": "别号913200014086950"},
+    {"words": "掌厅南京人工备注:"},
+    {"words": "江苏省南京市庐山路226号13800250222"},
+    {"words": "中国工商银行南京市城北支行43010109190023"},
+    {"words": "1477719"}
+  ],
+  "log_id": 1346388721972281344,
+  "words_result_num": 37
+}
+2021-01-05 17:32:06.497  INFO 16976 [main] --- com.huawei.Application                   : [][][StartupInfoLogger.java:logStarting:50] Starting Application v0.0.2-SNAPSHOT on BDSHYF119754 with PID 16976 (D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin\springboot-helloworld.jar started by liuyucheng02 in D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin)
+2021-01-05 17:32:06.504  INFO 16976 [main] --- com.huawei.Application                   : [][][SpringApplication.java:logStartupProfileInfo:675] No active profile set, falling back to default profiles: default
+2021-01-05 17:32:09.551  INFO 16976 [main] --- o.s.b.w.embedded.tomcat.TomcatWebServer  : [][][TomcatWebServer.java:initialize:90] Tomcat initialized with port(s): 8080 (http)
+2021-01-05 17:32:09.587  INFO 16976 [main] --- o.a.coyote.http11.Http11NioProtocol      : [][][DirectJDKLog.java:log:173] Initializing ProtocolHandler ["http-nio-8080"]
+2021-01-05 17:32:09.621  INFO 16976 [main] --- o.apache.catalina.core.StandardService   : [][][DirectJDKLog.java:log:173] Starting service [Tomcat]
+2021-01-05 17:32:09.631  INFO 16976 [main] --- org.apache.catalina.core.StandardEngine  : [][][DirectJDKLog.java:log:173] Starting Servlet engine: [Apache Tomcat/9.0.16]
+2021-01-05 17:32:09.664  INFO 16976 [main] --- o.a.catalina.core.AprLifecycleListener   : [][][DirectJDKLog.java:log:173] The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk-11.0.9\bin;C:\windows\Sun\Java\bin;C:\windows\system32;C:\windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\NetSarang\Xshell 6;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0;C:\windows\System32\OpenSSH;C:\go1.13\go\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Git\;C:\Program Files\Git\usr\bin;D:\Program Files\kubernetes;C:\Users\liuyucheng02\Downloads\gradle-6.8-rc-1\bin;C:\Program Files\Git\usr\bin;D:\Program Files\MongoDB\Server\4.4\binbak;D:\mongodb-win32-x86_64-windows-4.4.2\bin;C:\Program Files\Java\jdk1.8.0_271\bin;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38\Scripts;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38;C:\Program Files\MySQL\MySQL Shell 8.0\bin;C:\Users\liuyucheng02\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk1.8.0_271\bin;D:\Program Files\apache-maven-3.6.3\bin;D:\Program Files\apache-maven-3.6.3\bin;C:\Users\liuyucheng02\go\bin;D:\Program Files\Microsoft VS Code\bin;C:\Users\liuyucheng02\AppData\Roaming\npm;C:\Program Files\Bandizip;D:\Program Files\JetBrains\PyCharm Community Edition 2020.2.4\bin;D:\Program Files\JetBrains\GoLand 2019.2.3\bin;.]
+2021-01-05 17:32:09.853  INFO 16976 [main] --- o.a.c.c.C.[Tomcat].[localhost].[/]       : [][][DirectJDKLog.java:log:173] Initializing Spring embedded WebApplicationContext
+2021-01-05 17:32:09.855  INFO 16976 [main] --- o.s.web.context.ContextLoader            : [][][ServletWebServerApplicationContext.java:prepareWebApplicationContext:296] Root WebApplicationContext: initialization completed in 3264 ms
+2021-01-05 17:32:10.383  INFO 16976 [main] --- o.s.s.concurrent.ThreadPoolTaskExecutor  : [][][ExecutorConfigurationSupport.java:initialize:171] Initializing ExecutorService 'applicationTaskExecutor'
+2021-01-05 17:32:10.772  INFO 16976 [main] --- o.a.coyote.http11.Http11NioProtocol      : [][][DirectJDKLog.java:log:173] Starting ProtocolHandler ["http-nio-8080"]
+2021-01-05 17:32:10.844  INFO 16976 [main] --- o.s.b.w.embedded.tomcat.TomcatWebServer  : [][][TomcatWebServer.java:start:204] Tomcat started on port(s): 8080 (http) with context path ''
+2021-01-05 17:32:10.878  INFO 16976 [main] --- com.huawei.Application                   : [][][StartupInfoLogger.java:logStarted:59] Started Application in 6.434 seconds (JVM running for 7.265)
+2021-01-05 17:32:34.467  INFO 16976 [http-nio-8080-exec-1] --- o.a.c.c.C.[Tomcat].[localhost].[/]       : [][][DirectJDKLog.java:log:173] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-01-05 17:32:34.469  INFO 16976 [http-nio-8080-exec-1] --- o.s.web.servlet.DispatcherServlet        : [][][FrameworkServlet.java:initServletBean:524] Initializing Servlet 'dispatcherServlet'
+2021-01-05 17:32:34.484  INFO 16976 [http-nio-8080-exec-1] --- o.s.web.servlet.DispatcherServlet        : [][][FrameworkServlet.java:initServletBean:546] Completed initialization in 13 ms
+2021-01-05 17:32:34.590  INFO 16976 [http-nio-8080-exec-1] --- com.huawei.web.HelloWorldController      : [][][HelloWorldController.java:sayHello:46] get,Hello,liuyc!my age=12,config=null,cf.name=null,cf.age=10000.hg=HKConfig(name=null, age=1000)
+2021-01-05 17:32:36.390  INFO 16976 [http-nio-8080-exec-1] --- com.baidu.aip.client.BaseClient          : [][][BaseClient.java:getAccessToken:199] get access_token success. current state: STATE_AIP_AUTH_OK
+2021-01-05 17:32:38.653  INFO 16976 [http-nio-8080-exec-1] --- com.huawei.web.HelloWorldController      : [][][HelloWorldController.java:sayHello:52] {
+  "words_result": [
+    {"words": "回「A朗读此页内"},
+    {"words": "回回"},
+    {"words": "发票代码:0200000"},
+    {"words": "江苏增值税电了普通发票号"},
+    {"words": "开票日期:2020年12月21日"},
+    {"words": "机器编号;66161629109"},
+    {"words": "校验码:56655166081608247150"},
+    {"words": "名"},
+    {"words": "称刘率成"},
+    {"words": "<\//*0+837<05>683+*>0629*364"},
+    {"words": "买纳税人识别号"},
+    {"words": "032-*390+525>/54>7+363-47>"},
+    {"words": "地址,电话"},
+    {"words": "20<0893<7<-39108>6*4<>0<+0"},
+    {"words": "方耳户行及账号"},
+    {"words": "22*01/-+390+525>/54275>3"},
+    {"words": "物成劳务服务名称国格型号单位"},
+    {"words": "单价"},
+    {"words": "金额"},
+    {"words": "税率"},
+    {"words": "电信服务通信服务费"},
+    {"words": "83.76"},
+    {"words": "8376"},
+    {"words": "电信服务折扣折让"},
+    {"words": "5146"},
+    {"words": "-51.46"},
+    {"words": "32,30"},
+    {"words": "抢底圆色角零分"},
+    {"words": "Y32.30"},
+    {"words": "价税"},
+    {"words": "中国移动通信集团江苏有限公司南京分公司"},
+    {"words": "号码:15051810512账期:202011开票机构:电子渠道"},
+    {"words": "别号913200014086950"},
+    {"words": "掌厅南京人工备注:"},
+    {"words": "江苏省南京市庐山路226号13800250222"},
+    {"words": "中国工商银行南京市城北支行43010109190023"},
+    {"words": "1477719"}
+  ],
+  "log_id": 1346389126915555328,
+  "words_result_num": 37
+}
+2021-01-05 17:36:45.057  INFO 7000 [main] --- com.huawei.Application                   : [][][StartupInfoLogger.java:logStarting:50] Starting Application v0.0.2-SNAPSHOT on BDSHYF119754 with PID 7000 (D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin\springboot-helloworld.jar started by liuyucheng02 in D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin)
+2021-01-05 17:36:45.114  INFO 7000 [main] --- com.huawei.Application                   : [][][SpringApplication.java:logStartupProfileInfo:675] No active profile set, falling back to default profiles: default
+2021-01-05 17:36:48.649  INFO 7000 [main] --- o.s.b.w.embedded.tomcat.TomcatWebServer  : [][][TomcatWebServer.java:initialize:90] Tomcat initialized with port(s): 8080 (http)
+2021-01-05 17:36:48.686  INFO 7000 [main] --- o.a.coyote.http11.Http11NioProtocol      : [][][DirectJDKLog.java:log:173] Initializing ProtocolHandler ["http-nio-8080"]
+2021-01-05 17:36:48.722  INFO 7000 [main] --- o.apache.catalina.core.StandardService   : [][][DirectJDKLog.java:log:173] Starting service [Tomcat]
+2021-01-05 17:36:48.725  INFO 7000 [main] --- org.apache.catalina.core.StandardEngine  : [][][DirectJDKLog.java:log:173] Starting Servlet engine: [Apache Tomcat/9.0.16]
+2021-01-05 17:36:48.761  INFO 7000 [main] --- o.a.catalina.core.AprLifecycleListener   : [][][DirectJDKLog.java:log:173] The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk-11.0.9\bin;C:\windows\Sun\Java\bin;C:\windows\system32;C:\windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\NetSarang\Xshell 6;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0;C:\windows\System32\OpenSSH;C:\go1.13\go\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Git\;C:\Program Files\Git\usr\bin;D:\Program Files\kubernetes;C:\Users\liuyucheng02\Downloads\gradle-6.8-rc-1\bin;C:\Program Files\Git\usr\bin;D:\Program Files\MongoDB\Server\4.4\binbak;D:\mongodb-win32-x86_64-windows-4.4.2\bin;C:\Program Files\Java\jdk1.8.0_271\bin;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38\Scripts;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38;C:\Program Files\MySQL\MySQL Shell 8.0\bin;C:\Users\liuyucheng02\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk1.8.0_271\bin;D:\Program Files\apache-maven-3.6.3\bin;D:\Program Files\apache-maven-3.6.3\bin;C:\Users\liuyucheng02\go\bin;D:\Program Files\Microsoft VS Code\bin;C:\Users\liuyucheng02\AppData\Roaming\npm;C:\Program Files\Bandizip;D:\Program Files\JetBrains\PyCharm Community Edition 2020.2.4\bin;D:\Program Files\JetBrains\GoLand 2019.2.3\bin;.]
+2021-01-05 17:36:49.052  INFO 7000 [main] --- o.a.c.c.C.[Tomcat].[localhost].[/]       : [][][DirectJDKLog.java:log:173] Initializing Spring embedded WebApplicationContext
+2021-01-05 17:36:49.055  INFO 7000 [main] --- o.s.web.context.ContextLoader            : [][][ServletWebServerApplicationContext.java:prepareWebApplicationContext:296] Root WebApplicationContext: initialization completed in 3806 ms
+2021-01-05 17:36:50.308  INFO 7000 [main] --- o.s.s.concurrent.ThreadPoolTaskExecutor  : [][][ExecutorConfigurationSupport.java:initialize:171] Initializing ExecutorService 'applicationTaskExecutor'
+2021-01-05 17:36:50.799  INFO 7000 [main] --- o.a.coyote.http11.Http11NioProtocol      : [][][DirectJDKLog.java:log:173] Starting ProtocolHandler ["http-nio-8080"]
+2021-01-05 17:36:50.868  INFO 7000 [main] --- o.s.b.w.embedded.tomcat.TomcatWebServer  : [][][TomcatWebServer.java:start:204] Tomcat started on port(s): 8080 (http) with context path ''
+2021-01-05 17:36:50.890  INFO 7000 [main] --- com.huawei.Application                   : [][][StartupInfoLogger.java:logStarted:59] Started Application in 8.201 seconds (JVM running for 9.089)
+2021-01-05 17:37:04.463  INFO 7000 [http-nio-8080-exec-1] --- o.a.c.c.C.[Tomcat].[localhost].[/]       : [][][DirectJDKLog.java:log:173] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-01-05 17:37:04.465  INFO 7000 [http-nio-8080-exec-1] --- o.s.web.servlet.DispatcherServlet        : [][][FrameworkServlet.java:initServletBean:524] Initializing Servlet 'dispatcherServlet'
+2021-01-05 17:37:04.493  INFO 7000 [http-nio-8080-exec-1] --- o.s.web.servlet.DispatcherServlet        : [][][FrameworkServlet.java:initServletBean:546] Completed initialization in 27 ms
+2021-01-05 17:37:04.588  INFO 7000 [http-nio-8080-exec-1] --- com.huawei.web.HelloWorldController      : [][][HelloWorldController.java:sayHello:46] get,Hello,liuyc!my age=12,config=null,cf.name=null,cf.age=10000.hg=HKConfig(name=null, age=1000)
+2021-01-05 17:37:06.007  INFO 7000 [http-nio-8080-exec-1] --- com.baidu.aip.client.BaseClient          : [][][BaseClient.java:getAccessToken:199] get access_token success. current state: STATE_AIP_AUTH_OK
+2021-01-05 17:37:08.734  INFO 7000 [http-nio-8080-exec-1] --- com.huawei.web.HelloWorldController      : [][][HelloWorldController.java:sayHello:52] {
+  "words_result": [
+    {"words": "回「A朗读此页内"},
+    {"words": "回回"},
+    {"words": "发票代码:0200000"},
+    {"words": "江苏增值税电了普通发票号"},
+    {"words": "开票日期:2020年12月21日"},
+    {"words": "机器编号;66161629109"},
+    {"words": "校验码:56655166081608247150"},
+    {"words": "名"},
+    {"words": "称刘率成"},
+    {"words": "<\//*0+837<05>683+*>0629*364"},
+    {"words": "买纳税人识别号"},
+    {"words": "032-*390+525>/54>7+363-47>"},
+    {"words": "地址,电话"},
+    {"words": "20<0893<7<-39108>6*4<>0<+0"},
+    {"words": "方耳户行及账号"},
+    {"words": "22*01/-+390+525>/54275>3"},
+    {"words": "物成劳务服务名称国格型号单位"},
+    {"words": "单价"},
+    {"words": "金额"},
+    {"words": "税率"},
+    {"words": "电信服务通信服务费"},
+    {"words": "83.76"},
+    {"words": "8376"},
+    {"words": "电信服务折扣折让"},
+    {"words": "5146"},
+    {"words": "-51.46"},
+    {"words": "32,30"},
+    {"words": "抢底圆色角零分"},
+    {"words": "Y32.30"},
+    {"words": "价税"},
+    {"words": "中国移动通信集团江苏有限公司南京分公司"},
+    {"words": "号码:15051810512账期:202011开票机构:电子渠道"},
+    {"words": "别号913200014086950"},
+    {"words": "掌厅南京人工备注:"},
+    {"words": "江苏省南京市庐山路226号13800250222"},
+    {"words": "中国工商银行南京市城北支行43010109190023"},
+    {"words": "1477719"}
+  ],
+  "log_id": 1346390260635926528,
+  "words_result_num": 37
+}
+2021-01-05 17:38:37.093  INFO 16948 [main] --- com.huawei.Application                   : [][][StartupInfoLogger.java:logStarting:50] Starting Application v0.0.2-SNAPSHOT on BDSHYF119754 with PID 16948 (D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin\springboot-helloworld.jar started by liuyucheng02 in D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin)
+2021-01-05 17:38:37.116  INFO 16948 [main] --- com.huawei.Application                   : [][][SpringApplication.java:logStartupProfileInfo:675] No active profile set, falling back to default profiles: default
+2021-01-05 17:38:40.302  INFO 16948 [main] --- o.s.b.w.embedded.tomcat.TomcatWebServer  : [][][TomcatWebServer.java:initialize:90] Tomcat initialized with port(s): 8080 (http)
+2021-01-05 17:38:40.352  INFO 16948 [main] --- o.a.coyote.http11.Http11NioProtocol      : [][][DirectJDKLog.java:log:173] Initializing ProtocolHandler ["http-nio-8080"]
+2021-01-05 17:38:40.385  INFO 16948 [main] --- o.apache.catalina.core.StandardService   : [][][DirectJDKLog.java:log:173] Starting service [Tomcat]
+2021-01-05 17:38:40.387  INFO 16948 [main] --- org.apache.catalina.core.StandardEngine  : [][][DirectJDKLog.java:log:173] Starting Servlet engine: [Apache Tomcat/9.0.16]
+2021-01-05 17:38:40.427  INFO 16948 [main] --- o.a.catalina.core.AprLifecycleListener   : [][][DirectJDKLog.java:log:173] The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk-11.0.9\bin;C:\windows\Sun\Java\bin;C:\windows\system32;C:\windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\NetSarang\Xshell 6;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0;C:\windows\System32\OpenSSH;C:\go1.13\go\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Git\;C:\Program Files\Git\usr\bin;D:\Program Files\kubernetes;C:\Users\liuyucheng02\Downloads\gradle-6.8-rc-1\bin;C:\Program Files\Git\usr\bin;D:\Program Files\MongoDB\Server\4.4\binbak;D:\mongodb-win32-x86_64-windows-4.4.2\bin;C:\Program Files\Java\jdk1.8.0_271\bin;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38\Scripts;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38;C:\Program Files\MySQL\MySQL Shell 8.0\bin;C:\Users\liuyucheng02\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk1.8.0_271\bin;D:\Program Files\apache-maven-3.6.3\bin;D:\Program Files\apache-maven-3.6.3\bin;C:\Users\liuyucheng02\go\bin;D:\Program Files\Microsoft VS Code\bin;C:\Users\liuyucheng02\AppData\Roaming\npm;C:\Program Files\Bandizip;D:\Program Files\JetBrains\PyCharm Community Edition 2020.2.4\bin;D:\Program Files\JetBrains\GoLand 2019.2.3\bin;.]
+2021-01-05 17:38:40.714  INFO 16948 [main] --- o.a.c.c.C.[Tomcat].[localhost].[/]       : [][][DirectJDKLog.java:log:173] Initializing Spring embedded WebApplicationContext
+2021-01-05 17:38:40.716  INFO 16948 [main] --- o.s.web.context.ContextLoader            : [][][ServletWebServerApplicationContext.java:prepareWebApplicationContext:296] Root WebApplicationContext: initialization completed in 3438 ms
+2021-01-05 17:38:41.270  INFO 16948 [main] --- o.s.s.concurrent.ThreadPoolTaskExecutor  : [][][ExecutorConfigurationSupport.java:initialize:171] Initializing ExecutorService 'applicationTaskExecutor'
+2021-01-05 17:38:41.689  INFO 16948 [main] --- o.a.coyote.http11.Http11NioProtocol      : [][][DirectJDKLog.java:log:173] Starting ProtocolHandler ["http-nio-8080"]
+2021-01-05 17:38:41.748  INFO 16948 [main] --- o.s.b.w.embedded.tomcat.TomcatWebServer  : [][][TomcatWebServer.java:start:204] Tomcat started on port(s): 8080 (http) with context path ''
+2021-01-05 17:38:41.756  INFO 16948 [main] --- com.huawei.Application                   : [][][StartupInfoLogger.java:logStarted:59] Started Application in 6.976 seconds (JVM running for 7.779)
+2021-01-05 17:39:06.246  INFO 16948 [http-nio-8080-exec-1] --- o.a.c.c.C.[Tomcat].[localhost].[/]       : [][][DirectJDKLog.java:log:173] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-01-05 17:39:06.248  INFO 16948 [http-nio-8080-exec-1] --- o.s.web.servlet.DispatcherServlet        : [][][FrameworkServlet.java:initServletBean:524] Initializing Servlet 'dispatcherServlet'
+2021-01-05 17:39:06.264  INFO 16948 [http-nio-8080-exec-1] --- o.s.web.servlet.DispatcherServlet        : [][][FrameworkServlet.java:initServletBean:546] Completed initialization in 15 ms
+2021-01-05 17:39:06.421  INFO 16948 [http-nio-8080-exec-1] --- com.huawei.web.HelloWorldController      : [][][HelloWorldController.java:sayHello:46] get,Hello,liuyc!my age=12,config=null,cf.name=null,cf.age=10000.hg=HKConfig(name=null, age=1000)
+2021-01-05 17:39:08.239  INFO 16948 [http-nio-8080-exec-1] --- com.baidu.aip.client.BaseClient          : [][][BaseClient.java:getAccessToken:199] get access_token success. current state: STATE_AIP_AUTH_OK
+2021-01-05 17:39:10.048  INFO 16948 [http-nio-8080-exec-1] --- com.huawei.web.HelloWorldController      : [][][HelloWorldController.java:sayHello:52] {
+  "words_result": [
+    {"words": "回「A朗读此页内"},
+    {"words": "回回"},
+    {"words": "发票代码:0200000"},
+    {"words": "江苏增值税电了普通发票号"},
+    {"words": "开票日期:2020年12月21日"},
+    {"words": "机器编号;66161629109"},
+    {"words": "校验码:56655166081608247150"},
+    {"words": "名"},
+    {"words": "称刘率成"},
+    {"words": "<\//*0+837<05>683+*>0629*364"},
+    {"words": "买纳税人识别号"},
+    {"words": "032-*390+525>/54>7+363-47>"},
+    {"words": "地址,电话"},
+    {"words": "20<0893<7<-39108>6*4<>0<+0"},
+    {"words": "方耳户行及账号"},
+    {"words": "22*01/-+390+525>/54275>3"},
+    {"words": "物成劳务服务名称国格型号单位"},
+    {"words": "单价"},
+    {"words": "金额"},
+    {"words": "税率"},
+    {"words": "电信服务通信服务费"},
+    {"words": "83.76"},
+    {"words": "8376"},
+    {"words": "电信服务折扣折让"},
+    {"words": "5146"},
+    {"words": "-51.46"},
+    {"words": "32,30"},
+    {"words": "抢底圆色角零分"},
+    {"words": "Y32.30"},
+    {"words": "价税"},
+    {"words": "中国移动通信集团江苏有限公司南京分公司"},
+    {"words": "号码:15051810512账期:202011开票机构:电子渠道"},
+    {"words": "别号913200014086950"},
+    {"words": "掌厅南京人工备注:"},
+    {"words": "江苏省南京市庐山路226号13800250222"},
+    {"words": "中国工商银行南京市城北支行43010109190023"},
+    {"words": "1477719"}
+  ],
+  "log_id": 1346390770118033408,
+  "words_result_num": 37
+}
+2021-01-05 17:43:18.362  INFO 14292 [main] --- com.huawei.Application                   : [][][StartupInfoLogger.java:logStarting:50] Starting Application v0.0.2-SNAPSHOT on BDSHYF119754 with PID 14292 (D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin\springboot-helloworld.jar started by liuyucheng02 in D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin)
+2021-01-05 17:43:18.419  INFO 14292 [main] --- com.huawei.Application                   : [][][SpringApplication.java:logStartupProfileInfo:675] No active profile set, falling back to default profiles: default
+2021-01-05 17:43:21.445  INFO 14292 [main] --- o.s.b.w.embedded.tomcat.TomcatWebServer  : [][][TomcatWebServer.java:initialize:90] Tomcat initialized with port(s): 8080 (http)
+2021-01-05 17:43:21.500  INFO 14292 [main] --- o.a.coyote.http11.Http11NioProtocol      : [][][DirectJDKLog.java:log:173] Initializing ProtocolHandler ["http-nio-8080"]
+2021-01-05 17:43:21.535  INFO 14292 [main] --- o.apache.catalina.core.StandardService   : [][][DirectJDKLog.java:log:173] Starting service [Tomcat]
+2021-01-05 17:43:21.537  INFO 14292 [main] --- org.apache.catalina.core.StandardEngine  : [][][DirectJDKLog.java:log:173] Starting Servlet engine: [Apache Tomcat/9.0.16]
+2021-01-05 17:43:21.568  INFO 14292 [main] --- o.a.catalina.core.AprLifecycleListener   : [][][DirectJDKLog.java:log:173] The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk-11.0.9\bin;C:\windows\Sun\Java\bin;C:\windows\system32;C:\windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\NetSarang\Xshell 6;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0;C:\windows\System32\OpenSSH;C:\go1.13\go\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Git\;C:\Program Files\Git\usr\bin;D:\Program Files\kubernetes;C:\Users\liuyucheng02\Downloads\gradle-6.8-rc-1\bin;C:\Program Files\Git\usr\bin;D:\Program Files\MongoDB\Server\4.4\binbak;D:\mongodb-win32-x86_64-windows-4.4.2\bin;C:\Program Files\Java\jdk1.8.0_271\bin;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38\Scripts;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38;C:\Program Files\MySQL\MySQL Shell 8.0\bin;C:\Users\liuyucheng02\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk1.8.0_271\bin;D:\Program Files\apache-maven-3.6.3\bin;D:\Program Files\apache-maven-3.6.3\bin;C:\Users\liuyucheng02\go\bin;D:\Program Files\Microsoft VS Code\bin;C:\Users\liuyucheng02\AppData\Roaming\npm;C:\Program Files\Bandizip;D:\Program Files\JetBrains\PyCharm Community Edition 2020.2.4\bin;D:\Program Files\JetBrains\GoLand 2019.2.3\bin;.]
+2021-01-05 17:43:21.724  INFO 14292 [main] --- o.a.c.c.C.[Tomcat].[localhost].[/]       : [][][DirectJDKLog.java:log:173] Initializing Spring embedded WebApplicationContext
+2021-01-05 17:43:21.725  INFO 14292 [main] --- o.s.web.context.ContextLoader            : [][][ServletWebServerApplicationContext.java:prepareWebApplicationContext:296] Root WebApplicationContext: initialization completed in 3185 ms
+2021-01-05 17:43:22.216  INFO 14292 [main] --- o.s.s.concurrent.ThreadPoolTaskExecutor  : [][][ExecutorConfigurationSupport.java:initialize:171] Initializing ExecutorService 'applicationTaskExecutor'
+2021-01-05 17:43:22.593  INFO 14292 [main] --- o.a.coyote.http11.Http11NioProtocol      : [][][DirectJDKLog.java:log:173] Starting ProtocolHandler ["http-nio-8080"]
+2021-01-05 17:43:22.659  INFO 14292 [main] --- o.s.b.w.embedded.tomcat.TomcatWebServer  : [][][TomcatWebServer.java:start:204] Tomcat started on port(s): 8080 (http) with context path ''
+2021-01-05 17:43:22.670  INFO 14292 [main] --- com.huawei.Application                   : [][][StartupInfoLogger.java:logStarted:59] Started Application in 6.322 seconds (JVM running for 7.208)
+2021-01-05 17:43:28.717  INFO 14292 [http-nio-8080-exec-1] --- o.a.c.c.C.[Tomcat].[localhost].[/]       : [][][DirectJDKLog.java:log:173] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-01-05 17:43:28.720  INFO 14292 [http-nio-8080-exec-1] --- o.s.web.servlet.DispatcherServlet        : [][][FrameworkServlet.java:initServletBean:524] Initializing Servlet 'dispatcherServlet'
+2021-01-05 17:43:28.740  INFO 14292 [http-nio-8080-exec-1] --- o.s.web.servlet.DispatcherServlet        : [][][FrameworkServlet.java:initServletBean:546] Completed initialization in 17 ms
+2021-01-05 17:43:28.837  INFO 14292 [http-nio-8080-exec-1] --- com.huawei.web.HelloWorldController      : [][][HelloWorldController.java:sayHello:46] get,Hello,liuyc!my age=12,config=null,cf.name=null,cf.age=10000.hg=HKConfig(name=null, age=1000)
+2021-01-05 17:43:30.318  INFO 14292 [http-nio-8080-exec-1] --- com.baidu.aip.client.BaseClient          : [][][BaseClient.java:getAccessToken:199] get access_token success. current state: STATE_AIP_AUTH_OK
+2021-01-05 17:43:32.421  INFO 14292 [http-nio-8080-exec-1] --- com.huawei.web.HelloWorldController      : [][][HelloWorldController.java:sayHello:52] {
+  "words_result": [
+    {"words": "回「A朗读此页内"},
+    {"words": "回回"},
+    {"words": "发票代码:0200000"},
+    {"words": "江苏增值税电了普通发票号"},
+    {"words": "开票日期:2020年12月21日"},
+    {"words": "机器编号;66161629109"},
+    {"words": "校验码:56655166081608247150"},
+    {"words": "名"},
+    {"words": "称刘率成"},
+    {"words": "<\//*0+837<05>683+*>0629*364"},
+    {"words": "买纳税人识别号"},
+    {"words": "032-*390+525>/54>7+363-47>"},
+    {"words": "地址,电话"},
+    {"words": "20<0893<7<-39108>6*4<>0<+0"},
+    {"words": "方耳户行及账号"},
+    {"words": "22*01/-+390+525>/54275>3"},
+    {"words": "物成劳务服务名称国格型号单位"},
+    {"words": "单价"},
+    {"words": "金额"},
+    {"words": "税率"},
+    {"words": "电信服务通信服务费"},
+    {"words": "83.76"},
+    {"words": "8376"},
+    {"words": "电信服务折扣折让"},
+    {"words": "5146"},
+    {"words": "-51.46"},
+    {"words": "32,30"},
+    {"words": "抢底圆色角零分"},
+    {"words": "Y32.30"},
+    {"words": "价税"},
+    {"words": "中国移动通信集团江苏有限公司南京分公司"},
+    {"words": "号码:15051810512账期:202011开票机构:电子渠道"},
+    {"words": "别号913200014086950"},
+    {"words": "掌厅南京人工备注:"},
+    {"words": "江苏省南京市庐山路226号13800250222"},
+    {"words": "中国工商银行南京市城北支行43010109190023"},
+    {"words": "1477719"}
+  ],
+  "log_id": 1346391869176676352,
+  "words_result_num": 37
+}
+2021-01-05 17:44:56.608  INFO 14292 [http-nio-8080-exec-3] --- com.huawei.web.HelloWorldController      : [][][HelloWorldController.java:sayHello:46] get,Hello,liuyc!my age=12,config=null,cf.name=null,cf.age=10000.hg=HKConfig(name=null, age=1000)
+2021-01-05 17:44:59.354  INFO 14292 [http-nio-8080-exec-3] --- com.huawei.web.HelloWorldController      : [][][HelloWorldController.java:sayHello:52] {
+  "words_result": [
+    {"words": "回「A朗读此页内"},
+    {"words": "回回"},
+    {"words": "发票代码:0200000"},
+    {"words": "江苏增值税电了普通发票号"},
+    {"words": "开票日期:2020年12月21日"},
+    {"words": "机器编号;66161629109"},
+    {"words": "校验码:56655166081608247150"},
+    {"words": "名"},
+    {"words": "称刘率成"},
+    {"words": "<\//*0+837<05>683+*>0629*364"},
+    {"words": "买纳税人识别号"},
+    {"words": "032-*390+525>/54>7+363-47>"},
+    {"words": "地址,电话"},
+    {"words": "20<0893<7<-39108>6*4<>0<+0"},
+    {"words": "方耳户行及账号"},
+    {"words": "22*01/-+390+525>/54275>3"},
+    {"words": "物成劳务服务名称国格型号单位"},
+    {"words": "单价"},
+    {"words": "金额"},
+    {"words": "税率"},
+    {"words": "电信服务通信服务费"},
+    {"words": "83.76"},
+    {"words": "8376"},
+    {"words": "电信服务折扣折让"},
+    {"words": "5146"},
+    {"words": "-51.46"},
+    {"words": "32,30"},
+    {"words": "抢底圆色角零分"},
+    {"words": "Y32.30"},
+    {"words": "价税"},
+    {"words": "中国移动通信集团江苏有限公司南京分公司"},
+    {"words": "号码:15051810512账期:202011开票机构:电子渠道"},
+    {"words": "别号913200014086950"},
+    {"words": "掌厅南京人工备注:"},
+    {"words": "江苏省南京市庐山路226号13800250222"},
+    {"words": "中国工商银行南京市城北支行43010109190023"},
+    {"words": "1477719"}
+  ],
+  "log_id": 1346392233582002176,
+  "words_result_num": 37
+}
+2021-01-05 18:14:46.863  INFO 17612 [main] --- com.huawei.Application                   : [][][StartupInfoLogger.java:logStarting:50] Starting Application v0.0.2-SNAPSHOT on BDSHYF119754 with PID 17612 (D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin\springboot-helloworld.jar started by liuyucheng02 in D:\studyself\guoshoucai\springboot-learning-example\springboot-helloworld\bin)
+2021-01-05 18:14:46.883  INFO 17612 [main] --- com.huawei.Application                   : [][][SpringApplication.java:logStartupProfileInfo:675] No active profile set, falling back to default profiles: default
+2021-01-05 18:14:50.342  INFO 17612 [main] --- o.s.b.w.embedded.tomcat.TomcatWebServer  : [][][TomcatWebServer.java:initialize:90] Tomcat initialized with port(s): 8080 (http)
+2021-01-05 18:14:50.393  INFO 17612 [main] --- o.a.coyote.http11.Http11NioProtocol      : [][][DirectJDKLog.java:log:173] Initializing ProtocolHandler ["http-nio-8080"]
+2021-01-05 18:14:50.424  INFO 17612 [main] --- o.apache.catalina.core.StandardService   : [][][DirectJDKLog.java:log:173] Starting service [Tomcat]
+2021-01-05 18:14:50.433  INFO 17612 [main] --- org.apache.catalina.core.StandardEngine  : [][][DirectJDKLog.java:log:173] Starting Servlet engine: [Apache Tomcat/9.0.16]
+2021-01-05 18:14:50.462  INFO 17612 [main] --- o.a.catalina.core.AprLifecycleListener   : [][][DirectJDKLog.java:log:173] The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk-11.0.9\bin;C:\windows\Sun\Java\bin;C:\windows\system32;C:\windows;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\NetSarang\Xshell 6;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0;C:\windows\System32\OpenSSH;C:\go1.13\go\bin;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\ProgramData\chocolatey\bin;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Git\;C:\Program Files\Git\usr\bin;D:\Program Files\kubernetes;C:\Users\liuyucheng02\Downloads\gradle-6.8-rc-1\bin;C:\Program Files\Git\usr\bin;D:\Program Files\MongoDB\Server\4.4\binbak;D:\mongodb-win32-x86_64-windows-4.4.2\bin;C:\Program Files\Java\jdk1.8.0_271\bin;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38\Scripts;C:\Users\liuyucheng02\AppData\Local\Programs\Python\Python38;C:\Program Files\MySQL\MySQL Shell 8.0\bin;C:\Users\liuyucheng02\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Java\jdk1.8.0_271\bin;D:\Program Files\apache-maven-3.6.3\bin;D:\Program Files\apache-maven-3.6.3\bin;C:\Users\liuyucheng02\go\bin;D:\Program Files\Microsoft VS Code\bin;C:\Users\liuyucheng02\AppData\Roaming\npm;C:\Program Files\Bandizip;D:\Program Files\JetBrains\PyCharm Community Edition 2020.2.4\bin;D:\Program Files\JetBrains\GoLand 2019.2.3\bin;.]
+2021-01-05 18:14:50.702  INFO 17612 [main] --- o.a.c.c.C.[Tomcat].[localhost].[/]       : [][][DirectJDKLog.java:log:173] Initializing Spring embedded WebApplicationContext
+2021-01-05 18:14:50.705  INFO 17612 [main] --- o.s.web.context.ContextLoader            : [][][ServletWebServerApplicationContext.java:prepareWebApplicationContext:296] Root WebApplicationContext: initialization completed in 3635 ms
+2021-01-05 18:14:51.267  INFO 17612 [main] --- o.s.s.concurrent.ThreadPoolTaskExecutor  : [][][ExecutorConfigurationSupport.java:initialize:171] Initializing ExecutorService 'applicationTaskExecutor'
+2021-01-05 18:14:51.677  INFO 17612 [main] --- o.a.coyote.http11.Http11NioProtocol      : [][][DirectJDKLog.java:log:173] Starting ProtocolHandler ["http-nio-8080"]
+2021-01-05 18:14:51.739  INFO 17612 [main] --- o.s.b.w.embedded.tomcat.TomcatWebServer  : [][][TomcatWebServer.java:start:204] Tomcat started on port(s): 8080 (http) with context path ''
+2021-01-05 18:14:51.746  INFO 17612 [main] --- com.huawei.Application                   : [][][StartupInfoLogger.java:logStarted:59] Started Application in 6.93 seconds (JVM running for 7.787)
+2021-01-05 18:14:55.642  INFO 17612 [Thread-2] --- o.s.s.concurrent.ThreadPoolTaskExecutor  : [][][ExecutorConfigurationSupport.java:shutdown:208] Shutting down ExecutorService 'applicationTaskExecutor'

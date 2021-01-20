@@ -12,7 +12,7 @@ import java.util.Map;
 
 public interface CallResultService {
     PageVO<CallResultRsp> findByCondition(CallResultReq req);
-    PageVO<CallResultRsp> finCallResultdItemByCondition(CallResultReq req);
+    PageVO<CallResultRsp> finCallResultItemByCondition(CallResultReq req);
     Integer countByCondition(CallResultReq req);
     PageVO<RouteRsp> findRouteByCondition(Route req);
     void insertRoute(Route req) throws BusinessException;
@@ -34,15 +34,17 @@ public interface CallResultService {
 
     void updateTypeEnum(TypeEnum req) throws BusinessException;
 
-    void deleteTypeEnum(Integer id);
+    void deleteTypeEnum(Integer id) throws BusinessException;
 
-    void logicDeleteTypeEnum(Integer id);
+    void logicDeleteTypeEnum(Integer id) throws BusinessException;
 
     void updateRoute(Route req) throws BusinessException;
 
     void updateApi(Api req) throws BusinessException;
 
-    void logicDeleteRoute(Integer id);
+    void logicDeleteRoute(Integer id) throws BusinessException;
 
-    void logicDeleteApi(Integer id);
+    void logicDeleteApi(Integer id) throws BusinessException;
+
+    PageVO<CallResultRsp> finCallResultPatchByCondition(CallResultPatchReq req);
 }

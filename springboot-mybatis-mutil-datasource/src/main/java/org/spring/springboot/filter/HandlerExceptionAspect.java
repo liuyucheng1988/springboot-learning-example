@@ -21,10 +21,10 @@ public class HandlerExceptionAspect {
     public Response process(Throwable cause, HttpServletRequest request, HttpServletResponse response) {
         Response result;
         if (cause instanceof BusinessException) {
-            result = new Response(((BusinessException) cause).getCode(), ((BusinessException) cause).getMsg(), null);
+            result = new Response(((BusinessException) cause).getCode(), ((BusinessException) cause).getMsg());
 
         } else {
-            result = Response.FAILMSG(cause.getMessage());
+            result = Response.FAILMSG("系统异常，请联系管理员",cause.getMessage());
         }
         log.error("error:{}", cause);
         return result;

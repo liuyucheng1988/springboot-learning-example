@@ -3,6 +3,7 @@
 <mapper namespace="org.spring.springboot.dao.CallResultDao">
     <resultMap id="BaseResultMap" type="org.spring.springboot.domain.CallResult">
         <result column="id" property="id"/>
+        <result column="request_id" property="requestId"/>
         <result column="province" property="province"/>
         <result column="category" property="category"/>
         <result column="api_codesn" property="apiCodesn"/>
@@ -15,19 +16,22 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id, province, category, api_codesn, duration,bills_type,result,createtime,isdel,client
+        id,request_id, province, category, api_codesn, duration,bills_type,result,createtime,isdel,client
     </sql>
 	<insert id="insert" parameterType="org.spring.springboot.domain.CallResult">
-		insert into t_call_result(province,category, api_codesn, duration,bills_type,result,createtime,client)
-		values(#{vo.province},#{vo.category},#{vo.apiCodesn},#{vo.duration},#{vo.billsType},#{vo.result},#{vo.createtime},#{vo.client})
+		insert into t_call_result(request_id,province,category, api_codesn, duration,bills_type,result,createtime,client)
+		values(#{vo.requestId},#{vo.province},#{vo.category},#{vo.apiCodesn},#{vo.duration},#{vo.billsType},#{vo.result},#{vo.createtime},#{vo.client})
 	</insert>
 
-    <select id="finCallResultdItemByCondition" resultType="org.spring.springboot.vo.CallResultRsp"
+    <select id="finCallResultItemByCondition" resultType="org.spring.springboot.vo.CallResultRsp"
             parameterType="org.spring.springboot.vo.CallResultReq">
         select
-        id,province,category,api_codesn as apiCodesn,bills_type as billsType,result,duration,createtime,client
+        id,request_id as requestId,province,category,api_codesn as apiCodesn,bills_type as billsType,result,duration,createtime,client
         FROM t_call_result where createtime &gt;= #{vo.createTimeFrom} and createtime &lt;= #{vo.createTimeTo} and
         isdel=0
+        <if test="vo.requestId != null and vo.requestId != ''">
+            and request_id = #{vo.requestId}
+        </if>
         <if test="vo.province != null and vo.province != ''">
             and province = #{vo.province}
         </if>
@@ -49,7 +53,53 @@
         <if test="vo.result != null">
             and result = #{vo.result}
         </if>
+        order by id
     </select>
+    <select id="finCallResultPatchByCondition" resultType="org.spring.springboot.vo.CallResultRsp"
+            parameterType="org.spring.springboot.vo.CallResultPatchReq">
+        select
+        id,request_id as requestId,province,category,api_codesn as apiCodesn,bills_type as billsType,result,duration,createtime,client
+        FROM t_call_result where createtime &gt;= #{vo.createTimeFrom} and createtime &lt;= #{vo.createTimeTo} and
+        isdel=0
+        <if test="vo.requestId != null and vo.requestId != ''">
+            and request_id = #{vo.requestId}
+        </if>
+        <if test="vo.provinceList != null and vo.provinceList.size() > 0" >
+            and province in
+            <foreach collection="vo.provinceList" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test="vo.categoryList != null and vo.categoryList.size() > 0" >
+            and category in
+            <foreach collection="vo.categoryList" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test="vo.apiCodesnList != null and vo.apiCodesnList.size() > 0" >
+            and api_codesn in
+            <foreach collection="vo.apiCodesnList" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test="vo.billsTypeList != null and vo.billsTypeList.size() > 0" >
+            and bills_type in
+            <foreach collection="vo.billsTypeList" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+       </if>
+        <if test="vo.durationFrom != null">
+            and duration &gt;= #{vo.durationFrom}
+        </if>
+        <if test="vo.durationTo != null">
+            and duration &lt;= #{vo.durationTo}
+        </if>
+        <if test="vo.result != null">
+            and result = #{vo.result}
+        </if>
+        order by id
+    </select>
+
     <select id="findByCondition" resultType="org.spring.springboot.vo.CallResultRsp"
             parameterType="org.spring.springboot.vo.CallResultReq">
         select
@@ -79,22 +129,4 @@
         </if>
         group by province,category,api_codesn,bills_type,result
     </select>
-
-
-
-
-    <!--if 标签使用类似html的C标签的if -->
-    <!--<select id="selectUseIf" parameterType="com.soft.test.model.User" resultMap="userMap">
-        select * from t_user where
-        <if test="id != null and id != ''">
-            id=#{id}
-        </if>
-        <if test="username != null and username != ''">
-            and username like concat('%',#{username},'%')
-        </if>
-        <if test="password != null and password != ''">
-            and password=#{password}
-        </if>
-    </select>-->
-
 </mapper>

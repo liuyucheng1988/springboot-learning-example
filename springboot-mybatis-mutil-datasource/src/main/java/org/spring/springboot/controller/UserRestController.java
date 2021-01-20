@@ -7,6 +7,7 @@ import org.spring.springboot.exception.BusinessException;
 import org.spring.springboot.service.CallResultService;
 import org.spring.springboot.service.UserService;
 import org.spring.springboot.util.Response;
+import org.spring.springboot.vo.CallResultPatchReq;
 import org.spring.springboot.vo.CallResultReq;
 import org.spring.springboot.vo.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,8 @@ public class UserRestController {
 
         List<Menu> menus = new ArrayList<>();
         List<Menu> menuChildren = new ArrayList<>();
-        menuChildren.add(new Menu(11, "调用统计", "monitor"));
+        menuChildren.add(new Menu(11, "请求列表", "request"));
+        menuChildren.add(new Menu(12, "分组统计", "monitor"));
         menus.add(new Menu(1, "监控管理", null, menuChildren));
 
         menuChildren = new ArrayList<>();
@@ -80,12 +82,19 @@ public class UserRestController {
         }
         return Response.SUCCESSDATA(callResultService.findByCondition(req));
     }
+    @PostMapping("/listmonitor")
+    public Response listMonitor(@RequestBody CallResultPatchReq req)   {
+        if(req.getCreateTimeFrom() == null || req.getCreateTimeTo() == null){
+            return Response.FAIL;
+        }
+        return Response.SUCCESSDATA(callResultService.finCallResultPatchByCondition(req));
+    }
     @PostMapping("/querydetail")
     public Response queryDetail(@RequestBody CallResultReq req)   {
         if(req.getCreateTimeFrom() == null || req.getCreateTimeTo() == null){
             return Response.FAIL;
         }
-        return Response.SUCCESSDATA(callResultService.finCallResultdItemByCondition(req));
+        return Response.SUCCESSDATA(callResultService.finCallResultItemByCondition(req));
     }
     @PostMapping("/monitor")
     public Response saveMonitor(@RequestBody CallResult req)   {
@@ -101,20 +110,17 @@ public class UserRestController {
         return Response.SUCCESSDATA(callResultService.findRouteById(id));
     }
     @PostMapping("/route")
-    public Response saveRoute(@RequestBody Route req) throws BusinessException {
+    public Response saveRoute(@RequestBody @Validated Route req) throws BusinessException {
         callResultService.insertRoute(req);
         return Response.SUCCESS;
     }
     @PutMapping("/route")
-    public Response updatetApi(@RequestBody Route req) throws BusinessException {
-        if(req.getId() != null && StringUtils.isNotBlank(req.getProvince())
-                && StringUtils.isNotBlank(req.getCategory())
-                && StringUtils.isNotBlank(req.getBillsType())
-                && StringUtils.isNotBlank(req.getApiCodesn())){
+    public Response updatetApi(@RequestBody @Validated Route req) throws BusinessException {
+        if(req.getId() != null){
             callResultService.updateRoute(req);
             return Response.SUCCESS;
         }else{
-            return Response.FAILMSG("参数不对，请确保id、省份、险种、票据类型、Api都有值");
+            return Response.FAILMSG("参数不对，请确保id有值");
         }
     }
     @DeleteMapping("/route/{id}")
@@ -137,13 +143,11 @@ public class UserRestController {
     }
     @PutMapping("/server")
     public Response updatetApi(@RequestBody @Validated Api req) throws BusinessException {
-        if(req.getId() != null && StringUtils.isNotBlank(req.getCodesn())
-                && StringUtils.isNotBlank(req.getUrl())
-                && StringUtils.isNotBlank(req.getName())){
+        if(req.getId() != null){
             callResultService.updateApi(req);
             return Response.SUCCESS;
         }else{
-            return Response.FAILMSG("参数不对，请确保id、编码、名称、url都有值");
+            return Response.FAILMSG("参数不对，请确保id有值");
         }
     }
     @DeleteMapping("/server/{id}")
@@ -160,22 +164,17 @@ public class UserRestController {
         return Response.SUCCESSDATA(callResultService.findTypeById(id));
     }
     @PostMapping("/type")
-    public Response insertParam(@RequestBody TypeEnum req) throws BusinessException {
-        if(StringUtils.isNotBlank(req.getCodesn()) && StringUtils.isNotBlank(req.getType()) && StringUtils.isNotBlank(req.getName())){
-            callResultService.insertEnum(req);
-            return Response.SUCCESS;
-        }else{
-            return Response.FAILMSG("参数不对，请确保类型、编码、名称都有值");
-        }
-
+    public Response insertParam(@RequestBody @Validated TypeEnum req) throws BusinessException {
+        callResultService.insertEnum(req);
+        return Response.SUCCESS;
     }
     @PutMapping("/type")
-    public Response updatetParam(@RequestBody TypeEnum req) throws BusinessException {
-        if(req.getId() != null && StringUtils.isNotBlank(req.getCodesn()) && StringUtils.isNotBlank(req.getType()) && StringUtils.isNotBlank(req.getName())){
+    public Response updatetParam(@RequestBody @Validated TypeEnum req) throws BusinessException {
+        if(req.getId() != null){
             callResultService.updateTypeEnum(req);
             return Response.SUCCESS;
         }else{
-            return Response.FAILMSG("参数不对，请确保id、类型、编码、名称都有值");
+            return Response.FAILMSG("参数不对，请确保id有值");
         }
     }
     @DeleteMapping("/type/{id}")

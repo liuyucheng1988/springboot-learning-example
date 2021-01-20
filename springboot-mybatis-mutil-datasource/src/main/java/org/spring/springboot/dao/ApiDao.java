@@ -10,6 +10,9 @@ import java.util.List;
 @Mapper
 public interface ApiDao {
     List<Api> findApiByCondition(@Param("vo") Api req);
+    List<Api> queryApiByCondition(@Param("vo") Api req);
+    List<Api> getApiByCodeOrNameOrUrl(@Param("vo") Api req);
+
     void insert(@Param("vo") Api req);
     void updateApi(@Param("vo") Api req);
     void logicDeleteApi(@Param("id") Integer id);

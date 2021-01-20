@@ -17,6 +17,7 @@
 
     <properties>
         <mybatis-spring-boot>1.2.0</mybatis-spring-boot>
+       <!-- <tk-mybatis.version>4.0.3</tk-mybatis.version>-->
         <mysql-connector>5.1.39</mysql-connector>
         <druid>1.0.18</druid>
         <pagehelper.spring-boot.version>1.2.12</pagehelper.spring-boot.version>
@@ -43,7 +44,16 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>${mybatis-spring-boot}</version>
         </dependency>
-
+        <!--<dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper</artifactId>
+            <version>${tk-mybatis.version}</version>
+        </dependency>-->
+       <!-- <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+            <version>2.1.5</version>
+        </dependency>-->
         <!-- MySQL 连接驱动依赖 -->
         <dependency>
             <groupId>mysql</groupId>

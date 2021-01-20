@@ -6,7 +6,6 @@ import org.spring.springboot.domain.TypeEnum;
 import org.spring.springboot.vo.KeyValueVO;
 
 import java.util.List;
-
 @Mapper
 public interface TypeEnumDao {
     List<TypeEnum> findTypeEnumByCondition(@Param("vo") TypeEnum req);

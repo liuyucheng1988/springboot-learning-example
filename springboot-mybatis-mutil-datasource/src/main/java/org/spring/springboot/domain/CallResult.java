@@ -17,6 +17,7 @@ import java.util.Date;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CallResult extends PaperBase {
     private BigInteger id;
+    private String requestId;
     private String category;
     private String province;
     private String apiCodesn;

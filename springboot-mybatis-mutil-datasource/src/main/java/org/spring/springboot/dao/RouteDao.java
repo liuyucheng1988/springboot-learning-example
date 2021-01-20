@@ -14,6 +14,7 @@ import java.util.List;
 @Mapper
 public interface RouteDao {
     List<RouteRsp> findRouteByCondition(@Param("vo") Route req);
+    List<RouteRsp> findRouteApiInfoByCondition(@Param("vo") Route req);
     void insert(@Param("vo") Route entity);
     void updateRoute(@Param("vo") Route req);
     void logicDeleteRoute(@Param("id") Integer id);
