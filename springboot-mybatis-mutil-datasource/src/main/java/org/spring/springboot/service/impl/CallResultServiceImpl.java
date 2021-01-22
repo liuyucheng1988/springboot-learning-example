@@ -73,8 +73,8 @@ public class CallResultServiceImpl implements CallResultService {
         PageInfo<CallResultRsp> info = new PageInfo<>(callResultRsps);
         return new PageVO<CallResultRsp>(info.getTotal(), callResultRsps);
     }
-    @Override
-    public PageVO<CallResultRsp> finCallResultPatchByCondition(CallResultPatchReq req) {
+
+    private String getOrderBy(PaperBase req){
         String orderBy = null;
         if(StringUtils.isNotBlank(req.getField())){
             orderBy = req.getField();
@@ -82,6 +82,11 @@ public class CallResultServiceImpl implements CallResultService {
                 orderBy = orderBy  + " desc";
             }
         }
+        return orderBy;
+    }
+    @Override
+    public PageVO<CallResultRsp> finCallResultPatchByCondition(CallResultPatchReq req) {
+        String orderBy = getOrderBy(req);
         PageHelper.startPage(req.getPageNum(), req.getPageSize(), orderBy);
         List<CallResultRsp> callResultRsps = callResultDao.finCallResultPatchByCondition(req);
 
@@ -106,7 +111,8 @@ public class CallResultServiceImpl implements CallResultService {
     }
 
     public PageVO<CallResultRsp> finCallResultItemByCondition(CallResultReq req) {
-        PageHelper.startPage(req.getDetailPageNum(), req.getDetailPageSize());
+        String orderBy = getOrderBy(req);
+        PageHelper.startPage(req.getDetailPageNum(), req.getDetailPageSize(), orderBy);
         List<CallResultRsp> callResultRsps = callResultDao.finCallResultItemByCondition(req);
 
         Map<String, String> provinceMap = getTypeEnumByType(Constant.Type.Province);
@@ -132,15 +138,9 @@ public class CallResultServiceImpl implements CallResultService {
         return new PageVO<CallResultRsp>(info.getTotal(), callResultRsps);
     }
     @Override
-    public Integer countByCondition(CallResultReq req) {
-//        return callResultDao.countByCondition(req);
-        return null;
-
-    }
-
-    @Override
     public PageVO<RouteRsp> findRouteByCondition(Route req) {
-        PageHelper.startPage(req.getPageNum(), req.getPageSize());
+        String orderBy  = getOrderBy(req);
+        PageHelper.startPage(req.getPageNum(), req.getPageSize(), orderBy);
         List<RouteRsp> rsps = routeDao.findRouteByCondition(req);
         Map<String, String> provinceMap = getTypeEnumByType(Constant.Type.Province);
         Map<String, String> categoryMap = getTypeEnumByType(Constant.Type.Insurance_category);
@@ -504,17 +504,12 @@ public class CallResultServiceImpl implements CallResultService {
 
     @Override
     public PageVO<Api> findApiByCondition(Api req) {
-        PageHelper.startPage(req.getPageNum(), req.getPageSize());
+        String orderBy = getOrderBy(req);
+        PageHelper.startPage(req.getPageNum(), req.getPageSize(), orderBy);
         List<Api> servers = apiDao.findApiByCondition(req);
         PageInfo<Api> info = new PageInfo<>(servers);
         return new PageVO<Api>(info.getTotal(), servers);
 
-    }
-
-    @Override
-    public Integer countServerByCondition(Api req) {
-//        return serverDao.countServerByCondition(req);
-        return null;
     }
 
     @Override
@@ -572,18 +567,12 @@ public class CallResultServiceImpl implements CallResultService {
 
     @Override
     public PageVO<TypeEnum> findTypeEnumByCondition(TypeEnum req) {
-        PageHelper.startPage(req.getPageNum(), req.getPageSize());
+        String orderBy = getOrderBy(req);
+        PageHelper.startPage(req.getPageNum(), req.getPageSize(), orderBy);
         List<TypeEnum> typeEnums = typeEnumDao.findTypeEnumByCondition(req);
         PageInfo<TypeEnum> info = new PageInfo<>(typeEnums);
         return new PageVO<TypeEnum>(info.getTotal(), typeEnums);
     }
-
-    @Override
-    public Integer countTypeEnumByCondition(TypeEnum req) {
-//        return typeEnumDao.countTypeEnumByCondition(req);
-        return null;
-    }
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insertEnum(TypeEnum req) throws BusinessException {

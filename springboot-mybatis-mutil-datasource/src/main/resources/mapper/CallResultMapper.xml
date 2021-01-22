@@ -53,7 +53,7 @@
         <if test="vo.result != null">
             and result = #{vo.result}
         </if>
-        order by id
+        order by id desc
     </select>
     <select id="finCallResultPatchByCondition" resultType="org.spring.springboot.vo.CallResultRsp"
             parameterType="org.spring.springboot.vo.CallResultPatchReq">
@@ -97,7 +97,7 @@
         <if test="vo.result != null">
             and result = #{vo.result}
         </if>
-        order by id
+        order by id desc
     </select>
 
     <select id="findByCondition" resultType="org.spring.springboot.vo.CallResultRsp"

@@ -91,6 +91,6 @@
         <if test="vo.effectivetimeTo != null">
             and (effectivetime_to &gt;= #{vo.effectivetimeTo} or effectivetime_to is null)
         </if>
-       order by effectivetime_from
+       order by id desc
     </select>
 </mapper>
