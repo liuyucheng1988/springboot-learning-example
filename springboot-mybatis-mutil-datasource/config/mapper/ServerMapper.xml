@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.springboot.dao.ApiDao">
+    <resultMap id="BaseResultMap" type="org.spring.springboot.domain.Api">
+        <result column="id" property="id"/>
+        <result column="codesn" property="codesn"/>
+        <result column="name" property="name"/>
+        <result column="url" property="url"/>
+        <result column="description" property="description"/>
+        <result column="updatetime" property="updatetime"/>
+        <result column="isdel" property="isdel"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, codesn,name, url, desc,isdel,updatetime
+    </sql>
+	<insert id="insert" parameterType="org.spring.springboot.domain.Api">
+		insert into t_api(codesn,name, url, description)
+		values(#{vo.codesn},#{vo.name},#{vo.url},#{vo.description})
+	</insert>
+    <update id="updateApi" parameterType="org.spring.springboot.domain.Api">
+        update t_api
+        <set>
+            <if test="vo.codesn != null">codesn=#{vo.codesn},</if>
+            <if test="vo.name != null">name=#{vo.name},</if>
+            <if test="vo.url != null">url=#{vo.url},</if>
+            <if test="vo.description != null">description=#{vo.description}</if>
+        </set>
+        where id=#{vo.id}
+    </update>
+    <update id="logicDeleteApi" parameterType="java.lang.Integer">
+        update t_api set isdel=1 where id=#{id}
+    </update>
+
+    <select id="getApiByCodeOrNameOrUrl" resultType="org.spring.springboot.domain.Api"
+            parameterType="org.spring.springboot.domain.Api">
+        select * FROM t_api where isdel=0 and (codesn = #{vo.codesn} or name = #{vo.name} or url = #{vo.url})
+    </select>
+    <select id="findApiByCondition" resultType="org.spring.springboot.domain.Api"
+            parameterType="org.spring.springboot.domain.Api">
+        select *
+        FROM t_api where isdel=0
+        <if test="vo.codesn != null and vo.codesn != ''">
+            and codesn like concat('%',#{vo.codesn},'%')
+        </if>
+        <if test="vo.name != null and vo.name != ''">
+            and name like concat('%',#{vo.name},'%')
+        </if>
+        <if test="vo.url != null and vo.url != ''">
+            and url like  concat('%',#{vo.url},'%')
+        </if>
+        order by id
+    </select>
+    <select id="queryApiByCondition" resultType="org.spring.springboot.domain.Api"
+            parameterType="org.spring.springboot.domain.Api">
+        select *
+        FROM t_api where isdel=0
+        <if test="vo.id != null and vo.id>0">
+            and id = #{vo.id}
+        </if>
+        <if test="vo.codesn != null and vo.codesn != ''">
+            and codesn = #{vo.codesn}
+        </if>
+        <if test="vo.name != null and vo.name != ''">
+            and name = #{vo.name}
+        </if>
+        <if test="vo.url != null and vo.url != ''">
+            and url = #{vo.url}
+        </if>
+    </select>
+</mapper>

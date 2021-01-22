@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.springboot.dao.RouteDao">
+    <resultMap id="BaseResultMap" type="org.spring.springboot.domain.Route">
+        <result column="id" property="id"/>
+        <result column="province" property="province"/>
+        <result column="category" property="category"/>
+        <result column="api_codesn" property="apiCodesn"/>
+        <result column="bills_type" property="billsType"/>
+        <result column="effectivetime_from" property="effectivetimeFrom"/>
+        <result column="effectivetime_to" property="effectivetimeTo"/>
+        <result column="description" property="description"/>
+        <result column="updatetime" property="updatetime"/>
+        <result column="isdel" property="isdel"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, province,category, api_codesn,bills_type,effectivetime_from,effectivetime_to,updatetime,isdel,description
+    </sql>
+	<insert id="insert" parameterType="org.spring.springboot.domain.Route">
+		insert into t_route(province,category, api_codesn,bills_type,effectivetime_from,effectivetime_to,description)
+		values(#{vo.province},#{vo.category},#{vo.apiCodesn},#{vo.billsType},#{vo.effectivetimeFrom},#{vo.effectivetimeTo},#{vo.description})
+	</insert>
+    <update id="updateRoute" parameterType="org.spring.springboot.domain.Route">
+        update t_route
+        <set>
+            <if test="vo.province != null">province=#{vo.province},</if>
+            <if test="vo.category != null">category=#{vo.category},</if>
+            <if test="vo.apiCodesn != null">api_codesn=#{vo.apiCodesn},</if>
+            <if test="vo.billsType != null">bills_type=#{vo.billsType},</if>
+            <if test="vo.effectivetimeFrom != null">effectivetime_from=#{vo.effectivetimeFrom},</if>
+            <if test="vo.effectivetimeTo != null">effectivetime_to=#{vo.effectivetimeTo},</if>
+            <if test="vo.description != null">description=#{vo.description}</if>
+        </set>
+        where id=#{vo.id}
+    </update>
+    <update id="logicDeleteRoute" parameterType="java.lang.Integer">
+        update t_route set isdel=1 where id=#{id}
+    </update>
+
+    <select id="findRouteApiInfoByCondition" resultType="org.spring.springboot.vo.RouteRsp"
+            parameterType="org.spring.springboot.domain.Route">
+        select
+        id,api_codesn as apiCodesn,effectivetime_from as effectivetimeFrom, effectivetime_to as effectivetimeTo FROM t_route where isdel=0
+        <if test="vo.id != null and vo.id > 0">
+            and id = #{vo.id}
+        </if>
+        <if test="vo.province != null and vo.province != ''">
+            and province = #{vo.province}
+        </if>
+        <if test="vo.category != null and vo.category != ''">
+            and category = #{vo.category}
+        </if>
+        <if test="vo.billsType != null and vo.billsType != ''">
+            and bills_type = #{vo.billsType}
+        </if>
+        <if test="vo.apiCodesn != null and vo.apiCodesn != ''">
+            and api_codesn = #{vo.apiCodesn}
+        </if>
+        <if test="vo.effectivetimeFrom != null">
+            and (effectivetime_from &lt;= #{vo.effectivetimeFrom} or effectivetime_from is null)
+        </if>
+        <if test="vo.effectivetimeTo != null">
+            and (effectivetime_to &gt;= #{vo.effectivetimeTo} or effectivetime_to is null)
+        </if>
+        order by effectivetime_from
+    </select>
+    <select id="findRouteByCondition" resultType="org.spring.springboot.vo.RouteRsp"
+            parameterType="org.spring.springboot.domain.Route">
+        select
+        id,province,category,api_codesn as apiCodesn,bills_type as billsType,effectivetime_from as effectivetimeFrom, effectivetime_to as effectivetimeTo,
+        updatetime,description FROM t_route where isdel=0
+        <if test="vo.id != null and vo.id > 0">
+            and id = #{vo.id}
+        </if>
+        <if test="vo.province != null and vo.province != ''">
+            and province = #{vo.province}
+        </if>
+        <if test="vo.category != null and vo.category != ''">
+            and category = #{vo.category}
+        </if>
+        <if test="vo.billsType != null and vo.billsType != ''">
+            and bills_type = #{vo.billsType}
+        </if>
+        <if test="vo.apiCodesn != null and vo.apiCodesn != ''">
+            and api_codesn = #{vo.apiCodesn}
+        </if>
+        <if test="vo.effectivetimeFrom != null">
+            and (effectivetime_from &lt;= #{vo.effectivetimeFrom} or effectivetime_from is null)
+        </if>
+        <if test="vo.effectivetimeTo != null">
+            and (effectivetime_to &gt;= #{vo.effectivetimeTo} or effectivetime_to is null)
+        </if>
+       order by id desc
+    </select>
+</mapper>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+    <jmxConfigurator/>
+    <!-- configure logger level -->
+    <logger name="org.springframework" level="INFO"/>
+<!--    <logger name="com.baidu.acg.piat.digitalhuman" level="DEBUG"/>-->
+    <logger name="com.huawei" level="INFO"/>
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator"/>
+    <if condition='isDefined("spring.config.location")'>
+        <then>
+            <property file="${spring.config.location}"/>
+        </then>
+    </if>
+    <if condition='!isDefined("spring.config.location")'>
+        <then>
+            <property resource="application.properties"/>
+        </then>
+    </if>
+
+    <property name="logging.has_console_appender" value="${logging.has_console_appender:-true}"/>
+    <property name="logging.log_pattern" value="${logging.log_pattern:-%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } [%t] --- %-40.40logger{39} : [%X{x-bce-request-id}][%X{currentUser}][%F:%M:%L] %m%n}"/>
+    <property name="logging.max_log_file_size" value="${logging.max_log_file_size:-50MB}"/>
+    <property name="logging.max_log_file_history_in_days" value="${logging.max_log_file_history_in_days:-7}"/>
+    <property name="logging.web_debug.level" value="${logging.web_debug.level:-INFO}"/>
+
+    <if condition='"true".equals(property("logging.has_console_appender"))'>
+        <then>
+            <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <Pattern>
+                        %black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable
+                    </Pattern>
+                </layout>
+                <encoder>
+                    <charset>UTF-8</charset>
+                    <pattern>${logging.log_pattern}</pattern>
+                </encoder>
+            </appender>
+        </then>
+    </if>
+
+    <if condition='isDefined("logging.debug_log_file_prefix")'>
+        <then>
+            <appender name="DEBUG_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+                    <level>DEBUG</level>
+                </filter>
+                <encoder>
+                    <charset>UTF-8</charset>
+                    <pattern>${logging.log_pattern}</pattern>
+                </encoder>
+                <file>${logging.debug_log_file_prefix}.debug.log</file>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <fileNamePattern>${logging.debug_log_file_prefix}-%d{yyyy-MM-dd}.%i.debug.log</fileNamePattern>
+                    <if condition='isDefined("logging.debug_log_max_history_in_days")'>
+                        <then>
+                            <maxHistory>${logging.max_log_file_history_in_days}</maxHistory>
+                        </then>
+                    </if>
+                    <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                        <maxFileSize>${logging.max_log_file_size}</maxFileSize>
+                    </timeBasedFileNamingAndTriggeringPolicy>
+                </rollingPolicy>
+            </appender>
+        </then>
+    </if>
+
+    <!-- configure root -->
+    <root level="INFO">
+        <if condition='"true".equals(property("logging.has_console_appender"))'>
+            <then>
+                <appender-ref ref="CONSOLE" />
+            </then>
+        </if>
+        <if condition='isDefined("logging.debug_log_file_prefix")'>
+            <then>
+                <appender-ref ref="DEBUG_LOG_FILE" />
+            </then>
+        </if>
+    </root>
+</configuration>

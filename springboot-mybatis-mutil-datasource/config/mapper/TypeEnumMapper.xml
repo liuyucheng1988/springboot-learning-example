@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.springboot.dao.TypeEnumDao">
+    <resultMap id="BaseResultMap" type="org.spring.springboot.domain.TypeEnum">
+        <result column="id" property="id"/>
+        <result column="type" property="type"/>
+        <result column="type_name" property="typeName"/>
+        <result column="codesn" property="codesn"/>
+        <result column="name" property="name"/>
+        <result column="updatetime" property="updatetime"/>
+        <result column="isdel" property="isdel"/>
+    </resultMap>
+    <resultMap id="TypeCodesnNameMap" type="org.spring.springboot.vo.KeyValueVO">
+        <result column="type" property="key"/>
+        <result column="type_name" property="value"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, type, type_name,codesn, name,  isdel,updatetime
+    </sql>
+	<insert id="insert" parameterType="org.spring.springboot.domain.TypeEnum">
+		insert into t_enum(type,type_name, codesn, name)
+		values(#{vo.type},#{vo.typeName},#{vo.codesn},#{vo.name})
+	</insert>
+    <update id="updateTypeEnum" parameterType="org.spring.springboot.domain.TypeEnum">
+        update t_enum
+        <set>
+            <if test="vo.type != null">type=#{vo.type},</if>
+            <if test="vo.typeName != null">type_name=#{vo.typeName},</if>
+            <if test="vo.codesn != null">codesn=#{vo.codesn},</if>
+            <if test="vo.name != null">name=#{vo.name}</if>
+        </set>
+        where id=#{vo.id}
+    </update>
+    <delete id="deleteTypeEnum">
+        delete from t_enum where id = #{id}
+    </delete>
+    <update id="logicDeleteTypeEnum" parameterType="java.lang.Integer">
+        update t_enum set isdel=1 where id=#{id}
+    </update>
+
+    <select id="findTypeMap" resultMap="TypeCodesnNameMap">
+        select distinct type, type_name from t_enum
+    </select>
+
+    <select id="findTypeEnumByCondition" resultMap="BaseResultMap"
+            parameterType="org.spring.springboot.domain.TypeEnum">
+        select *
+        FROM t_enum where isdel=0
+        <if test="vo.id != null and vo.id > 0">
+            and id=#{vo.id}
+        </if>
+        <if test="vo.codesn != null and vo.codesn != ''">
+            and codesn like concat('%',#{vo.codesn},'%')
+        </if>
+        <if test="vo.type != null and vo.type != ''">
+            and type = #{vo.type}
+        </if>
+        <if test="vo.name != null and vo.name != ''">
+            and name like concat('%',#{vo.name},'%')
+        </if>
+        order by id
+    </select>
+
+</mapper>
