@@ -19,6 +19,11 @@ public class Response<T> {
         this.code = code;
         this.msg = msg;
     }
+    public Response(Integer code, String msg, String debugMsg) {
+        this.code = code;
+        this.msg = msg;
+        this.debugMsg = debugMsg;
+    }
 
     public Response(Integer code, String msg, T data) {
         this.code = code;

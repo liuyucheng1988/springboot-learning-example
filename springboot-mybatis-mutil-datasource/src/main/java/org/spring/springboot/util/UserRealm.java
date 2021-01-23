@@ -7,11 +7,13 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.spring.springboot.domain.User;
+import org.spring.springboot.exception.BusinessException;
 import org.spring.springboot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Service
@@ -38,12 +40,13 @@ private UserService userService;
     @SneakyThrows
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth) throws AuthenticationException {
-        String token = (String) auth.getCredentials();
+//        String token = new String((char[]) auth.getCredentials()) ;
+        String token = (String) auth.getCredentials() ;
         // 解密获得username，用于和数据库进行对比
         String username = JWTUtils.getUsername(token);
 
         if (username == null) {
-            throw new AuthenticationException(" token错误，请重新登入！");
+            throw new AuthenticationException(" 身份认证失败，请重新登入！");
         }
 
         User req = new User();
@@ -52,14 +55,15 @@ private UserService userService;
         if(CollectionUtils.isEmpty(users)){
             throw new AccountException("账号不存在!");
         }
-
         User user = users.get(0);
         if(JWTUtils.isExpire(token)){
-            throw new AuthenticationException(" token过期，请重新登入！");
+            throw new AuthenticationException(" 身份凭证过期，请退出重新登录！");
         }
 
-        if (! JWTUtils.verify(token, username, user.getPassWord())) {
-            throw new CredentialsException("密码错误!");
+        try {
+            JWTUtils.verify(token, username, user.getPassWord());
+        } catch (UnsupportedEncodingException e) {
+            throw new AuthenticationException(" 身份凭证失效，请退出重新登录！");
         }
 
         //过滤出url,和用户的权限

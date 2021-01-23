@@ -36,23 +36,22 @@ public class UserServiceImpl implements UserService {
     public String login(String username, String password) throws BusinessException {
         User req = new User();
         req.setUserName(username);
-        req.setPassWord(password);
+//        req.setPassWord(password);
         List<User> users = userDao.findUserByCondition(req);
         if(CollectionUtils.isEmpty(users)){
-            throw new BusinessException(500, "用户名或者密码错误");
+            throw new BusinessException(500, "不存在该用户");
         }
         User user = users.get(0);
         String token;
         String target = MD5Utils.md5Encryption(password, salt);
 
         //生成Token
-
         try {
             token = JWTUtils.sign(username, target);
             JWTToken jwtToken = new JWTToken(token);
             SecurityUtils.getSubject().login(jwtToken);
         } catch (Exception e) {
-            throw new BusinessException(500, e.getMessage());
+            throw new BusinessException(500,"身份认证失败，请联系管理员", e.getMessage());
         }
         return token;
     }

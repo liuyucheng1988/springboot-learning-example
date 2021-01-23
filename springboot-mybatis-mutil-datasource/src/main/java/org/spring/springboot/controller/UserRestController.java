@@ -38,12 +38,12 @@ public class UserRestController {
      * @param userName
      * @return
      */
-    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    /*@RequestMapping(value = "/user", method = RequestMethod.GET)
     public List<User> findByName(@RequestParam(value = "userName", required = true) String userName) {
         User user = new User();
         user.setUserName(userName);
         return userService.findUserByCondition(user);
-    }
+    }*/
     @GetMapping(value = "/menus")
     public Response getMenus() {
 

@@ -14,4 +14,10 @@ import lombok.experimental.Accessors;
 public class BusinessException  extends Exception{
     private int code;
     private String msg;
+    private String debugMsg;
+
+    public BusinessException(int code, String msg){
+        this.code = code;
+        this.msg = msg;
+    }
 }
