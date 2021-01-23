@@ -3,6 +3,7 @@ package org.spring.springboot.util;
 public class Constant {
     public static String LEFT_SQUAREBRACKETS = "[";
     public static String RIGHT_SQUAREBRACKETS = "]";
+    public static String NULL = "null";
     public static String COMMA = ",";
     public static String UNDERSCORE = "_";
     // 配置类型

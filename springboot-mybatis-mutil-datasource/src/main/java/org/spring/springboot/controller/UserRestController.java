@@ -1,5 +1,6 @@
 package org.spring.springboot.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
 import org.spring.springboot.domain.*;
@@ -24,6 +25,7 @@ import java.util.*;
  */
 @RestController
 @RequestMapping("/api")
+@Slf4j
 public class UserRestController {
 
     @Autowired
@@ -63,15 +65,12 @@ public class UserRestController {
     }
 
     @PostMapping("/login")
-    public Response login(@RequestBody User user) {
-        System.out.println("user="+user);
-        List<User> users = userService.findUserByCondition(user);
-        if(CollectionUtils.isEmpty(users)){
-            return Response.FAIL;
-        }
-        Map<String, String> token = new HashMap<>();
-        token.put("token", UUID.randomUUID().toString());
-        return Response.SUCCESSDATA(token);
+    public Response login(@RequestBody User user) throws BusinessException {
+        log.info("login user="+user);
+        String token = userService.login(user.getUserName(), user.getPassWord());
+        Map<String, String> tokenMap = new HashMap<>();
+        tokenMap.put("token", token);
+        return Response.SUCCESSDATA(tokenMap);
     }
     @PostMapping("/querymonitor")
     public Response queryMonitor(@RequestBody CallResultReq req)   {
