@@ -27,6 +27,9 @@ public class CallResult extends PaperBase {
     private Date createtime;
     private Boolean isdel;
     private String client;
+    private String req;
+    private String rsp;
+    private String errorMsg;
 
 
 }

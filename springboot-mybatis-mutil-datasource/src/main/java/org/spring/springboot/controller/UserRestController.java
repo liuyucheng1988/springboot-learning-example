@@ -7,6 +7,7 @@ import org.spring.springboot.domain.*;
 import org.spring.springboot.exception.BusinessException;
 import org.spring.springboot.service.CallResultService;
 import org.spring.springboot.service.UserService;
+import org.spring.springboot.util.Constant;
 import org.spring.springboot.util.Response;
 import org.spring.springboot.vo.CallResultPatchReq;
 import org.spring.springboot.vo.CallResultReq;
@@ -164,6 +165,9 @@ public class UserRestController {
     }
     @PostMapping("/type")
     public Response insertParam(@RequestBody @Validated TypeEnum req) throws BusinessException {
+        if(req.getCodesn().contains(Constant.UNDERSCORE)){
+            throw new BusinessException(500, "编码不能含有_");
+        }
         callResultService.insertEnum(req);
         return Response.SUCCESS;
     }

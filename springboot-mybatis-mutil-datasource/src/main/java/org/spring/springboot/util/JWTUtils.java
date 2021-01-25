@@ -15,8 +15,8 @@ public class JWTUtils {
     /**
      * 过期时间12小时
      */
-//    private static final long EXPIRE_TIME = 12*60*60*1000;
-    private static final long EXPIRE_TIME = 10*60 * 1000;
+    private static final long EXPIRE_TIME = 12*60*60*1000;
+//    private static final long EXPIRE_TIME = 10*60 * 1000;
   /*  public static String sign(String username, String secret) throws Exception {
         Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
         Map<String, Object> map = new HashMap<>();

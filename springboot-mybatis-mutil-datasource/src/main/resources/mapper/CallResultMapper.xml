@@ -13,20 +13,20 @@
         <result column="createtime" property="createtime"/>
         <result column="isdel" property="isdel"/>
         <result column="client" property="client"/>
+        <result column="req" property="req"/>
+        <result column="rsp" property="rsp"/>
+        <result column="error_msg" property="errorMsg"/>
     </resultMap>
-
-    <sql id="Base_Column_List">
-        id,request_id, province, category, api_codesn, duration,bills_type,result,createtime,isdel,client
-    </sql>
 	<insert id="insert" parameterType="org.spring.springboot.domain.CallResult">
-		insert into t_call_result(request_id,province,category, api_codesn, duration,bills_type,result,createtime,client)
-		values(#{vo.requestId},#{vo.province},#{vo.category},#{vo.apiCodesn},#{vo.duration},#{vo.billsType},#{vo.result},#{vo.createtime},#{vo.client})
+		insert into t_call_result(request_id,province,category, api_codesn, duration,bills_type,result,createtime,client,req,rsp,error_msg)
+		values(#{vo.requestId},#{vo.province},#{vo.category},#{vo.apiCodesn},#{vo.duration},#{vo.billsType},#{vo.result},#{vo.createtime},#{vo.client}
+        ,#{vo.req},#{vo.rsp},#{vo.errorMsg})
 	</insert>
 
     <select id="finCallResultItemByCondition" resultType="org.spring.springboot.vo.CallResultRsp"
             parameterType="org.spring.springboot.vo.CallResultReq">
         select
-        id,request_id as requestId,province,category,api_codesn as apiCodesn,bills_type as billsType,result,duration,createtime,client
+        id,request_id as requestId,province,category,api_codesn as apiCodesn,bills_type as billsType,result,duration,createtime,client,req,rsp,error_msg as errorMsg
         FROM t_call_result where createtime &gt;= #{vo.createTimeFrom} and createtime &lt;= #{vo.createTimeTo} and
         isdel=0
         <if test="vo.requestId != null and vo.requestId != ''">

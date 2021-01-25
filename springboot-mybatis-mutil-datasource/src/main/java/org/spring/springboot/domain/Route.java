@@ -10,6 +10,7 @@ import org.spring.springboot.vo.PaperBase;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigInteger;
 import java.util.Date;
 
@@ -21,12 +22,16 @@ import java.util.Date;
 public class Route extends PaperBase {
     private Integer id;
     @NotNull(message = "险种不能为空")
+    @Size(min=1, max=45)
     private String category;
     @NotNull(message = "省份不能为空")
+    @Size(min=1, max=45)
     private String province;
     @NotNull(message = "Api不能为空")
+    @Size(min=1, max=45)
     private String apiCodesn;
     @NotNull(message = "票据类型不能为空")
+    @Size(min=1, max=45)
     private String billsType;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
