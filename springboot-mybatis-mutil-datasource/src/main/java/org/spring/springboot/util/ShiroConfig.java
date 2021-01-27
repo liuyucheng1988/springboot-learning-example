@@ -45,9 +45,7 @@ public class ShiroConfig {
         factoryBean.setSecurityManager(securityManager);
 
         Map<String, String> filterRuleMap = new HashMap<>();
-        // 所有请求通过我们自己的JWT Filter
-        filterRuleMap.put("/", "jwt");
-        // 访问401和404页面不通过我们的Filter
+
         filterRuleMap.put("/api/login", "anon");
 //        filterRuleMap.put("/user/imgCode", "anon");
 //        //开放API文档接口
@@ -58,13 +56,16 @@ public class ShiroConfig {
 //        filterRuleMap.put("/static/**","anon");
         //sql监控
         filterRuleMap.put("/druid/**","anon");
+        // 所有请求通过我们自己的JWT Filter
+        filterRuleMap.put("/**", "jwt");
+//        filterChainDefinitionMap.put("/**", "jwt");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
     }
 
-   /* *//**
+    /**
      * 下面的代码是添加注解支持
-     *//*
+     */
     @Bean
     @DependsOn("lifecycleBeanPostProcessor")
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
@@ -78,7 +79,7 @@ public class ShiroConfig {
     @Bean
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
-    }*/
+    }
 
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {
