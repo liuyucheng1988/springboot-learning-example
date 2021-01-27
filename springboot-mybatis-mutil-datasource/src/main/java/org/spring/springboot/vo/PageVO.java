@@ -1,16 +1,18 @@
 package org.spring.springboot.vo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Author zhangyukang
- * @Date 2020/3/7 19:41
- * @Version 1.0
- **/
 @Data
+@NoArgsConstructor
+@Accessors(chain = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PageVO<T> {
     private long total;
 

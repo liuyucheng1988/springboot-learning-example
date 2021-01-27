@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.springboot.dao.RoleDao">
+	<resultMap id="BaseResultMap" type="org.spring.springboot.domain.Role">
+		<result column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="description" property="description" />
+		<result column="isdel" property="isdel"/>
+		<result column="createtime" property="createtime"/>
+	</resultMap>
+
+	<!--<insert id="insertUser" parameterType="org.spring.springboot.domain.User">
+		insert into t_user(user_name, password, description)
+		values(#{vo.userName},#{vo.passWord},#{vo.description})
+	</insert>
+	<update id="updateUser" parameterType="org.spring.springboot.domain.User">
+		update t_user
+		<set>
+			<if test="vo.passWord != null">password=#{vo.passWord},</if>
+			<if test="vo.description != null">description=#{vo.description},</if>
+		</set>
+		where user_name=#{vo.userName}
+	</update>-->
+	<select id="findRoleByCondition" resultMap="BaseResultMap"
+			parameterType="org.spring.springboot.domain.Role">
+		select *
+		FROM t_role where isdel=0
+		<if test="vo.name != null and vo.name != ''">
+			and name = #{vo.name}
+		</if>
+		<if test="vo.id != null">
+			and id = #{vo.id}
+		</if>
+	</select>
+
+</mapper>

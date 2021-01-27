@@ -1,6 +1,7 @@
 package org.spring.springboot.filter;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.AuthorizationException;
 import org.spring.springboot.exception.BusinessException;
 import org.spring.springboot.util.Response;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -23,6 +24,8 @@ public class HandlerExceptionAspect {
         if (cause instanceof BusinessException) {
             result = new Response(((BusinessException) cause).getCode(), ((BusinessException) cause).getMsg());
 
+        } else  if (cause instanceof AuthorizationException) {
+            result = Response.FAILMSG("该操作您没有权限，请联系管理员",cause.getMessage());
         } else {
             result = Response.FAILMSG("系统异常，请联系管理员",cause.getMessage());
         }

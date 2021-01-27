@@ -23,6 +23,7 @@
         <pagehelper.spring-boot.version>1.2.12</pagehelper.spring-boot.version>
         <java-jwt.version>3.2.0</java-jwt.version>
         <shiro-spring.version>1.3.2</shiro-spring.version>
+        <swagger2-version>2.9.2</swagger2-version>
     </properties>
 
     <dependencies>
@@ -129,6 +130,16 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger2-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger2-version}</version>
         </dependency>
     </dependencies>
     <build>

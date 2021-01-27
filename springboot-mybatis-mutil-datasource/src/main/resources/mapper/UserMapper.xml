@@ -7,15 +7,23 @@
 		<result column="password" property="passWord" />
 		<result column="description" property="description" />
 		<result column="isdel" property="isdel"/>
+		<result column="createtime" property="createtime"/>
+		<result column="type" property="type"/>
 	</resultMap>
 
-	<sql id="Base_Column_List">
-		id, user_name, password, description
-	</sql>
-	<insert id="insert" parameterType="org.spring.springboot.domain.User">
-		insert into t_usre(user_name, password, description)
-		values(#{vo.userName},#{vo.passWord},#{vo.description})
+	<insert id="insertUser" parameterType="org.spring.springboot.domain.User">
+		insert into t_user(user_name, password, description,type)
+		values(#{vo.userName},#{vo.passWord},#{vo.description},#{vo.type})
 	</insert>
+	<update id="updateUser" parameterType="org.spring.springboot.domain.User">
+		update t_user
+		<set>
+			<if test="vo.passWord != null">password=#{vo.passWord},</if>
+			<if test="vo.description != null">description=#{vo.description},</if>
+			<if test="vo.type != null">type=#{vo.type},</if>
+		</set>
+		where user_name=#{vo.userName}
+	</update>
 	<select id="findUserByCondition" resultMap="BaseResultMap"
 			parameterType="org.spring.springboot.domain.User">
 		select *
@@ -25,6 +33,9 @@
 		</if>
 		<if test="vo.passWord != null and vo.passWord != ''">
 			and password = #{vo.passWord}
+		</if>
+		<if test="vo.type != null">
+			and type = #{vo.type}
 		</if>
 	</select>
 

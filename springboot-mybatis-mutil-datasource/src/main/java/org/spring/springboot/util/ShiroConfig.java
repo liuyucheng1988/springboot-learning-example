@@ -23,10 +23,7 @@ public class ShiroConfig {
         DefaultWebSecurityManager manager = new DefaultWebSecurityManager();
         // 使用自己的realm
         manager.setRealm(realm);
-        /*
-         * 关闭shiro自带的session，详情见文档
-         * http://shiro.apache.org/session-management.html#SessionManagement-StatelessApplications%28Sessionless%29
-         */
+
         DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
         DefaultSessionStorageEvaluator defaultSessionStorageEvaluator = new DefaultSessionStorageEvaluator();
         defaultSessionStorageEvaluator.setSessionStorageEnabled(false);
@@ -46,31 +43,28 @@ public class ShiroConfig {
         factoryBean.setFilters(filterMap);
 
         factoryBean.setSecurityManager(securityManager);
-        /*
-         * 自定义url规则
-         * http://shiro.apache.org/web.html#urls-
-         */
+
         Map<String, String> filterRuleMap = new HashMap<>();
         // 所有请求通过我们自己的JWT Filter
-        filterRuleMap.put("/**", "jwt");
+        filterRuleMap.put("/", "jwt");
         // 访问401和404页面不通过我们的Filter
         filterRuleMap.put("/api/login", "anon");
-        filterRuleMap.put("/user/imgCode", "anon");
-        //开放API文档接口
+//        filterRuleMap.put("/user/imgCode", "anon");
+//        //开放API文档接口
         filterRuleMap.put("/swagger-ui.html", "anon");
-        filterRuleMap.put("/webjars/**","anon");
+//        filterRuleMap.put("/webjars/**","anon");
         filterRuleMap.put("/swagger-resources/**","anon");
-        filterRuleMap.put("/v2/**","anon");
-        filterRuleMap.put("/static/**","anon");
+//        filterRuleMap.put("/v2/**","anon");
+//        filterRuleMap.put("/static/**","anon");
         //sql监控
         filterRuleMap.put("/druid/**","anon");
         factoryBean.setFilterChainDefinitionMap(filterRuleMap);
         return factoryBean;
     }
 
-    /**
+   /* *//**
      * 下面的代码是添加注解支持
-     */
+     *//*
     @Bean
     @DependsOn("lifecycleBeanPostProcessor")
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
@@ -84,7 +78,7 @@ public class ShiroConfig {
     @Bean
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         return new LifecycleBeanPostProcessor();
-    }
+    }*/
 
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager) {

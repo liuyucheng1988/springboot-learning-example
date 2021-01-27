@@ -16,7 +16,6 @@ public class Menu {
     private String authName;
     private String path;
     private List<Menu> children;
-
     public Menu(Integer id, String authName, String path) {
         this.id = id;
         this.authName = authName;

@@ -15,4 +15,6 @@ import java.util.List;
 public interface UserDao {
 
     List<User> findUserByCondition(@Param("vo") User req);
+    void insertUser(@Param("vo") User req);
+    void updateUser(@Param("vo") User req);
 }

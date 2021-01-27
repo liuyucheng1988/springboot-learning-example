@@ -1,16 +1,17 @@
 package org.spring.springboot.controller;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.spring.springboot.domain.*;
 import org.spring.springboot.exception.BusinessException;
 import org.spring.springboot.service.CallResultService;
 import org.spring.springboot.service.UserService;
 import org.spring.springboot.util.Constant;
 import org.spring.springboot.util.Response;
-import org.spring.springboot.vo.CallResultPatchReq;
-import org.spring.springboot.vo.CallResultReq;
+import org.spring.springboot.vo.*;
 import org.spring.springboot.vo.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -60,24 +61,50 @@ public class UserRestController {
         menuChildren.add(new Menu(23, "参数配置", "type"));
         menus.add(new Menu(2, "系统管理", null, menuChildren));
 
+      /*  menuChildren = new ArrayList<>();
+        menuChildren.add(new Menu(31, "用户列表", "route"));
+        menus.add(new Menu(3, "用户管理", null, menuChildren));
+
+        menuChildren = new ArrayList<>();
+        menuChildren.add(new Menu(41, "角色列表", "route"));
+        menuChildren.add(new Menu(42, "权限列表", "route"));
+        menus.add(new Menu(4, "权限管理", null, menuChildren));*/
 
         return Response.SUCCESSDATA(menus);
 
     }
 
     @PostMapping("/login")
-    public Response login(@RequestBody User user) throws BusinessException {
+    public Response login(@RequestBody @Validated  User user) throws BusinessException {
         log.info("login user="+user);
         String token = userService.login(user.getUserName(), user.getPassWord());
         Map<String, String> tokenMap = new HashMap<>();
         tokenMap.put("token", token);
         return Response.SUCCESSDATA(tokenMap);
     }
+    @ApiOperation(value = "用户信息", notes = "用户登入信息")
+    @GetMapping("/user")
+    public Response info() {
+        UserInfoVO userInfoVO = userService.info();
+        return Response.SUCCESSDATA(userInfoVO);
+    }
+    @PostMapping("/user")
+    public Response addUser(@RequestBody @Validated  User user) throws BusinessException {
+        log.info("add user="+user);
+        userService.addUser(user);
+        return Response.SUCCESS;
+    }
+    @PostMapping("/password")
+    @ApiOperation(value = "修改密码")
+    @RequiresPermissions({"password:edit"})
+    public Response changePwd(@RequestBody @Validated  UserPw user) throws BusinessException {
+        log.info("change pwd userPw="+user);
+        userService.changePwd(user);
+        return Response.SUCCESS;
+    }
     @PostMapping("/querymonitor")
     public Response queryMonitor(@RequestBody CallResultReq req)   {
         if(req.getCreateTimeFrom() == null || req.getCreateTimeTo() == null){
-//            req.setCreateTimeFrom(DateUtil.strToDate("2021-01-11"));
-//            req.setCreateTimeTo(DateUtil.strToDate("2021-01-20"));
             return Response.FAIL;
         }
         return Response.SUCCESSDATA(callResultService.findByCondition(req));
@@ -110,12 +137,16 @@ public class UserRestController {
         return Response.SUCCESSDATA(callResultService.findRouteById(id));
     }
     @PostMapping("/route")
+    @ApiOperation(value = "添加路由")
+    @RequiresPermissions({"route:add"})
     public Response saveRoute(@RequestBody @Validated Route req) throws BusinessException {
         callResultService.insertRoute(req);
         return Response.SUCCESS;
     }
     @PutMapping("/route")
-    public Response updatetApi(@RequestBody @Validated Route req) throws BusinessException {
+    @ApiOperation(value = "修改路由")
+    @RequiresPermissions({"route:edit"})
+    public Response updatetRoute(@RequestBody @Validated Route req) throws BusinessException {
         if(req.getId() != null){
             callResultService.updateRoute(req);
             return Response.SUCCESS;
@@ -124,6 +155,8 @@ public class UserRestController {
         }
     }
     @DeleteMapping("/route/{id}")
+    @ApiOperation(value = "删除路由")
+    @RequiresPermissions({"route:del"})
     public Response deleteRoute(@PathVariable Integer id) throws BusinessException {
         callResultService.logicDeleteRoute(id);
         return Response.SUCCESS;
@@ -137,11 +170,15 @@ public class UserRestController {
         return Response.SUCCESSDATA(callResultService.findApiById(id));
     }
     @PostMapping("/server")
+    @ApiOperation(value = "添加Api")
+    @RequiresPermissions({"api:add"})
     public Response insertServer(@RequestBody @Validated Api req) throws BusinessException {
         callResultService.insertServer(req);
         return Response.SUCCESS;
     }
     @PutMapping("/server")
+    @ApiOperation(value = "修改Api")
+    @RequiresPermissions({"api:edit"})
     public Response updatetApi(@RequestBody @Validated Api req) throws BusinessException {
         if(req.getId() != null){
             callResultService.updateApi(req);
@@ -151,6 +188,8 @@ public class UserRestController {
         }
     }
     @DeleteMapping("/server/{id}")
+    @ApiOperation(value = "删除Api")
+    @RequiresPermissions({"api:del"})
     public Response deleteApi(@PathVariable Integer id) throws BusinessException {
         callResultService.logicDeleteApi(id);
         return Response.SUCCESS;
@@ -164,6 +203,8 @@ public class UserRestController {
         return Response.SUCCESSDATA(callResultService.findTypeById(id));
     }
     @PostMapping("/type")
+    @ApiOperation(value = "添加参数")
+    @RequiresPermissions({"param:add"})
     public Response insertParam(@RequestBody @Validated TypeEnum req) throws BusinessException {
         if(req.getCodesn().contains(Constant.UNDERSCORE)){
             throw new BusinessException(500, "编码不能含有_");
@@ -172,6 +213,8 @@ public class UserRestController {
         return Response.SUCCESS;
     }
     @PutMapping("/type")
+    @ApiOperation(value = "修改参数")
+    @RequiresPermissions({"param:edit"})
     public Response updatetParam(@RequestBody @Validated TypeEnum req) throws BusinessException {
         if(req.getId() != null){
             callResultService.updateTypeEnum(req);
@@ -181,6 +224,8 @@ public class UserRestController {
         }
     }
     @DeleteMapping("/type/{id}")
+    @ApiOperation(value = "删除参数")
+    @RequiresPermissions({"param:del"})
     public Response deleteTypeEnum(@PathVariable Integer id) throws BusinessException {
         callResultService.logicDeleteTypeEnum(id);
         return Response.SUCCESS;

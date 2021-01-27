@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.springboot.dao.MenuDao">
+	<resultMap id="BaseResultMap" type="org.spring.springboot.domain.Menu">
+		<result column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="parent_id" property="parentId" />
+		<result column="url" property="url" />
+		<result column="permissions" property="permissions" />
+		<result column="type" property="type" />
+		<result column="order_num" property="orderNum" />
+		<result column="isdel" property="isdel"/>
+		<result column="createtime" property="createtime"/>
+	</resultMap>
+	<!--<insert id="insertUser" parameterType="org.spring.springboot.domain.User">
+		insert into t_user(user_name, password, description)
+		values(#{vo.userName},#{vo.passWord},#{vo.description})
+	</insert>
+	<update id="updateUser" parameterType="org.spring.springboot.domain.User">
+		update t_user
+		<set>
+			<if test="vo.passWord != null">password=#{vo.passWord},</if>
+			<if test="vo.description != null">description=#{vo.description},</if>
+		</set>
+		where user_name=#{vo.userName}
+	</update>-->
+	<select id="findMenusByIds" resultMap="BaseResultMap"
+			parameterType="org.spring.springboot.domain.Menu">
+		select *
+		FROM t_menu where isdel=0
+		<if test="menuids != null and menuids.size() > 0" >
+			and id in
+			<foreach collection="menuids" item="item" index="index" open="(" close=")" separator=",">
+				#{item}
+			</foreach>
+		</if>
+	</select>
+	<select id="findMenuByCondition" resultMap="BaseResultMap"
+			parameterType="org.spring.springboot.domain.Menu">
+		select *
+		FROM t_menu where isdel=0
+		<if test="vo.name != null and vo.name != ''">
+			and name = #{vo.name}
+		</if>
+		<if test="vo.type != null">
+			and type = #{vo.type}
+		</if>
+		<if test="vo.parentId != null  and vo.parentId > 0">
+			and parent_id = #{vo.parentId}
+		</if>
+		<if test="vo.url != null and vo.url != ''">
+			and url = #{vo.url}
+		</if>
+		<if test="vo.permissions != null and vo.permissions != ''">
+			and permissions = #{vo.permissions}
+		</if>
+		<if test="vo.orderNum != null">
+			and order_num = #{vo.orderNum}
+		</if>
+		<if test="vo.id != null">
+			and id = #{vo.id}
+		</if>
+	</select>
+
+</mapper>
