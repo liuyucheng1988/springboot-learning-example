@@ -11,6 +11,7 @@
 		<result column="order_num" property="orderNum" />
 		<result column="isdel" property="isdel"/>
 		<result column="createtime" property="createtime"/>
+		<result column="level" property="level"/>
 	</resultMap>
 	<!--<insert id="insertUser" parameterType="org.spring.springboot.domain.User">
 		insert into t_user(user_name, password, description)
@@ -25,7 +26,7 @@
 		where user_name=#{vo.userName}
 	</update>-->
 	<select id="findMenusByIds" resultMap="BaseResultMap"
-			parameterType="org.spring.springboot.domain.Menu">
+			parameterType="java.lang.Integer">
 		select *
 		FROM t_menu where isdel=0
 		<if test="menuids != null and menuids.size() > 0" >
@@ -35,6 +36,47 @@
 			</foreach>
 		</if>
 	</select>
+
+	<select id="queryIdsByParentId" resultType="java.lang.Integer"
+			parameterType="java.lang.Integer">
+		select id from t_menu a
+		where a.isdel=0
+		<if test="parentid != null" >
+			and a.parent_id = #{parentid}
+		</if>
+	</select>
+	<select id="queryIdsByParentIds" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+		select id from t_menu a
+		where a.isdel=0
+		<if test="parentids != null and parentids.size() > 0" >
+			and parent_id in
+			<foreach collection="parentids" item="item" index="index" open="(" close=")" separator=",">
+				#{item}
+			</foreach>
+		</if>
+	</select>
+	<select id="findMenuIdsByUserId" resultType="java.lang.Integer"
+			parameterType="java.lang.Integer">
+		select distinct(c.id) from t_user_role a left join t_role_menu b
+		on a.roleid=b.role_id
+		left join t_menu c on c.id=b.menu_id
+		where a.isdel=0 and b.isdel=0 and c.isdel=0
+		and c.type=0
+		<if test="userid != null" >
+		 and a.userid = #{userid}
+		</if>
+	</select>
+	<select id="queryMenusByNameLike" resultMap="BaseResultMap"
+			parameterType="org.spring.springboot.domain.Menu">
+		select *
+		FROM t_menu where isdel=0
+		<if test="vo.name != null and vo.name != ''">
+			and name like concat('%',#{vo.name},'%')
+		</if>
+		order by parent_id,order_num
+	</select>
+
+
 	<select id="findMenuByCondition" resultMap="BaseResultMap"
 			parameterType="org.spring.springboot.domain.Menu">
 		select *

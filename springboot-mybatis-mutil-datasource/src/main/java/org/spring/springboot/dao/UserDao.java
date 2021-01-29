@@ -15,6 +15,13 @@ import java.util.List;
 public interface UserDao {
 
     List<User> findUserByCondition(@Param("vo") User req);
-    void insertUser(@Param("vo") User req);
+    List<User> queryLikeByCondition(@Param("vo") User req);
+
+    Integer insertUser(@Param("vo") User req);
     void updateUser(@Param("vo") User req);
+    void delUser(@Param("id") Integer id);
+
+    List<User> queryByRoleId(@Param("vo") User req);
+
+    List<User> queryUserWithRoleIdByUserName(@Param("vo") User req);
 }

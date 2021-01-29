@@ -8,11 +8,33 @@
 		<result column="isdel" property="isdel"/>
 		<result column="createtime" property="createtime"/>
 	</resultMap>
-
-	<!--<insert id="insertUser" parameterType="org.spring.springboot.domain.User">
-		insert into t_user(user_name, password, description)
-		values(#{vo.userName},#{vo.passWord},#{vo.description})
+	<resultMap id="RoleIdNameMap" type="org.spring.springboot.vo.KeyValue">
+		<result column="id" property="key"/>
+		<result column="name" property="value"/>
+	</resultMap>
+	<insert id="insertRole" parameterType="org.spring.springboot.domain.Role">
+		insert into t_role(name, description)
+		values(#{vo.name},#{vo.description})
 	</insert>
+	<update id="deleteRoleById" parameterType="java.lang.Integer">
+		update t_role set isdel=1 where id=#{roleId} and isdel=0;
+	</update>
+	<update id="deleteUserroleByRoleId" parameterType="java.lang.Integer">
+		update t_user_role set isdel=1 where roleid=#{roleId} and isdel=0
+	</update>
+	<update id="deleteRolemenuByRoleId" parameterType="java.lang.Integer">
+		update t_role_menu set isdel=1 where isdel=0 and role_id=#{roleId};
+	</update>
+
+	<update id="updateRole" parameterType="org.spring.springboot.domain.Role">
+		update t_role
+		<set>
+			<if test="vo.name != null">name=#{vo.name},</if>
+			<if test="vo.description != null">description=#{vo.description},</if>
+		</set>
+		where id=#{vo.id}
+	</update>
+	<!--
 	<update id="updateUser" parameterType="org.spring.springboot.domain.User">
 		update t_user
 		<set>
@@ -21,6 +43,9 @@
 		</set>
 		where user_name=#{vo.userName}
 	</update>-->
+	<select id="findRoleMap" resultMap="RoleIdNameMap">
+		select id,name from t_role where isdel=0
+	</select>
 	<select id="findRoleByCondition" resultMap="BaseResultMap"
 			parameterType="org.spring.springboot.domain.Role">
 		select *
@@ -30,6 +55,16 @@
 		</if>
 		<if test="vo.id != null">
 			and id = #{vo.id}
+		</if>
+	</select>
+
+	<select id="findRolesByUserId" resultMap="BaseResultMap"
+			parameterType="java.lang.Integer">
+		SELECT b.* FROM gsc.t_user_role a left join t_role b
+		on a.roleid=b.id
+		where a.isdel=0 and b.isdel=0
+		<if test="userid != null">
+			and a.userid=#{userid}
 		</if>
 	</select>
 

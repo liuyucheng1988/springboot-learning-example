@@ -21,4 +21,8 @@ public class RoleMenu extends PaperBase {
 
     private Date createtime;
 
+    public RoleMenu(Integer roleId, Integer menuId) {
+        this.roleId = roleId;
+        this.menuId = menuId;
+    }
 }

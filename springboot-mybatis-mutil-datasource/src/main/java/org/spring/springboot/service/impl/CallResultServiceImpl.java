@@ -15,6 +15,7 @@ import org.spring.springboot.domain.TypeEnum;
 import org.spring.springboot.exception.BusinessException;
 import org.spring.springboot.service.CallResultService;
 import org.spring.springboot.util.Constant;
+import org.spring.springboot.util.PageUtils;
 import org.spring.springboot.util.RedisUtil;
 import org.spring.springboot.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,19 +75,10 @@ public class CallResultServiceImpl implements CallResultService {
         return new PageVO<CallResultRsp>(info.getTotal(), callResultRsps);
     }
 
-    private String getOrderBy(PaperBase req){
-        String orderBy = null;
-        if(StringUtils.isNotBlank(req.getField())){
-            orderBy = req.getField();
-            if(req.getDesc() != null && 1 == req.getDesc()){
-                orderBy = orderBy  + " desc";
-            }
-        }
-        return orderBy;
-    }
+
     @Override
     public PageVO<CallResultRsp> finCallResultPatchByCondition(CallResultPatchReq req) {
-        String orderBy = getOrderBy(req);
+        String orderBy = PageUtils.getOrderBy(req);
         PageHelper.startPage(req.getPageNum(), req.getPageSize(), orderBy);
         List<CallResultRsp> callResultRsps = callResultDao.finCallResultPatchByCondition(req);
 
@@ -111,7 +103,7 @@ public class CallResultServiceImpl implements CallResultService {
     }
 
     public PageVO<CallResultRsp> finCallResultItemByCondition(CallResultReq req) {
-        String orderBy = getOrderBy(req);
+        String orderBy = PageUtils.getOrderBy(req);
         PageHelper.startPage(req.getDetailPageNum(), req.getDetailPageSize(), orderBy);
         List<CallResultRsp> callResultRsps = callResultDao.finCallResultItemByCondition(req);
 
@@ -139,7 +131,7 @@ public class CallResultServiceImpl implements CallResultService {
     }
     @Override
     public PageVO<RouteRsp> findRouteByCondition(Route req) {
-        String orderBy  = getOrderBy(req);
+        String orderBy  = PageUtils.getOrderBy(req);
         PageHelper.startPage(req.getPageNum(), req.getPageSize(), orderBy);
         List<RouteRsp> rsps = routeDao.findRouteByCondition(req);
         Map<String, String> provinceMap = getTypeEnumByType(Constant.Type.Province);
@@ -504,7 +496,7 @@ public class CallResultServiceImpl implements CallResultService {
 
     @Override
     public PageVO<Api> findApiByCondition(Api req) {
-        String orderBy = getOrderBy(req);
+        String orderBy = PageUtils.getOrderBy(req);
         PageHelper.startPage(req.getPageNum(), req.getPageSize(), orderBy);
         List<Api> servers = apiDao.findApiByCondition(req);
         PageInfo<Api> info = new PageInfo<>(servers);
@@ -567,7 +559,7 @@ public class CallResultServiceImpl implements CallResultService {
 
     @Override
     public PageVO<TypeEnum> findTypeEnumByCondition(TypeEnum req) {
-        String orderBy = getOrderBy(req);
+        String orderBy = PageUtils.getOrderBy(req);
         PageHelper.startPage(req.getPageNum(), req.getPageSize(), orderBy);
         List<TypeEnum> typeEnums = typeEnumDao.findTypeEnumByCondition(req);
         PageInfo<TypeEnum> info = new PageInfo<>(typeEnums);

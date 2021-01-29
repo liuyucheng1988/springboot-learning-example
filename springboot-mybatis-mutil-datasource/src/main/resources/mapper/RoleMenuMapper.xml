@@ -9,6 +9,20 @@
 		<result column="createtime" property="createtime"/>
 	</resultMap>
 
+	<!-- 批量插入生成的兑换码 -->
+	<insert id ="insertBatchRoleMenu" parameterType="org.spring.springboot.domain.RoleMenu" >
+		<selectKey resultType ="java.lang.Integer" keyProperty= "id"
+				   order= "AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey >
+		insert into t_role_menu
+		(role_id, menu_id)
+		values
+		<foreach collection ="roleMenuList" item="item" index= "index" separator =",">
+			(#{item.roleId}, #{item.menuId})
+		</foreach >
+	</insert >
+
 	<!--<insert id="insertUser" parameterType="org.spring.springboot.domain.User">
 		insert into t_user(user_name, password, description)
 		values(#{vo.userName},#{vo.passWord},#{vo.description})
@@ -21,6 +35,20 @@
 		</set>
 		where user_name=#{vo.userName}
 	</update>-->
+	<update id="deleteByRoleidAndMenuIds">
+		update t_role_menu  set isdel=1
+		where  isdel=0
+		<if test="roleId != null">
+			and role_id = #{roleId}
+		</if>
+		<if test="idsToDel != null and idsToDel.size() > 0" >
+			and menu_id in
+			<foreach collection="idsToDel" item="item" index="index" open="(" close=")" separator=",">
+				#{item}
+			</foreach>
+		</if>
+	</update>
+
 	<select id="findRoleMenuByCondition" resultMap="BaseResultMap"
 			parameterType="org.spring.springboot.domain.RoleMenu">
 		select *

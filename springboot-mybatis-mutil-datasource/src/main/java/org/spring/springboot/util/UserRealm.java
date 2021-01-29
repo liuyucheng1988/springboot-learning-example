@@ -27,15 +27,9 @@ import java.util.Set;
 @Service
 public class UserRealm extends AuthorizingRealm {
 
-//    @Autowired
-//    private UserService userService;
-@Autowired
-private UserService userService;
+    @Autowired
+    private UserService userService;
 
-
-    /**
-     * 大坑！，必须重写此方法，不然Shiro会报错
-     */
     @Override
     public boolean supports(AuthenticationToken token) {
         return token instanceof JWTToken;
@@ -49,7 +43,7 @@ private UserService userService;
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken auth) throws AuthenticationException {
 //        String token = new String((char[]) auth.getCredentials()) ;
-        String token = (String) auth.getCredentials() ;
+        String token = (String) auth.getCredentials();
         // 解密获得username，用于和数据库进行对比
         String username = JWTUtils.getUsername(token);
 
@@ -60,11 +54,11 @@ private UserService userService;
         User req = new User();
         req.setUserName(username);
         List<User> users = userService.findUserByCondition(req);
-        if(CollectionUtils.isEmpty(users)){
+        if (CollectionUtils.isEmpty(users)) {
             throw new AccountException("账号不存在!");
         }
         User user = users.get(0);
-        if(JWTUtils.isExpire(token)){
+        if (JWTUtils.isExpire(token)) {
             throw new AuthenticationException(" 身份凭证过期，请退出重新登录！");
         }
 
@@ -76,20 +70,20 @@ private UserService userService;
 
         // shiro url权限
         //如果验证通过，获取用户的角色
-        List<Role> roles= userService.findRolesById(user.getId());
+        List<Role> roles = userService.findRolesByUserId(user.getId());
         //查询用户的所有菜单(包括了菜单和按钮)
         List<Menu> menus = userService.findMenuByRoles(roles);
 
-        Set<String> urls=new HashSet<>();
-        Set<String> perms=new HashSet<>();
-        if(!CollectionUtils.isEmpty(menus)){
+        Set<String> urls = new HashSet<>();
+        Set<String> perms = new HashSet<>();
+        if (!CollectionUtils.isEmpty(menus)) {
             for (Menu menu : menus) {
                 String url = menu.getUrl();
                 String per = menu.getPermissions();
-                if(menu.getType()==0&& !StringUtils.isEmpty(url)){
+                if (menu.getType() == 0 && StringUtils.isNotBlank(url)) {
                     urls.add(menu.getUrl());
                 }
-                if(menu.getType()==1&&!StringUtils.isEmpty(per)){
+                if (menu.getType() == 1 && StringUtils.isNotBlank(per)) {
                     perms.add(per);
                 }
             }
@@ -104,11 +98,6 @@ private UserService userService;
         return new SimpleAuthenticationInfo(activeUser, token, getName());
     }
 
-   /* @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return new SimpleAuthorizationInfo();
-    }*/
-
     /**
      * 只有当需要检测用户权限的时候才会调用此方法，例如checkRole,checkPermission之类的
      */
@@ -119,10 +108,10 @@ private UserService userService;
         //permission 角色
         ActiveUser activeUser = (ActiveUser) SecurityUtils.getSubject().getPrincipal();
 
-        if(activeUser.getUser().getUserName().equals("admin")){
+        if (activeUser.getUser().getUserName().equals("admin")) {
             //超级管理员
             authorizationInfo.addStringPermission("*:*");
-        }else {
+        } else {
             List<String> permissions = new ArrayList<>(activeUser.getPermissions());
             List<Role> roleList = activeUser.getRoles();
             //授权角色
@@ -134,7 +123,7 @@ private UserService userService;
             }
             //授权权限
             if (!CollectionUtils.isEmpty(permissions)) {
-                for (String  permission : permissions) {
+                for (String permission : permissions) {
                     if (StringUtils.isNotBlank(permission)) {
                         authorizationInfo.addStringPermission(permission);
                     }

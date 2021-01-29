@@ -4,15 +4,17 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.spring.springboot.domain.Role;
 import org.spring.springboot.domain.RoleMenu;
+import org.spring.springboot.domain.UserRole;
 
 import java.util.List;
 
 @Mapper
-public interface RoleMenuDao {
-    List<RoleMenu> findRoleMenuByCondition(@Param("vo") RoleMenu req);
+public interface UserRoleDao {
+    List<UserRole> findUserRoleByCondition(@Param("vo") UserRole req);
+    void insertUserRole(@Param("vo") UserRole req);
 
-    void deleteByRoleidAndMenuIds(@Param("roleId") Integer roleId,@Param("idsToDel")List<Integer> idsToDel);
-    Integer insertBatchRoleMenu(@Param("roleMenuList") List<RoleMenu> roleMenuList);
+    void updateUserRole(@Param("vo") UserRole userRole);
+    void deleteUserRole(@Param("userId") Integer userId);
 //    List<Api> queryApiByCondition(@Param("vo") Api req);
 //    List<Api> getApiByCodeOrNameOrUrl(@Param("vo") Api req);
 

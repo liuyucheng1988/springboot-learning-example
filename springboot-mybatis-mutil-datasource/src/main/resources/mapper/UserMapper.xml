@@ -9,11 +9,21 @@
 		<result column="isdel" property="isdel"/>
 		<result column="createtime" property="createtime"/>
 		<result column="type" property="type"/>
+		<result column="state" property="state"/>
+		<result column="roleid" property="roleId"/>
+		<result column="rolename" property="roleName"/>
 	</resultMap>
+	<update id="delUser" parameterType="java.lang.Integer">
+		update t_user set isdel=1 where id=#{id}
+	</update>
 
 	<insert id="insertUser" parameterType="org.spring.springboot.domain.User">
-		insert into t_user(user_name, password, description,type)
-		values(#{vo.userName},#{vo.passWord},#{vo.description},#{vo.type})
+		<selectKey resultType ="java.lang.Integer" keyProperty= "id"
+				   order= "AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey >
+		insert into t_user(user_name, password, description)
+		values(#{vo.userName},#{vo.passWord},#{vo.description})
 	</insert>
 	<update id="updateUser" parameterType="org.spring.springboot.domain.User">
 		update t_user
@@ -21,8 +31,15 @@
 			<if test="vo.passWord != null">password=#{vo.passWord},</if>
 			<if test="vo.description != null">description=#{vo.description},</if>
 			<if test="vo.type != null">type=#{vo.type},</if>
+			<if test="vo.state != null">state=#{vo.state},</if>
 		</set>
-		where user_name=#{vo.userName}
+		where 1=1
+		<if test="vo.id != null">
+			and id = #{vo.id}
+		</if>
+		<if test="vo.userName != null and vo.userName != ''">
+			and user_name = #{vo.userName}
+		</if>
 	</update>
 	<select id="findUserByCondition" resultMap="BaseResultMap"
 			parameterType="org.spring.springboot.domain.User">
@@ -37,6 +54,45 @@
 		<if test="vo.type != null">
 			and type = #{vo.type}
 		</if>
+		<if test="vo.id != null">
+			and id = #{vo.id}
+		</if>
+		<if test="vo.state != null">
+			and state = #{vo.state}
+		</if>
 	</select>
-
+	<select id="queryByRoleId" resultMap="BaseResultMap"
+			parameterType="org.spring.springboot.domain.User">
+		SELECT a.*,b.roleid FROM  t_user a join t_user_role b on a.id=b.userid
+		where a.isdel=0 and b.isdel=0
+		<if test="vo.userName != null and vo.userName != ''">
+			and a.user_name  like concat('%',#{vo.userName}, '%')
+		</if>
+		<if test="vo.roleId != null">
+			and b.roleid=#{vo.roleId}
+		</if>
+	</select>
+	<select id="queryUserWithRoleIdByUserName" resultMap="BaseResultMap"
+			parameterType="org.spring.springboot.domain.User">
+		SELECT a.*,b.roleid
+		FROM  t_user a left join t_user_role b on a.id=b.userid
+		and b.isdel=0 where a.isdel=0
+		<if test="vo.userName != null and vo.userName != ''">
+			and a.user_name  like concat('%',#{vo.userName}, '%')
+		</if>
+	</select>
+	<select id="queryLikeByCondition" resultMap="BaseResultMap"
+			parameterType="org.spring.springboot.domain.User">
+		select *
+		FROM t_user where isdel=0
+		<if test="vo.userName != null and vo.userName != ''">
+			and user_name like concat('%',#{vo.userName}, '%')
+		</if>
+		<if test="vo.passWord != null and vo.passWord != ''">
+			and password = #{vo.passWord}
+		</if>
+		<if test="vo.type != null">
+			and type = #{vo.type}
+		</if>
+	</select>
 </mapper>

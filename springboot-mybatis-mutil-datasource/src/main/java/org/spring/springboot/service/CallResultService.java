@@ -29,6 +29,7 @@ public interface CallResultService {
 
     List<KeyValueVO> findTypeMap();
 
+
     void updateTypeEnum(TypeEnum req) throws BusinessException;
 
     void deleteTypeEnum(Integer id) throws BusinessException;

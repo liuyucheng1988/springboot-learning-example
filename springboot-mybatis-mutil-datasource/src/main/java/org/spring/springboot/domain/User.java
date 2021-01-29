@@ -40,7 +40,8 @@ public class User extends PaperBase {
     @NotNull(message = "密码不能为空")
     @Size(min=1, max=45)
     private String passWord;
-
+    // 用户状态true-1:生效 false-0:失效
+    private Boolean state;
     /**
      * 描述
      */
@@ -48,7 +49,9 @@ public class User extends PaperBase {
 
     private Boolean isdel;
     private Date createtime;
-    private Integer type;// 0:管理员1：普通用户,
+    private Integer type;// 0:管理员1：普通用户。添加用户时，不控制该字段，db默认为1.type=0的用户是预置的。
+    private Integer roleId;
+    private String roleName;
 
 
 }

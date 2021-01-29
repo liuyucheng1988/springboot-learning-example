@@ -1,24 +1,20 @@
-package org.spring.springboot.domain;
+package org.spring.springboot.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.spring.springboot.vo.PaperBase;
 
-import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserRole extends PaperBase {
-    private Integer id;
-    private Integer userId;
-    private Integer roleId;
-    private Boolean isdel;
-    private Date createtime;
-
+public class RoleRightsReq {
+    private String rids;//1,2,3 权限编号
+    private List<Integer> ridList;
+    private List<String> ridStrList;
 }

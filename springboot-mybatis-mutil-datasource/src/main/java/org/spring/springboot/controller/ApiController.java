@@ -2,9 +2,8 @@ package org.spring.springboot.controller;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
-import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.spring.springboot.domain.Menu;
 import org.spring.springboot.domain.*;
 import org.spring.springboot.exception.BusinessException;
 import org.spring.springboot.service.CallResultService;
@@ -12,68 +11,102 @@ import org.spring.springboot.service.UserService;
 import org.spring.springboot.util.Constant;
 import org.spring.springboot.util.Response;
 import org.spring.springboot.vo.*;
-import org.spring.springboot.vo.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-/**
- * 用户控制层
- *
- * Created by bysocket on 07/02/2017.
- */
 @RestController
 @RequestMapping("/api")
 @Slf4j
-public class UserRestController {
+public class ApiController {
 
     @Autowired
     private UserService userService;
     @Autowired
     private CallResultService callResultService;
-    /**
-     * 根据用户名获取用户信息，包括从库的地址信息
-     *
-     * @param userName
-     * @return
-     */
-    /*@RequestMapping(value = "/user", method = RequestMethod.GET)
-    public List<User> findByName(@RequestParam(value = "userName", required = true) String userName) {
-        User user = new User();
-        user.setUserName(userName);
-        return userService.findUserByCondition(user);
-    }*/
-    @GetMapping(value = "/menus")
-    public Response getMenus() {
-
-        List<Menu> menus = new ArrayList<>();
-        List<Menu> menuChildren = new ArrayList<>();
-        menuChildren.add(new Menu(11, "请求列表", "request"));
-        menuChildren.add(new Menu(12, "分组统计", "monitor"));
-        menus.add(new Menu(1, "监控管理", null, menuChildren));
-
-        menuChildren = new ArrayList<>();
-        menuChildren.add(new Menu(21, "路由配置", "route"));
-        menuChildren.add(new Menu(22, "Api配置", "api"));
-        menuChildren.add(new Menu(23, "参数配置", "type"));
-        menus.add(new Menu(2, "系统管理", null, menuChildren));
-
-      /*  menuChildren = new ArrayList<>();
-        menuChildren.add(new Menu(31, "用户列表", "route"));
-        menus.add(new Menu(3, "用户管理", null, menuChildren));
-
-        menuChildren = new ArrayList<>();
-        menuChildren.add(new Menu(41, "角色列表", "route"));
-        menuChildren.add(new Menu(42, "权限列表", "route"));
-        menus.add(new Menu(4, "权限管理", null, menuChildren));*/
-
+    @PostMapping(value = "/permission")
+    @ApiOperation(value = "权限列表查询")
+    @RequiresPermissions({"right:list"})
+    public Response getMenusList(@RequestBody Menu req) {
+        PageVO<Menu> menus = userService.queryMenusByNameLike(req);
         return Response.SUCCESSDATA(menus);
-
+    }
+    @DeleteMapping("/roles/{roleId}/rights/{rightId}")
+    @ApiOperation(value = "删除角色绑定的权限")
+//    @RequiresPermissions({"roleright:del"})
+    public Response deleteRoleRight(@PathVariable Integer roleId, @PathVariable Integer rightId) throws BusinessException {
+        userService.deleteRoleRight(roleId, rightId);
+        return Response.SUCCESSDATA(userService.findMenuTreeByRoleId(roleId));
+    }
+    @PostMapping("/roles")
+    @ApiOperation(value = "添加角色")
+    @RequiresPermissions({"role:add"})
+    public Response addRole(@RequestBody @Validated RoleVo req) throws BusinessException {
+        userService.insertRole(req);
+        return Response.SUCCESS;
+    }
+    @PutMapping("/roles/{roleId}")
+    @ApiOperation(value = "编辑角色")
+    @RequiresPermissions({"role:edit"})
+    public Response editRole(@PathVariable Integer roleId, @RequestBody @Validated RoleVo req) throws BusinessException {
+        if(roleId == null || roleId == 0){
+            throw new BusinessException(500, "角色id必须大于0");
+        }
+        req.setId(roleId);
+        userService.updateRole(req);
+        return Response.SUCCESS;
+    }
+    @DeleteMapping("/roles/{roleId}")
+    @ApiOperation(value = "删除角色")
+    @RequiresPermissions({"role:del"})
+    public Response editRole(@PathVariable Integer roleId) throws BusinessException {
+        if(roleId == null || roleId == 0){
+            throw new BusinessException(500, "角色id必须大于0");
+        }
+        userService.deleteRole(roleId);
+        return Response.SUCCESS;
+    }
+    @GetMapping("/roles/{roleId}")
+    @ApiOperation(value = "根据id查询角色")
+    public Response queryRoleById(@PathVariable Integer roleId) throws BusinessException {
+        RoleVo roleVo = userService.queryRoleById(roleId);
+        return Response.SUCCESSDATA(roleVo);
+    }
+    @GetMapping("/queryrole")
+    @ApiOperation(value = "角色下拉列表")
+    public Response findRoleMap() throws BusinessException {
+        return Response.SUCCESSDATA(userService.findRoleMap());
+    }
+    @GetMapping("/roles")
+    @ApiOperation(value = "角色列表")
+    @RequiresPermissions({"role:list"})
+    public Response queryRole() throws BusinessException {
+        List<RoleVo> roleVos = userService.listRole();
+        return Response.SUCCESSDATA(roleVos);
+    }
+    @GetMapping("/rights/tree")
+    @ApiOperation(value = "获取权限树")
+    public Response queryRightsByRoleId() throws BusinessException {
+        List<Menu> menuList = userService.findMenuRightsTree();
+        return Response.SUCCESSDATA(menuList);
+    }
+    @PostMapping("/roles/{roleId}/rights")
+    @ApiOperation(value = "给角色分配权限")
+    @RequiresPermissions({"role:add"})
+    public Response addRoleRights(@PathVariable Integer roleId, @RequestBody RoleRightsReq req) throws BusinessException {
+        userService.addRoleRights(roleId, req);
+        return Response.SUCCESS;
     }
 
+    @GetMapping(value = "/menus")
+    public Response getMenus() {
+        List<Menu> menus = userService.findMenuTree();
+        return Response.SUCCESSDATA(menus);
+    }
     @PostMapping("/login")
     public Response login(@RequestBody @Validated  User user) throws BusinessException {
         log.info("login user="+user);
@@ -88,11 +121,39 @@ public class UserRestController {
         UserInfoVO userInfoVO = userService.info();
         return Response.SUCCESSDATA(userInfoVO);
     }
+    @ApiOperation(value = "根据用户id查询用户信息")
+    @GetMapping("/user/{id}")
+    public Response queryUserById(@PathVariable Integer id) throws BusinessException {
+        User user = userService.queryUserById(id);
+        return Response.SUCCESSDATA(user);
+    }
+    @ApiOperation(value = "删除用户信息")
+    @DeleteMapping("/user/{id}")
+    public Response delUserById(@PathVariable Integer id) throws BusinessException {
+        userService.deleteUser(id);
+        return Response.SUCCESS;
+    }
+    @PutMapping("/user")
+    public Response updateUser(@RequestBody @Validated  User user) throws BusinessException {
+        log.info("updateUser user="+user);
+        userService.updateUser(user);
+        return Response.SUCCESS;
+    }
     @PostMapping("/user")
     public Response addUser(@RequestBody @Validated  User user) throws BusinessException {
         log.info("add user="+user);
         userService.addUser(user);
         return Response.SUCCESS;
+    }
+    @PutMapping("/users/{id}/state/{state}")
+    public Response changeUserState(@PathVariable Integer id, @PathVariable boolean state) throws BusinessException {
+        userService.changeUserState(id, state);
+        return Response.SUCCESS;
+    }
+    @PostMapping("/queryuser")
+    public Response queryUser(@RequestBody User user) throws BusinessException {
+        log.info("query user="+user);
+        return Response.SUCCESSDATA(userService.queryUserLikeByCondition(user));
     }
     @PostMapping("/password")
     @ApiOperation(value = "修改密码")
@@ -102,7 +163,17 @@ public class UserRestController {
         userService.changePwd(user);
         return Response.SUCCESS;
     }
+    @PostMapping("/pwdhand")
+    @ApiOperation(value = "忘记密码并修改密码")
+    @RequiresPermissions({"password:calledit"})
+    public Response changePwdBackend(@RequestBody @Validated  UserPwBackend user) throws BusinessException {
+        log.info("changePwdBackend userPw="+user);
+        userService.changePwdBackend(user);
+        return Response.SUCCESS;
+    }
     @PostMapping("/querymonitor")
+    @ApiOperation(value = "分组统计")
+    @RequiresPermissions({"request:group"})
     public Response queryMonitor(@RequestBody CallResultReq req)   {
         if(req.getCreateTimeFrom() == null || req.getCreateTimeTo() == null){
             return Response.FAIL;
@@ -110,6 +181,8 @@ public class UserRestController {
         return Response.SUCCESSDATA(callResultService.findByCondition(req));
     }
     @PostMapping("/listmonitor")
+    @ApiOperation(value = "请求列表查询")
+    @RequiresPermissions({"request:list"})
     public Response listMonitor(@RequestBody CallResultPatchReq req)   {
         if(req.getCreateTimeFrom() == null || req.getCreateTimeTo() == null){
             return Response.FAIL;
@@ -117,6 +190,8 @@ public class UserRestController {
         return Response.SUCCESSDATA(callResultService.finCallResultPatchByCondition(req));
     }
     @PostMapping("/querydetail")
+    @ApiOperation(value = "请求分组详情查看")
+    @RequiresPermissions({"request:groupdetail"})
     public Response queryDetail(@RequestBody CallResultReq req)   {
         if(req.getCreateTimeFrom() == null || req.getCreateTimeTo() == null){
             return Response.FAIL;
@@ -129,6 +204,8 @@ public class UserRestController {
         return Response.SUCCESS;
     }
     @PostMapping("/queryroute")
+    @ApiOperation(value = "路由列表查询")
+    @RequiresPermissions({"route:list"})
     public Response queryRoute(@RequestBody Route req)   {
         return Response.SUCCESSDATA(callResultService.findRouteByCondition(req));
     }
@@ -162,6 +239,8 @@ public class UserRestController {
         return Response.SUCCESS;
     }
     @PostMapping("/queryapi")
+    @ApiOperation(value = "Api列表查询")
+    @RequiresPermissions({"api:list"})
     public Response queryServer(@RequestBody Api req)   {
         return Response.SUCCESSDATA(callResultService.findApiByCondition(req));
     }
@@ -195,6 +274,8 @@ public class UserRestController {
         return Response.SUCCESS;
     }
     @PostMapping("/querytype")
+    @ApiOperation(value = "参数列表查询")
+    @RequiresPermissions({"param:list"})
     public Response queryType(@RequestBody TypeEnum req)   {
         return Response.SUCCESSDATA(callResultService.findTypeEnumByCondition(req));
     }

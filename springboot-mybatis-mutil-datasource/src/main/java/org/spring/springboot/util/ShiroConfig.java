@@ -47,13 +47,16 @@ public class ShiroConfig {
         Map<String, String> filterRuleMap = new HashMap<>();
 
         filterRuleMap.put("/api/login", "anon");
+        filterRuleMap.put("/api/pwdhand", "anon");
 //        filterRuleMap.put("/user/imgCode", "anon");
 //        //开放API文档接口
+
+//        filterRuleMap.put("/v2/api-docs", "anon");
         filterRuleMap.put("/swagger-ui.html", "anon");
-//        filterRuleMap.put("/webjars/**","anon");
+        filterRuleMap.put("/webjars/**","anon");
         filterRuleMap.put("/swagger-resources/**","anon");
-//        filterRuleMap.put("/v2/**","anon");
-//        filterRuleMap.put("/static/**","anon");
+        filterRuleMap.put("/v2/**","anon");
+        filterRuleMap.put("/static/**","anon");
         //sql监控
         filterRuleMap.put("/druid/**","anon");
         // 所有请求通过我们自己的JWT Filter

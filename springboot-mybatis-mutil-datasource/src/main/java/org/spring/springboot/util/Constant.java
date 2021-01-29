@@ -6,6 +6,9 @@ public class Constant {
     public static String NULL = "null";
     public static String COMMA = ",";
     public static String UNDERSCORE = "_";
+//    public static String FIRST_LEVLE = "一级";
+//    public static String SECOND_LEVLE = "二级";
+//    public static String THIRD_LEVLE = "三级";
     // 配置类型
     public static class Type{
         public static String Province = "province";
