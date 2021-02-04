@@ -182,19 +182,20 @@ public class ApiController {
     }
 
     @PostMapping("/echarts/line")
-    @ApiOperation(value = "汇总最近10天各省份请求次数")
-//    @RequiresPermissions({"request:group"})
+    @ApiOperation(value = "汇总最近14天各省份请求次数")
+    @RequiresPermissions({"trend:day"})
     public Response groupByProvinceAndDay(@RequestBody CallResultReq req) throws BusinessException {
         return Response.SUCCESSDATA(callResultService.groupByProvinceAndDay());
     }
     @PostMapping("/echarts/monthline")
     @ApiOperation(value = "汇总最近12个月各省份请求次数")
-//    @RequiresPermissions({"request:group"})
+    @RequiresPermissions({"trend:month"})
     public Response groupByProvinceAndMonth(@RequestBody CallResultReq req) throws BusinessException {
         return Response.SUCCESSDATA(callResultService.groupByProvinceAndMonth());
     }
     @PostMapping("/echarts/pieprovince/{type}")
     @ApiOperation(value = "饼化地区调用次数")
+    @RequiresPermissions({"hot:query"})
     public Response pieDisplayData(@PathVariable Integer type, @RequestBody CallResultPatchReq req) throws BusinessException {
         List<NameValueVO> vos = callResultService.pieDisplayData(type, req);
         return Response.SUCCESSDATA(vos);

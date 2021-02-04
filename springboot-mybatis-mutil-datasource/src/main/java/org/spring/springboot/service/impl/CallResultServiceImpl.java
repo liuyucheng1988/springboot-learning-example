@@ -163,9 +163,9 @@ public class CallResultServiceImpl implements CallResultService {
             }
         }else if(type == 4){
             //页面传入搜索条件
-            req.setCreateTimeFrom(req.getCreateTimeFrom());
-            req.setCreateTimeTo(req.getCreateTimeTo());
-            req.setProvinceList(req.getProvinceList());
+            req.setCreateTimeFrom(resultPatchReq.getCreateTimeFrom());
+            req.setCreateTimeTo(resultPatchReq.getCreateTimeTo());
+            req.setProvinceList(resultPatchReq.getProvinceList());
         }
         List<CallResultRsp> callResultRsps = callResultDao.groupByProvince(req);
         Map<String, String> provinceMap = getTypeEnumByType(Constant.Type.Province);
