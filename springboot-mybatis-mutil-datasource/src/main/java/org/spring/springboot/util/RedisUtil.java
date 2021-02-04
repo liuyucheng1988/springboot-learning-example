@@ -1,5 +1,6 @@
 package org.spring.springboot.util;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -16,6 +17,7 @@ import java.util.concurrent.TimeUnit;
  * @Date 20-1-5 上午11:58
  */
 @Component
+@Slf4j
 public class RedisUtil {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
@@ -24,6 +26,33 @@ public class RedisUtil {
         this.redisTemplate = redisTemplate;
     }
 
+    private static long Expire_Seconds = 60;
+    /**
+     * 加锁
+     */
+    public boolean getLock(String key) {
+        try {
+            long count = redisTemplate.opsForValue().increment(key, 1);
+            if(count == 1){
+                //设置有效期2秒
+                redisTemplate.expire(key, Expire_Seconds, TimeUnit.SECONDS);
+                return true;
+            }else{
+                long time = redisTemplate.getExpire(key,TimeUnit.SECONDS);
+                if(time == -1){
+                    //设置失败重新设置过期时间
+                    redisTemplate.expire(key, Expire_Seconds, TimeUnit.SECONDS);
+                    return true;
+                }
+            }
+            //如果存在表示重复
+            return false;
+        } catch (Exception e) {
+            log.error("redis加锁异常,KEY="+key, e);
+            redisTemplate.delete(key);		//出现异常删除锁
+            return true;
+        }
+    }
     /**
      * 指定缓存失效时间
      * @param key 键

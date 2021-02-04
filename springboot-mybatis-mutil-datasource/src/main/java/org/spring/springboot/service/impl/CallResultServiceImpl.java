@@ -4,25 +4,24 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.spring.springboot.dao.ApiDao;
-import org.spring.springboot.dao.CallResultDao;
-import org.spring.springboot.dao.RouteDao;
-import org.spring.springboot.dao.TypeEnumDao;
-import org.spring.springboot.domain.Api;
-import org.spring.springboot.domain.CallResult;
-import org.spring.springboot.domain.Route;
-import org.spring.springboot.domain.TypeEnum;
+import org.spring.springboot.dao.*;
+import org.spring.springboot.domain.*;
 import org.spring.springboot.exception.BusinessException;
 import org.spring.springboot.service.CallResultService;
 import org.spring.springboot.util.Constant;
+import org.spring.springboot.util.DateUtil;
 import org.spring.springboot.util.PageUtils;
 import org.spring.springboot.util.RedisUtil;
 import org.spring.springboot.vo.*;
+import org.spring.springboot.vo.echarts.ProvinceDayData;
+import org.spring.springboot.vo.echarts.ProvinceDayVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -39,7 +38,8 @@ public class CallResultServiceImpl implements CallResultService {
     private TypeEnumDao typeEnumDao;
     @Autowired
     private RedisUtil redisUtil;
-
+    @Autowired
+    private StsMonthDao stsMonthDao;
     public CallResultServiceImpl() {
     }
 
@@ -74,7 +74,247 @@ public class CallResultServiceImpl implements CallResultService {
         PageInfo<CallResultRsp> info = new PageInfo<>(callResultRsps);
         return new PageVO<CallResultRsp>(info.getTotal(), callResultRsps);
     }
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void groupProvinceStsMonth(){
+        Date now = new Date();
+        Date lastMonth = DateUtil.addMonth(-1);
+        SimpleDateFormat sdf = new SimpleDateFormat(DateUtil.YEAR_MONTH);
+        SimpleDateFormat sdfDateTime = new SimpleDateFormat(DateUtil.DAY_TIME);
+        String nowMonth = sdf.format(now);
+        try {
+            Date nowFormat = sdfDateTime.parse(sdf.format(now) + Constant.Month_Morning);
+            Date lastMonthFormat = sdfDateTime.parse(sdf.format(lastMonth) + Constant.Month_Morning);
+            log.info("start to groupProvinceStsMonth by cronjob MonthCallSizeJob");
+            boolean getLock = redisUtil.getLock(nowMonth);
+            if(getLock){
+                log.info("获取锁成功，key="+nowMonth);
+                String value = (String) redisUtil.hget(Constant.KEY_MonthCallSizeJob, nowMonth);
+                if(value != null && value.equals("1")){
+                    log.info("已经汇总过上个月的地区调用次数，key="+nowMonth);
+                    return;
+                }
+                redisUtil.hset(Constant.KEY_MonthCallSizeJob, nowMonth, "1");
+                StsMonthPatchReq req = new StsMonthPatchReq();
+                req.setCreateTimeFrom(lastMonthFormat);
+                req.setCreateTimeTo(nowFormat);
+                List<StsMonth>  stsMonths = stsMonthDao.groupProvinceStsMonth(req);
+                log.info("groupProvinceStsMonth result size= "+stsMonths.size());
+                if(!CollectionUtils.isEmpty(stsMonths)){
+                    stsMonthDao.insertStsMonth(stsMonths);
+                }
+            }else{
+                log.info("获取锁失败，key="+nowMonth);
+            }
+        } catch (Exception e) {
+            log.error("MonthCallSizeJob 异常", e);
+            redisUtil.hdel(Constant.KEY_MonthCallSizeJob, nowMonth);
+        } finally {
+            redisUtil.del(nowMonth);
+        }
+    }
+    //type=0 1 2 3 4对应:当月\上月\最近3月\全部\搜索按钮
+    @Override
+    public List<NameValueVO> pieDisplayData(Integer type, CallResultPatchReq resultPatchReq) throws BusinessException {
+        CallResultPatchReq req = new CallResultPatchReq();
+        SimpleDateFormat sdfDaytime = new SimpleDateFormat(DateUtil.DAY_TIME);
+        SimpleDateFormat sdf = new SimpleDateFormat(DateUtil.YEAR_MONTH);
+        Date now = new Date();
+        if(type == 0){
+            //当月
+            try {
+                Date dateFrom = sdfDaytime.parse(sdf.format(now) + Constant.Month_Morning);
+                req.setCreateTimeFrom(dateFrom);
+                req.setCreateTimeTo(now);
+            } catch (ParseException e) {
+                throw new BusinessException(500, "获取开始时间异常。",e.getMessage());
+            }
+        }else if(type == 1){
+            //上个月
+            try {
+                Date nowMonthMorning = sdfDaytime.parse(sdf.format(now) + Constant.Month_Morning);
+                Date lastMonth = DateUtil.addMonth(-1);
+                Date lastMonthFormat = sdfDaytime.parse(sdf.format(lastMonth) + Constant.Month_Morning);
+                req.setCreateTimeFrom(lastMonthFormat);
+                req.setCreateTimeTo(nowMonthMorning);
+            } catch (ParseException e) {
+                throw new BusinessException(500, "获取开始时间异常。",e.getMessage());
+            }
+        }else if(type == 2){
+            //最近3个月
+            try {
+                Date nowMonthMorning = sdfDaytime.parse(sdf.format(now) + Constant.Month_Morning);
+                Date lastMonth = DateUtil.addMonth(-3);
+                Date lastMonthFormat = sdfDaytime.parse(sdf.format(lastMonth) + Constant.Month_Morning);
+                req.setCreateTimeFrom(lastMonthFormat);
+                req.setCreateTimeTo(nowMonthMorning);
+            } catch (ParseException e) {
+                throw new BusinessException(500, "获取开始时间异常。",e.getMessage());
+            }
+        }else if(type == 3){
+            //全部
+            try {
+                Date nowMonthMorning = sdfDaytime.parse(sdf.format(now) + Constant.Month_Morning);
+                Date startDayTime = sdfDaytime.parse(Constant.MinDayTime);
+                req.setCreateTimeFrom(startDayTime);
+                req.setCreateTimeTo(now);
+            } catch (ParseException e) {
+                throw new BusinessException(500, "获取开始时间异常。",e.getMessage());
+            }
+        }else if(type == 4){
+            //页面传入搜索条件
+            req.setCreateTimeFrom(req.getCreateTimeFrom());
+            req.setCreateTimeTo(req.getCreateTimeTo());
+            req.setProvinceList(req.getProvinceList());
+        }
+        List<CallResultRsp> callResultRsps = callResultDao.groupByProvince(req);
+        Map<String, String> provinceMap = getTypeEnumByType(Constant.Type.Province);
+        Map<String, String> billsTypeMap = getTypeEnumByType(Constant.Type.Bills_type);
+        StringBuffer buffer = new StringBuffer();
+        callResultRsps.stream().map(rsp ->{
+            rsp.setProvinceName(provinceMap.get(rsp.getProvince()));
+            rsp.setBillsTypeName(billsTypeMap.get(rsp.getBillsType()));
+            return rsp;
+        }).collect(Collectors.toList());
 
+        Map<String, List<CallResultRsp>> groupByProvince = callResultRsps.stream().collect(Collectors.groupingBy(CallResultRsp::getProvinceName));
+        List<NameValueVO> nameValues = new ArrayList<>();
+        for(String name : groupByProvince.keySet()){
+            List<CallResultRsp> resultRsps = groupByProvince.get(name);
+            List<NameValueVO> billTypeNameList= resultRsps.stream().map(rsp -> new NameValueVO(rsp.getBillsTypeName(),rsp.getSize())).collect(Collectors.toList());
+            NameValueVO vo = new NameValueVO(name, resultRsps.stream().mapToInt(CallResultRsp::getSize).sum(), billTypeNameList);
+            nameValues.add(vo);
+        }
+        return nameValues;
+    }
+
+    @Override
+    public ProvinceDayVo groupByProvinceAndMonth() throws BusinessException {
+        int maxMonthLast = 12;//最大12个月
+        //查询当月数据
+        Date now = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat(DateUtil.YEAR_MONTH);
+        SimpleDateFormat sdfDateTime = new SimpleDateFormat(DateUtil.DAY_TIME);
+        try {
+            Date monthStartFormat = sdfDateTime.parse(sdf.format(now) + Constant.Month_Morning);
+            StsMonthPatchReq req = new StsMonthPatchReq();
+            req.setCreateTimeFrom(monthStartFormat);
+            req.setCreateTimeTo(now);
+            List<StsMonth> monthNowSts = stsMonthDao.groupProvinceStsMonth(req);
+            //查询上月及以上数据
+            List<StsMonth> stsMonths = stsMonthDao.findStsMonthByCondition(new StsMonthPatchReq());
+            List<StsMonth> stsMonthList = new ArrayList<>(stsMonths);
+            stsMonthList.addAll(monthNowSts);
+
+            Map<String, String> provinceMap = getTypeEnumByType(Constant.Type.Province);
+            stsMonthList.stream().map(rsp ->{
+                rsp.setProvinceName(provinceMap.get(rsp.getProvince()));
+                return rsp;
+            }).collect(Collectors.toList());
+            //总共有多少月
+            ProvinceDayVo vo = new ProvinceDayVo();
+            vo.setTitle("地区每月趋势");
+            List<String> allDistinctMonths = stsMonthList.stream().map(StsMonth::getMonth).distinct().sorted().collect(Collectors.toList());
+            int distinctMonthSize = allDistinctMonths.size();
+            List<String> distinctMonths = allDistinctMonths;
+            if(distinctMonthSize > maxMonthLast){
+                int startIndex = distinctMonthSize - maxMonthLast;
+                distinctMonths = new ArrayList<>();
+                for(int i = startIndex; i < distinctMonthSize; i++){
+                    distinctMonths.add(allDistinctMonths.get(i));
+                }
+                distinctMonthSize = maxMonthLast;
+            }
+            vo.setDays(distinctMonths);
+            List<ProvinceDayData> datas = new ArrayList<>();
+            Map<String, List<StsMonth>> groupByProvince = stsMonthList.stream().collect(Collectors.groupingBy(StsMonth::getProvinceName));
+            List<String> provinces = new ArrayList<>(groupByProvince.keySet());
+            vo.setProvinces(provinces);
+            //
+            for(String province : provinces){
+                List<StsMonth> daySize = groupByProvince.get(province);
+                Map<String, Integer> day_size = new HashMap<>();
+                for(StsMonth tmp : daySize){
+                    day_size.put(tmp.getMonth(), tmp.getSize());
+                }
+                ProvinceDayData data = new ProvinceDayData();
+                data.setName(province);
+                List<Integer> sizes = new ArrayList<>();
+                for(int i=0;i<distinctMonthSize;i++){
+                    if(day_size.containsKey(distinctMonths.get(i))){
+                        sizes.add(day_size.get(distinctMonths.get(i)));
+                    }else{
+                        sizes.add(0);
+                    }
+                }
+                data.setSizes(sizes);
+                datas.add(data);
+            }
+            vo.setData(datas);
+            return vo;
+        } catch (ParseException e) {
+            throw new BusinessException(500, "系统异常，请联系管理员", e.getMessage());
+        }
+    }
+    @Override
+    public ProvinceDayVo groupByProvinceAndDay() throws BusinessException {
+        SimpleDateFormat sdf = new SimpleDateFormat(DateUtil.DAY);
+        Integer daysToDisplay = 13;// 最近2周调用次数统计
+        Date dateFrom = null;
+        try {
+            dateFrom = DateUtil.addDayAndFormatMorning(-1 * daysToDisplay);
+        } catch (ParseException e) {
+            throw new BusinessException(500, "获取开始时间异常。",e.getMessage());
+        }
+        CallResultReq req = new CallResultReq();
+        req.setCreateTimeFrom(dateFrom);
+        Date now = new Date();
+        req.setCreateTimeTo(now);
+        List<String> dayStrList = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();//获取对日期操作的类对象
+        dayStrList.add(sdf.format(now));
+        for(int i=0;i<daysToDisplay;i++){
+            calendar.add(Calendar.DATE, -1);
+            dayStrList.add(sdf.format(calendar.getTime()));
+        }
+        Collections.reverse(dayStrList);
+
+        List<CallResultRsp> callResultRsps = callResultDao.groupByProvinceAndDay(req);
+        Map<String, String> provinceMap = getTypeEnumByType(Constant.Type.Province);
+        callResultRsps.stream().map(rsp ->{
+            rsp.setProvinceName(provinceMap.get(rsp.getProvince()));
+            return rsp;
+        }).collect(Collectors.toList());
+
+        ProvinceDayVo vo = new ProvinceDayVo();
+        vo.setTitle("地区近2周趋势");
+        vo.setDays(dayStrList);
+        List<ProvinceDayData> datas = new ArrayList<>();
+        Map<String, List<CallResultRsp>> groupByProvince = callResultRsps.stream().collect(Collectors.groupingBy(CallResultRsp::getProvinceName));
+        List<String> provinces = new ArrayList<>(groupByProvince.keySet());
+        vo.setProvinces(provinces);
+        for(String province : provinces){
+            List<CallResultRsp> daySize = groupByProvince.get(province);
+            Map<String, Integer> day_size = new HashMap<>();
+            for(CallResultRsp tmp : daySize){
+                day_size.put(sdf.format(tmp.getCreateday()), tmp.getSize());
+            }
+            ProvinceDayData data = new ProvinceDayData();
+            data.setName(province);
+            List<Integer> sizes = new ArrayList<>();
+            for(int i=0;i< daysToDisplay+1;i++){
+                if(day_size.containsKey(dayStrList.get(i))){
+                    sizes.add(day_size.get(dayStrList.get(i)));
+                }else{
+                    sizes.add(0);
+                }
+            }
+            data.setSizes(sizes);
+            datas.add(data);
+        }
+        vo.setData(datas);
+        return vo;
+    }
 
     @Override
     public PageVO<CallResultRsp> finCallResultPatchByCondition(CallResultPatchReq req) {
@@ -101,6 +341,8 @@ public class CallResultServiceImpl implements CallResultService {
         PageInfo<CallResultRsp> info = new PageInfo<>(callResultRsps);
         return new PageVO<CallResultRsp>(info.getTotal(), callResultRsps);
     }
+
+
 
     public PageVO<CallResultRsp> finCallResultItemByCondition(CallResultReq req) {
         String orderBy = PageUtils.getOrderBy(req);
@@ -179,7 +421,7 @@ public class CallResultServiceImpl implements CallResultService {
         TypeEnum reqParam = new TypeEnum();
         reqParam.setType(req.getType());
         reqParam.setCodesn(req.getCodesn());
-        List<TypeEnum> types = typeEnumDao.findTypeEnumByCondition(reqParam);
+        List<TypeEnum> types = typeEnumDao.findPreciseTypeEnumByCondition(reqParam);
         List<KeyValueVO> typeCodeNames = findTypeMap();
         Map<String, String> typeCode_Name = new HashMap<>();
         if(!CollectionUtils.isEmpty(typeCodeNames)){
@@ -187,11 +429,21 @@ public class CallResultServiceImpl implements CallResultService {
         }
         req.setTypeName(typeCode_Name.get(req.getType()));
         if(CollectionUtils.isEmpty(types) || (types.size() == 1 && types.get(0).getId().equals(req.getId()))){
-             //更新
+        }else{
+            throw new BusinessException(500, "已存在类型为"+(req.getTypeName() == null ? "null" : req.getTypeName())+"，编码为"+req.getCodesn()+"的记录，请重新选择类型或者填写编码");
+        }
+        //名称不能重复
+        TypeEnum reqParamName = new TypeEnum();
+        reqParamName.setType(req.getType());
+        reqParamName.setName(req.getName());
+        types = typeEnumDao.findPreciseTypeEnumByCondition(reqParamName);
+        req.setTypeName(typeCode_Name.get(req.getType()));
+        if(CollectionUtils.isEmpty(types) || (types.size() == 1 && types.get(0).getId().equals(req.getId()))){
+            //更新
             typeEnumDao.updateTypeEnum(req);
             redisUtil.hdel(Constant.HashKey.TYPEENUM, req.getType());
         }else{
-            throw new BusinessException(500, "已存在类型为"+(req.getTypeName() == null ? "null" : req.getTypeName())+"，编码为"+req.getCodesn()+"的记录，请重新选择类型或者填写编码");
+            throw new BusinessException(500, "已存在类型为"+(req.getTypeName() == null ? "null" : req.getTypeName())+"，名称为"+req.getName()+"的记录，请重新选择类型或者填写名称");
         }
     }
 
@@ -571,18 +823,26 @@ public class CallResultServiceImpl implements CallResultService {
         TypeEnum reqParam = new TypeEnum();
         reqParam.setType(req.getType());
         reqParam.setCodesn(req.getCodesn());
-        List<TypeEnum> types = typeEnumDao.findTypeEnumByCondition(reqParam);
+        List<TypeEnum> types = typeEnumDao.findPreciseTypeEnumByCondition(reqParam);
         List<KeyValueVO> typeCodeNames = findTypeMap();
         Map<String, String> typeCode_Name = new HashMap<>();
         if(!CollectionUtils.isEmpty(typeCodeNames)){
             typeCode_Name = typeCodeNames.stream().collect(Collectors.toMap(KeyValueVO::getKey, KeyValueVO::getValue));
         }
         req.setTypeName(typeCode_Name.get(req.getType()));
+        if(!CollectionUtils.isEmpty(types)){
+            throw new BusinessException(500, "已存在类型为"+(req.getTypeName() == null ? "null" : req.getTypeName())+"，编码为"+req.getCodesn()+"的记录，请重新选择类型或者填写编码");
+        }
+        //名称不能重复
+        TypeEnum reqParamName = new TypeEnum();
+        reqParamName.setType(req.getType());
+        reqParamName.setName(req.getName());
+        types = typeEnumDao.findPreciseTypeEnumByCondition(reqParamName);
         if(CollectionUtils.isEmpty(types)){
             typeEnumDao.insert(req);
             redisUtil.hdel(Constant.HashKey.TYPEENUM, req.getType());
         }else{
-            throw new BusinessException(500, "已存在类型为"+(req.getTypeName() == null ? "null" : req.getTypeName())+"，编码为"+req.getCodesn()+"的记录，请重新选择类型或者填写编码");
+            throw new BusinessException(500, "已存在类型为"+(req.getTypeName() == null ? "null" : req.getTypeName())+"，名称为"+req.getName()+"的记录，请重新选择类型或者填写名称");
         }
     }
 }

@@ -180,6 +180,32 @@ public class ApiController {
         }
         return Response.SUCCESSDATA(callResultService.findByCondition(req));
     }
+
+    @PostMapping("/echarts/line")
+    @ApiOperation(value = "汇总最近10天各省份请求次数")
+//    @RequiresPermissions({"request:group"})
+    public Response groupByProvinceAndDay(@RequestBody CallResultReq req) throws BusinessException {
+        return Response.SUCCESSDATA(callResultService.groupByProvinceAndDay());
+    }
+    @PostMapping("/echarts/monthline")
+    @ApiOperation(value = "汇总最近12个月各省份请求次数")
+//    @RequiresPermissions({"request:group"})
+    public Response groupByProvinceAndMonth(@RequestBody CallResultReq req) throws BusinessException {
+        return Response.SUCCESSDATA(callResultService.groupByProvinceAndMonth());
+    }
+    @PostMapping("/echarts/pieprovince/{type}")
+    @ApiOperation(value = "饼化地区调用次数")
+    public Response pieDisplayData(@PathVariable Integer type, @RequestBody CallResultPatchReq req) throws BusinessException {
+        List<NameValueVO> vos = callResultService.pieDisplayData(type, req);
+        return Response.SUCCESSDATA(vos);
+    }
+    @GetMapping("/stsprovince")
+    @ApiOperation(value = "汇总上月地区调用次数")
+    public Response stsProvinceMonthSize()   {
+        callResultService.groupProvinceStsMonth();
+        return Response.SUCCESS;
+    }
+
     @PostMapping("/listmonitor")
     @ApiOperation(value = "请求列表查询")
     @RequiresPermissions({"request:list"})

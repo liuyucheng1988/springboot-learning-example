@@ -1,6 +1,9 @@
 package org.spring.springboot.util;
 
 public class Constant {
+    public static String KEY_MonthCallSizeJob = "MonthCallSizeJob";
+    public static String Month_Morning =  "-01 00:00:00";//2021-03 月初末尾内容
+    public static String MinDayTime = "2020-01-01 00:00:00";
     public static String LEFT_SQUAREBRACKETS = "[";
     public static String RIGHT_SQUAREBRACKETS = "]";
     public static String NULL = "null";

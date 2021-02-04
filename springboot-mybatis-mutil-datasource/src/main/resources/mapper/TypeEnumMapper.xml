@@ -60,5 +60,21 @@
         </if>
         order by id
     </select>
-
+    <select id="findPreciseTypeEnumByCondition" resultMap="BaseResultMap"
+            parameterType="org.spring.springboot.domain.TypeEnum">
+        select *
+        FROM t_enum where isdel=0
+        <if test="vo.id != null and vo.id > 0">
+            and id = #{vo.id}
+        </if>
+        <if test="vo.codesn != null and vo.codesn != ''">
+            and codesn = #{vo.codesn}
+        </if>
+        <if test="vo.type != null and vo.type != ''">
+            and type = #{vo.type}
+        </if>
+        <if test="vo.name != null and vo.name != ''">
+            and name = #{vo.name}
+        </if>
+    </select>
 </mapper>

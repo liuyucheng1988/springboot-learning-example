@@ -9,6 +9,8 @@ import java.util.List;
 @Mapper
 public interface TypeEnumDao {
     List<TypeEnum> findTypeEnumByCondition(@Param("vo") TypeEnum req);
+    List<TypeEnum> findPreciseTypeEnumByCondition(@Param("vo") TypeEnum req);
+
     void insert(@Param("vo") TypeEnum req);
 
     List<KeyValueVO> findTypeMap();

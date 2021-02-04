@@ -16,11 +16,12 @@
         <result column="req" property="req"/>
         <result column="rsp" property="rsp"/>
         <result column="error_msg" property="errorMsg"/>
+        <result column="createday" property="createday"/>
     </resultMap>
 	<insert id="insert" parameterType="org.spring.springboot.domain.CallResult">
-		insert into t_call_result(request_id,province,category, api_codesn, duration,bills_type,result,createtime,client,req,rsp,error_msg)
+		insert into t_call_result(request_id,province,category, api_codesn, duration,bills_type,result,createtime,client,req,rsp,error_msg,createday)
 		values(#{vo.requestId},#{vo.province},#{vo.category},#{vo.apiCodesn},#{vo.duration},#{vo.billsType},#{vo.result},#{vo.createtime},#{vo.client}
-        ,#{vo.req},#{vo.rsp},#{vo.errorMsg})
+        ,#{vo.req},#{vo.rsp},#{vo.errorMsg},#{vo.createday})
 	</insert>
 
     <select id="finCallResultItemByCondition" resultType="org.spring.springboot.vo.CallResultRsp"
@@ -98,6 +99,25 @@
             and result = #{vo.result}
         </if>
         order by id desc
+    </select>
+    <select id="groupByProvinceAndDay" resultType="org.spring.springboot.vo.CallResultRsp"
+            parameterType="org.spring.springboot.vo.CallResultReq">
+        SELECT province,createday, count(1) size  FROM t_call_result
+        where createtime &gt;= #{vo.createTimeFrom} and createtime &lt;= #{vo.createTimeTo} and
+        isdel=0 group by province,createday
+    </select>
+    <select id="groupByProvince" resultType="org.spring.springboot.vo.CallResultRsp"
+            parameterType="org.spring.springboot.vo.CallResultPatchReq">
+        SELECT province,bills_type as billsType, count(1) as size  FROM t_call_result
+        where createtime &gt;= #{vo.createTimeFrom} and createtime &lt; #{vo.createTimeTo} and
+        isdel=0
+        <if test="vo.provinceList != null and vo.provinceList.size() > 0" >
+            and province in
+            <foreach collection="vo.provinceList" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        group by province,bills_type
     </select>
 
     <select id="findByCondition" resultType="org.spring.springboot.vo.CallResultRsp"

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.springboot.dao.StsMonthDao">
+    <resultMap id="BaseResultMap" type="org.spring.springboot.domain.StsMonth">
+        <result column="id" property="id"/>
+        <result column="province" property="province"/>
+        <result column="month" property="month"/>
+        <result column="size" property="size"/>
+        <result column="createtime" property="createtime"/>
+        <result column="isdel" property="isdel"/>
+    </resultMap>
+	<insert id="insertStsMonth" parameterType="org.spring.springboot.domain.StsMonth">
+        insert into t_sts_month(province,month,size)
+        values
+        <foreach collection ="stsMonthList" item="item" index= "index" separator =",">
+            (#{item.province},#{item.month},#{item.size})
+        </foreach >
+	</insert>
+    <select id="findStsMonthByCondition" resultType="org.spring.springboot.domain.StsMonth"
+            parameterType="org.spring.springboot.vo.StsMonthPatchReq">
+        select * FROM t_sts_month where isdel=0
+        <if test="vo.provinceList != null and vo.provinceList.size() > 0" >
+            and province in
+            <foreach collection="vo.provinceList" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+        <if test="vo.monthList != null and vo.monthList.size() > 0" >
+            and month in
+            <foreach collection="vo.monthList" item="item" index="index" open="(" close=")" separator=",">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+    <select id="groupProvinceStsMonth" resultType="org.spring.springboot.domain.StsMonth"
+            parameterType="org.spring.springboot.vo.StsMonthPatchReq">
+        SELECT province,DATE_FORMAT(createtime ,'%Y-%m') month, count(1) size FROM t_call_result
+        where isdel=0
+        and createtime &gt;= #{vo.createTimeFrom}
+        and createtime &lt; #{vo.createTimeTo}
+        group by province,DATE_FORMAT(createtime ,'%Y-%m')
+    </select>
+</mapper>

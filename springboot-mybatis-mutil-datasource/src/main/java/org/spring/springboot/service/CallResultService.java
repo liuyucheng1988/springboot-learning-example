@@ -6,12 +6,18 @@ import org.spring.springboot.domain.Route;
 import org.spring.springboot.domain.TypeEnum;
 import org.spring.springboot.exception.BusinessException;
 import org.spring.springboot.vo.*;
+import org.spring.springboot.vo.echarts.ProvinceDayVo;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 
 public interface CallResultService {
     PageVO<CallResultRsp> findByCondition(CallResultReq req);
+
+    void groupProvinceStsMonth();
+    List<NameValueVO> pieDisplayData(Integer type, CallResultPatchReq resultPatchReq) throws BusinessException;
+    ProvinceDayVo groupByProvinceAndDay() throws BusinessException;
     PageVO<CallResultRsp> finCallResultItemByCondition(CallResultReq req);
     PageVO<RouteRsp> findRouteByCondition(Route req);
     void insertRoute(Route req) throws BusinessException;
@@ -45,4 +51,6 @@ public interface CallResultService {
     void logicDeleteApi(Integer id) throws BusinessException;
 
     PageVO<CallResultRsp> finCallResultPatchByCondition(CallResultPatchReq req);
+
+    ProvinceDayVo groupByProvinceAndMonth() throws BusinessException;
 }

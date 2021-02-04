@@ -15,22 +15,12 @@ import java.util.Date;
 @NoArgsConstructor
 @Accessors(chain = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CallResult extends PaperBase {
-    private BigInteger id;
-    private String requestId;
-    private String category;
+public class StsMonth extends PaperBase {
+    private Integer id;
     private String province;
-    private String apiCodesn;
-    private Integer duration;
-    private String billsType;
-    private Integer result;
+    private String provinceName;
+    private String month;
+    private Integer size;
     private Date createtime;
-    private Boolean isdel;
-    private String client;
-    private String req;
-    private String rsp;
-    private String errorMsg;
-    private Date createday;
-
 
 }
